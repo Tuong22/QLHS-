@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.List"%>
+<%@ page import="Model.HocSinh"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +18,7 @@
 
 </head>
 <body>
+	<% int i = 1; %>
 	<!--  Body Wrapper -->
 	<div class="page-wrapper" id="main-wrapper" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
@@ -44,40 +48,40 @@
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./class.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./class.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link active" href="#"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link active"
+								href="#" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./searchStudent.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-magnifying-glass"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./searchStudent.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./subject.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./subject.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./tablePoint.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-table"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./tablePoint.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
-							<li class="sidebar-item"><a class="sidebar-link" href="./report.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./report.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./changeRule.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-gear"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./changeRule.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
@@ -114,13 +118,6 @@
 							href="javascript:void(0)"> <i class="fa-regular fa-bell"></i>
 								<div class="notification"></div>
 						</a></li>
-						<li class="nav-item">
-							<div class="toggle-switch">
-								<label class="switch-label"> <input type="checkbox"
-									class="checkbox toggle-theme"> <span class="slider"></span>
-								</label>
-							</div>
-						</li>
 					</ul>
 					<div class="navbar-collapse justify-content-end px-0"
 						id="navbarNav">
@@ -149,22 +146,14 @@
 								<i class="fas fa-table me-1"></i> Danh sách học sinh
 							</div>
 							<div class="card-body">
-								<div
-									class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
-									<div class="datatable-top">
-										<div class="add-student">
-											<button class="btn btn-primary add-student-btn">Thêm
-												học sinh</button>
-										</div>
+								<div class="datatable-wrapper">
 
-
-										<div class="datatable-search">
-											<input class="datatable-input" placeholder="Search..."
-												type="search" title="Search within table"
-												aria-controls="datatablesSimple">
-										</div>
-
+									<div class="add-student">
+										<button class="btn btn-primary add-student-btn">Thêm
+											học sinh</button>
 									</div>
+
+
 									<div class="datatable-container">
 										<table id="datatablesInfoStudent" class="datatable-table">
 											<thead>
@@ -183,13 +172,16 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr data-index="0">
-													<td>1</td>
-													<td>Technical Author</td>
-													<td>Nam</td>
-													<td>123 quan hoa</td>
-													<td>vanA@gmail.com</td>
-												</tr>
+												
+												<c:forEach var="HocSinh" items="${DSHS}">
+													<tr>
+														<td><%= i++ %></td>
+														<td><c:out value="${HocSinh.tenHS}" /></td>
+														<td><c:out value="${HocSinh.gioiTinh}" /></td>
+														<td><c:out value="${HocSinh.diaChi}" /></td>
+														<td><c:out value="${HocSinh.email}" /></td>
+													</tr>
+												</c:forEach>
 
 											</tbody>
 										</table>
@@ -275,9 +267,7 @@
 
 
 	<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
-
 	<script src="./js/app.js"></script>
-	<script src="./js/darkTheme.js"></script>
 	<script src="./js/pagination.js"></script>
 	<script src="./js/modalAddStudent.js"></script>
 

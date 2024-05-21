@@ -6,7 +6,7 @@ const datatablesStatistical = '#datatablesStatistical'
 
 function Pagination(tableNameID) {
   const table = $(`${tableNameID}`);
-  const rowsPerPage = 4;
+  const rowsPerPage = 6;
   let maxPageShow = 5;
 
   const totalRows = table.find('tr').length - 1;

@@ -114,13 +114,6 @@
 							href="javascript:void(0)"> <i class="fa-regular fa-bell"></i>
 								<div class="notification"></div>
 						</a></li>
-						<li class="nav-item">
-							<div class="toggle-switch">
-								<label class="switch-label"> <input type="checkbox"
-									class="checkbox toggle-theme"> <span class="slider"></span>
-								</label>
-							</div>
-						</li>
 					</ul>
 					<div class="navbar-collapse justify-content-end px-0"
 						id="navbarNav">
@@ -240,6 +233,74 @@
 				</div>
 			</div>
 			<!-- Class end -->
+			
+			<!-- List student of class start -->
+			<div id="list-student-of-class" class="container-fluid list-student-of-class hidden">
+				<div class="row">
+					<div class="align-items-stretch">
+						<div class="card">
+							<div class="card-header">
+								<i class="fas fa-table me-1"></i> Danh sách học sinh lớp
+							</div>
+
+							<div class="list-student-wrap">
+								<div class="card-body">
+									<div class="datatable-wrapper">
+										<div class="datatable-top">
+											<div class = "datatable-top-group">
+												<p>Lớp: </p>
+												<p class = "class-value">...</p>
+											</div>
+											
+											<div class = "datatable-top-group">
+												<p>Sỉ số: </p>
+												<p class = "number-of-student-value">...</p>
+											</div>
+										</div>
+										<div class="datatable-container">
+											<table id="datatablesListStudent" class="datatable-table">
+												<thead>
+													<tr>
+														<th data-sortable="true" style="width: 10%;"><a
+															href="#" class="datatable-sorter">STT</a></th>
+														<th data-sortable="true" aria-sort="descending"
+															class="datatable-descending" style="width: 30%;"><a
+															href="#" class="datatable-sorter">Họ tên</a></th>
+														<th data-sortable="true" style="width: 10%;"><a
+															href="#" class="datatable-sorter">Giới Tính</a></th>
+														<th data-sortable="true" style="width: 15%;"><a
+															href="#" class="datatable-sorter">Ngày sinh</a></th>
+														<th data-sortable="true" style="width: 35%;"><a
+															href="#" class="datatable-sorter">Địa chỉ</a></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-index="0">
+														<td>1</td>
+														<td>Technical Author</td>
+														<td>23</td>
+														<td>Technical Author</td>
+														<td>23</td>
+													</tr>
+
+												</tbody>
+											</table>
+										</div>
+										<div class="datatablefooter justify-content-between">
+											<button class="btn btn-primary list-student-of-class-cancel-btn">Hủy</button>
+											<button class="btn btn-primary list-student-of-class-confirm-btn">Xác
+											nhận</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- List student of class end -->
+			
 		</div>
 		<!--  Main wrapper -->
 
@@ -322,8 +383,8 @@
 
 			<footer class="modal-footer">
 				<button class="btn btn-primary cancel-list-students-btn">Hủy</button>
-				<button class="btn btn-primary confirm-list-students-btn"><a href = "./listStudentOfClass.jsp">Xác
-				nhận</a></button>
+				<button class="btn btn-primary confirm-list-students-btn">Xác
+				nhận</button>
 			</footer>
 		</div>
 	</div>
@@ -333,7 +394,6 @@
 
 
 	<script src="./js/app.js"></script>
-	<script src="./js/darkTheme.js"></script>
 	<script src="./js/editClassName.js"></script>
 	<script src="./js/pagination.js"></script>
 	<script src="./js/modalAddClass.js"></script>

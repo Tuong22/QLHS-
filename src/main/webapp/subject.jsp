@@ -114,13 +114,6 @@
 							href="javascript:void(0)"> <i class="fa-regular fa-bell"></i>
 								<div class="notification"></div>
 						</a></li>
-						<li class="nav-item">
-							<div class="toggle-switch">
-								<label class="switch-label"> <input type="checkbox"
-									class="checkbox toggle-theme"> <span class="slider"></span>
-								</label>
-							</div>
-						</li>
 					</ul>
 					<div class="navbar-collapse justify-content-end px-0"
 						id="navbarNav">
@@ -287,7 +280,6 @@
 
 
 	<script src="./js/app.js"></script>
-	<script src="./js/darkTheme.js"></script>
 	<script src="./js/pagination.js"></script>
 	<script src="./js/editSubjectName.js"></script>
 	<script src="./js/modalAddSubject.js"></script>
