@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.List"%>
-<%@ page import="Model.HocSinh"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -17,8 +15,10 @@
 <style <%@ include file="./css/style.css" %>></style>
 
 </head>
-<body>
-	<% int i = 1; %>
+<body style="background-color: #484848">
+	<%
+	int i = 1;
+	%>
 	<!--  Body Wrapper -->
 	<div class="page-wrapper" id="main-wrapper" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
@@ -54,7 +54,8 @@
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link active"
-								href="#" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/InfoStudentsServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
@@ -161,10 +162,12 @@
 													<th data-sortable="true" style="width: 10%;"><a
 														href="#" class="datatable-sorter">STT</a></th>
 													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 25%;"><a
+														class="datatable-descending" style="width: 20%;"><a
 														href="#" class="datatable-sorter">Tên</a></th>
-													<th data-sortable="true" style="width: 15%;"><a
+													<th data-sortable="true" style="width: 10%;"><a
 														href="#" class="datatable-sorter">Giới Tính</a></th>
+													<th data-sortable="true" style="width: 10%;"><a
+														href="#" class="datatable-sorter">Năm</a></th>
 													<th data-sortable="true" style="width: 25%;"><a
 														href="#" class="datatable-sorter">Địa chỉ</a></th>
 													<th data-sortable="true" style="width: 25%;"><a
@@ -172,12 +175,13 @@
 												</tr>
 											</thead>
 											<tbody>
-												
+
 												<c:forEach var="HocSinh" items="${DSHS}">
 													<tr>
-														<td><%= i++ %></td>
+														<td><%=i++%></td>
 														<td><c:out value="${HocSinh.tenHS}" /></td>
 														<td><c:out value="${HocSinh.gioiTinh}" /></td>
+														<td><c:out value="${HocSinh.namSinh}" /></td>
 														<td><c:out value="${HocSinh.diaChi}" /></td>
 														<td><c:out value="${HocSinh.email}" /></td>
 													</tr>
@@ -211,57 +215,61 @@
 
 			<header class="modal-header"> Thêm học sinh mới </header>
 
-			<div class="modal-body">
-				<div class="model-input-item">
-					<label for="student-name" class="modal-label">Tên:</label> <input
-						type="text" id="student-name" class="modal-input"
-						placeholder="Họ tên">
-				</div>
+			<form action="<%=request.getContextPath()%>/InfoStudentsServlet">
+				<input type="hidden" name="action" value="/insert">
+				<div class="modal-body">
+					<div class="model-input-item">
+						<label for="student-name" class="modal-label">Tên:</label> <input
+							type="text" id="student-name" class="modal-input"
+							placeholder="Họ tên" name="studentName">
+					</div>
 
-				<div class="model-input-item">
-					<label class="modal-label">Giới tính:</label>
-					<div class="student-gender">
-						<div class="student-gender-wrap">
-							<label for="student-male" class="modal-label">Nam</label> <input
-								type="radio" id="student-male" class="modal-input"
-								name="gender-group" value="Nam">
-						</div>
+					<div class="model-input-item">
+						<label class="modal-label">Giới tính:</label>
+						<div class="student-gender">
+							<div class="student-gender-wrap">
+								<label for="student-male" class="modal-label">Nam</label> <input
+									type="radio" id="student-male" class="modal-input"
+									name="gender-group" value="Nam">
+							</div>
 
-						<div class="student-gender-wrap">
-							<label for="student-female" class="modal-label">Nữ</label> <input
-								type="radio" id="student-female" class="modal-input"
-								name="gender-group" value="Nữ">
+							<div class="student-gender-wrap">
+								<label for="student-female" class="modal-label">Nữ</label> <input
+									type="radio" id="student-female" class="modal-input"
+									name="gender-group" value="Nữ">
+							</div>
+
 						</div>
 
 					</div>
 
+					<div class="model-input-item">
+						<label for="student-year" class="modal-label">Năm sinh:</label> <input
+							type="text" id="student-year" class="modal-input"
+							placeholder="Năm sinh" name="studentYear">
+					</div>
+
+					<div class="model-input-item">
+						<label for="student-address" class="modal-label">Địa chỉ:</label>
+						<input type="text" id="student-address" class="modal-input"
+							placeholder="Địa chỉ" name="studentAddress">
+					</div>
+
+					<div class="model-input-item">
+						<label for="student-email" class="modal-label">Email:</label> <input
+							type="email" id="student-email" class="modal-input"
+							placeholder="Email" name="studentEmail">
+					</div>
+
 				</div>
 
-				<div class="model-input-item">
-					<label for="student-year" class="modal-label">Năm sinh:</label> <input
-						type="text" id="student-year" class="modal-input"
-						placeholder="Năm sinh">
-				</div>
-
-				<div class="model-input-item">
-					<label for="student-address" class="modal-label">Địa chỉ:</label> <input
-						type="text" id="student-address" class="modal-input"
-						placeholder="Địa chỉ">
-				</div>
-
-				<div class="model-input-item">
-					<label for="student-email" class="modal-label">Email:</label> <input
-						type="email" id="student-email" class="modal-input"
-						placeholder="Email">
-				</div>
-
-			</div>
-
-			<footer class="modal-footer">
-				<button class="btn btn-primary cancel-add-student-btn">Hủy</button>
-				<button class="btn btn-primary confirm-add-studen-btn">Xác
-					nhận</button>
-			</footer>
+				<footer class="modal-footer">
+					<button type="button"
+						class="btn btn-primary cancel-add-student-btn">Hủy</button>
+					<button type="submit"
+						class="btn btn-primary confirm-add-studen-btn">Xác nhận</button>
+				</footer>
+			</form>
 		</div>
 	</div>
 

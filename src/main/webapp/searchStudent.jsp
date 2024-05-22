@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,10 @@
 <style <%@ include file="./css/style.css" %>></style>
 
 </head>
-<body>
+<body style="background-color: #484848">
+	<%
+	int i = 1;
+	%>
 	<!--  Body Wrapper -->
 	<div class="page-wrapper" id="main-wrapper" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
@@ -44,40 +48,41 @@
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./class.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./class.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./infoStudent.jsp"
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="<%=request.getContextPath()%>/InfoStudentsServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link active" href="#"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link active"
+								href="#" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./subject.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./subject.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./tablePoint.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-table"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./tablePoint.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
-							<li class="sidebar-item"><a class="sidebar-link" href="./report.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./report.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./changeRule.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-gear"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./changeRule.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
@@ -114,7 +119,7 @@
 							href="javascript:void(0)"> <i class="fa-regular fa-bell"></i>
 								<div class="notification"></div>
 						</a></li>
-						
+
 					</ul>
 					<div class="navbar-collapse justify-content-end px-0"
 						id="navbarNav">
@@ -134,8 +139,7 @@
 			<!--  Header End -->
 
 			<!-- Search student start -->
-			<div id="search-student"
-				class="container-fluid search-student">
+			<div id="search-student" class="container-fluid search-student">
 				<div class="row">
 					<div class="align-items-stretch">
 						<div class="card">
@@ -143,19 +147,25 @@
 								<i class="fas fa-table me-1"></i> Danh sách học sinh
 							</div>
 							<div class="card-body">
-								<div
-									class="datatable-wrapper">
+								<div class="datatable-wrapper">
 									<div class="datatable-top">
-										<div class="datatable-search">
-											<input class="datatable-input" placeholder="Search..."
-												type="search" title="Search within table"
-												aria-controls="datatablesSimple">
-										</div>
 
-										<div class="search-student">
-											<button class="btn btn-primary search-point-btn">Tìm
-												kiếm</button>
-										</div>
+										<form
+											action="<%=request.getContextPath()%>/InfoStudentsServlet">
+											<input type="hidden" name="action" value="/searchByName">
+											<div class="datatable-search">
+												<input name="search-student-name" class="datatable-input"
+													placeholder="Search..." type="text"
+													title="Search within table"
+													aria-controls="datatablesSimple">
+											</div>
+
+											<div class="search-student">
+												<button type="submit" class="btn btn-primary search-point-btn">Tìm
+													kiếm</button>
+											</div>
+										</form>
+
 									</div>
 									<div class="datatable-container">
 										<table id="datatablesSearchStudent" class="datatable-table">
@@ -175,13 +185,16 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr data-index="0">
-													<td>1</td>
-													<td>Technical Author</td>
-													<td>Nam</td>
-													<td>123 quan hoa</td>
-													<td>vanA@gmail.com</td>
-												</tr>
+
+												<c:forEach var="HocSinh" items="${DSTCHS}">
+													<tr>
+														<td><%=i++%></td>
+														<td><c:out value="${HocSinh.tenHS}" /></td>
+														<td><c:out value="${HocSinh.lop}" /></td>
+														<td><c:out value="${HocSinh.tbhk1}" /></td>
+														<td><c:out value="${HocSinh.tbhk2}" /></td>
+													</tr>
+												</c:forEach>
 
 
 											</tbody>

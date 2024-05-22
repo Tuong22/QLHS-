@@ -7,6 +7,7 @@ public class HocSinh {
 	private int namSinh;
 	private String diaChi;
 	private String email;
+	
 	public HocSinh(String maHS, String tenHS, String gioiTinh, int namSinh, String diaChi, String email) {
 		super();
 		this.maHS = maHS;

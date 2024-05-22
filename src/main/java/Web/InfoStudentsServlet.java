@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 
 import Dao.InfoStudentsDao;
 import Model.HocSinh;
+import Model.TraCuuHocSinh;
 
 @WebServlet("/InfoStudentsServlet")
 public class InfoStudentsServlet extends HttpServlet {
@@ -31,18 +32,37 @@ public class InfoStudentsServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			render(request, response);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String action = request.getParameter("action");
+		if (action == null) {
+			action = "list";
 		}
+		switch (action) {
+		case "/insert":
+			try {
+				insertStudent(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			break;
+		case "/searchByName":
+			try {
+				selectStudentByName(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		default:
+			try {
+				render(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		}
+			
 	}
 
 	private void render(HttpServletRequest request, HttpServletResponse response) 
@@ -52,4 +72,26 @@ public class InfoStudentsServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("infoStudent.jsp");
 		dispatcher.forward(request, response);
 	}
+	
+	private void selectStudentByName(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		String name = request.getParameter("search-student-name");
+		List<TraCuuHocSinh> DSTCHS = infoStudentsDao.selectStudent(name);
+		request.setAttribute("DSTCHS", DSTCHS);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("searchStudent.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+	private void insertStudent(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException {
+		String name = request.getParameter("studentName");
+		String gender = request.getParameter("gender-group");
+		String year = request.getParameter("studentYear");
+		String address = request.getParameter("studentAddress");
+		String email = request.getParameter("studentEmail");
+		HocSinh hs = new HocSinh(null, name, gender, Integer.parseInt(year), address, email);
+		infoStudentsDao.insertStudent(hs);
+		response.sendRedirect(request.getContextPath() + "/InfoStudentsServlet");
+	}
+	
 }

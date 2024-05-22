@@ -14,7 +14,7 @@
 <style <%@ include file="./css/style.css" %>></style>
 
 </head>
-<body>
+<body style="background-color: #484848">
 	<!--  Body Wrapper -->
 	<div class="page-wrapper" id="main-wrapper" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
@@ -49,7 +49,7 @@
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./infoStudent.jsp"
+							<li class="sidebar-item"><a class="sidebar-link" href="<%= request.getContextPath() %>/InfoStudentsServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
