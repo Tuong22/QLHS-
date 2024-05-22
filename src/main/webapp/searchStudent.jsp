@@ -60,12 +60,14 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link active"
-								href="#" aria-expanded="false"> <span> <i
+								href="#"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./subject.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/SubjectServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
@@ -161,8 +163,8 @@
 											</div>
 
 											<div class="search-student">
-												<button type="submit" class="btn btn-primary search-point-btn">Tìm
-													kiếm</button>
+												<button type="submit"
+													class="btn btn-primary search-point-btn">Tìm kiếm</button>
 											</div>
 										</form>
 

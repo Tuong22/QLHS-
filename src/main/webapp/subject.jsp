@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +16,9 @@
 
 </head>
 <body style="background-color: #484848">
+	<%
+	int i = 1;
+	%>
 	<!--  Body Wrapper -->
 	<div class="page-wrapper" id="main-wrapper" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
@@ -44,40 +48,42 @@
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./class.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./class.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="<%= request.getContextPath() %>/InfoStudentsServlet"
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="<%=request.getContextPath()%>/InfoStudentsServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./searchStudent.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-magnifying-glass"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./searchStudent.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link active" href="#"
+							<li class="sidebar-item"><a class="sidebar-link active"
+								href="<%=request.getContextPath()%>/SubjectServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./tablePoint.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-table"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./tablePoint.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
-							<li class="sidebar-item"><a class="sidebar-link" href="./report.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./report.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./changeRule.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-gear"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./changeRule.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
@@ -145,6 +151,12 @@
 								<div class="card-body subject-list-data">
 
 									<div class="datatable-wrapper">
+
+										<div class="add-subject">
+											<button class="btn btn-primary add-subject-btn">Thêm
+												môn</button>
+										</div>
+
 										<div class="datatable-container">
 											<table id="datatablesSubject" class="datatable-table">
 												<thead>
@@ -159,44 +171,20 @@
 													</tr>
 												</thead>
 												<tbody>
-													<tr data-index="0">
-														<td>1</td>
-														<td class="subjectName-edit">Technical Author <i
-															class="subjectName-edit-icon fa fa-solid fa-pen-to-square"></i>
-														</td>
-														<td>23</td>
-													</tr>
-													<tr data-index="0">
-														<td>1</td>
-														<td class="subjectName-edit">Tú Author <i
-															class="subjectName-edit-icon fa fa-solid fa-pen-to-square"></i>
-														</td>
-														<td>23</td>
-													</tr>
-													<tr data-index="0">
-														<td>1</td>
-														<td class="subjectName-edit">tuấn Author <i
-															class="subjectName-edit-icon fa fa-solid fa-pen-to-square"></i>
-														</td>
-														<td>23</td>
-													</tr>
-													<tr data-index="0">
-														<td>1</td>
-														<td class="subjectName-edit">hâh Author <i
-															class="subjectName-edit-icon fa fa-solid fa-pen-to-square"></i>
-														</td>
-														<td>23</td>
-													</tr>
+													<c:forEach var="Mon" items="${DSMon}">
+														<tr>
+															<td><%=i++%></td>
+															<td class="subjectName-edit"><c:out
+																	value="${Mon.tenMH}" /><i
+																class="subjectName-edit-icon fa fa-solid fa-pen-to-square"></i>
+															</td>
+															<td><c:out value="${Mon.heSo}" /></td>
+														</tr>
+													</c:forEach>
 												</tbody>
 											</table>
 										</div>
-										<div class="datatablefooter justify-content-end ">
-											<button class="btn btn-primary add-subject-btn">Thêm
-												môn</button>
-										</div>
 									</div>
-
-
 
 								</div>
 								<div class="card-body change-subjectName hidden">
@@ -204,25 +192,37 @@
 										<header class="change-subjectName-top">
 											<h5>Thay đổi tên môn</h5>
 										</header>
-
-										<div class="change-subjectName-container">
-											<div class="change-subjectName-group">
-												<label for="change-subjectName-input">Nhập tên môn
-													mới:</label> <input type="text" id="change-subjectName-input"
-													placeholder="Tên môn mới">
+										<form action="<%=request.getContextPath()%>/SubjectServlet">
+											<input type="hidden" name="action" value="/update">
+											<div class="change-subjectName-container">
+												<div class="change-subjectName-group">
+													<label for="subjectNameOld">Tên môn
+														thay đổi:</label> <input type="text" id="subjectNameOld"
+														name="nameOld" readonly>
+												</div>
+												<div class="change-subjectName-group">
+													<label for="change-subjectName-input">Nhập tên môn
+														mới:</label> <input type="text" id="change-subjectName-input"
+														placeholder="Tên môn mới" name="name">
+												</div>
+												<div class="change-subjectName-group">
+													<label for="numberSubject-input">Nhập hệ số:</label> <input
+														type="text" id="numberSubject-input" placeholder="Hệ số"
+														name="number">
+												</div>
 											</div>
-										</div>
 
 
-										<div class="change-subjectName-bottom">
-											<div class="change-subjectName-confirm">
-												<button
-													class="btn btn-primary change-subjectName-cancel-btn">Hủy</button>
-												<button
-													class="btn btn-primary change-subjectName-confirm-btn">Xác
-													nhận</button>
+											<div class="change-subjectName-bottom">
+												<div class="change-subjectName-confirm">
+													<button type="button"
+														class="btn btn-primary change-subjectName-cancel-btn">Hủy</button>
+													<button type="submit"
+														class="btn btn-primary change-subjectName-confirm-btn">Xác
+														nhận</button>
+												</div>
 											</div>
-										</div>
+										</form>
 									</div>
 								</div>
 							</div>
@@ -249,27 +249,31 @@
 
 			<header class="modal-header"> Thêm môn mới </header>
 
-			<div class="modal-body">
-				<div class="model-input-item">
-					<label for="new-subject" class="modal-label">Tên môn:</label> <input
-						type="text" id="new-subject" class="modal-input"
-						placeholder="Tên môn">
+			<form action="<%=request.getContextPath()%>/SubjectServlet">
+				<input type="hidden" name="action" value="/insert">
+				<div class="modal-body">
+					<div class="model-input-item">
+						<label for="new-subject" class="modal-label">Tên môn:</label> <input
+							type="text" id="new-subject" class="modal-input"
+							placeholder="Tên môn" name="newSubjectName">
+					</div>
+
+
+					<div class="model-input-item">
+						<label for="number-of-subject" class="modal-label">Hệ số:</label>
+						<input type="text" id="number-of-subject" class="modal-input"
+							placeholder="Hệ số" name="numberSubject">
+					</div>
+
 				</div>
 
-
-				<div class="model-input-item">
-					<label for="number-of-subject" class="modal-label">Hệ số:</label> <input
-						type="text" id="number-of-subject" class="modal-input"
-						placeholder="Hệ số">
-				</div>
-
-			</div>
-
-			<footer class="modal-footer">
-				<button class="btn btn-primary cancel-add-subject-btn">Hủy</button>
-				<button class="btn btn-primary confirm-add-subject-btn">Xác
-					nhận</button>
-			</footer>
+				<footer class="modal-footer">
+					<button type="button"
+						class="btn btn-primary cancel-add-subject-btn">Hủy</button>
+					<button type="submit"
+						class="btn btn-primary confirm-add-subject-btn">Xác nhận</button>
+				</footer>
+			</form>
 		</div>
 	</div>
 

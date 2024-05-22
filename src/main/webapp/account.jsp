@@ -39,45 +39,48 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a class="sidebar-link active"
-								href="#" aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-user"></i>
+							<li class="sidebar-item mg-l-4"><a
+								class="sidebar-link active" href="#" aria-expanded="false">
+									<span> <i class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./class.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./class.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="<%= request.getContextPath() %>/InfoStudentsServlet"
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./searchStudent.jsp"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./searchStudent.jsp"
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="<%=request.getContextPath()%>/InfoStudentsServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./subject.jsp"
+							<li class="sidebar-item"><a class="sidebar-link"
+								href=".<%=request.getContextPath()%>/SubjectServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./tablePoint.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-table"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./tablePoint.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
-							<li class="sidebar-item"><a class="sidebar-link" href="./report.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./report.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./changeRule.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-gear"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./changeRule.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
@@ -235,7 +238,7 @@
 	<script src="./js/app.js"></script>
 	<script src="./js/pagination.js"></script>
 	<script src="./js/modalEditPass.js"></script>
-
+	<script src="./js/showPass.js"></script>
 
 </body>
 </html>

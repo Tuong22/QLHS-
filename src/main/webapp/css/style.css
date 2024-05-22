@@ -325,6 +325,13 @@ tbody, td, tfoot, th, thead, tr {
 	margin: 12px 0;
 }
 
+.change-subjectName-group {
+    display: flex;
+    flex-flow: column;
+    margin-bottom: 6px;
+}
+
+
 .change-subjectName-confirm,
 .change-className-confirm {
 	display: flex;
@@ -4787,7 +4794,11 @@ ul {
 	visibility: visible;
 }
 
-#datatablesInfoStudent {
+#datatablesInfoStudent,
+#datatablesSubject,
+#datatablesClass,
+#datatablesSearchStudent,
+#datatablesPoint {
 	margin: 20px 0;
 }
 
