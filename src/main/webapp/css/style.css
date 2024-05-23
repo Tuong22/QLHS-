@@ -248,6 +248,11 @@ tbody, td, tfoot, th, thead, tr {
 	border: 1px solid #333;
 }
 
+.class-semester-selection {
+	margin-top: -0.5rem;
+}
+
+
 #class .class-list-wrap,
 #subject .subject-list-wrap,
 #list-student-of-class .list-student-wrap {
@@ -5048,14 +5053,18 @@ ul {
 	margin-right: 6px;
 }
 
-#table-point .datatable-selection,
-#report .datatable-selection {
+#table-point .datatable-selection{
 	display: flex;
     margin-bottom: 50px;
     width: 100%;
     justify-content: space-around;
 
 }
+
+.report-type {
+	margin-bottom: 0.5rem;
+}
+
 
 #change-rule .datatable-selection {
 	display: flex;

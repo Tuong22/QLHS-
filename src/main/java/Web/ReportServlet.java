@@ -1,0 +1,66 @@
+package Web;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+import Dao.ReportDao;
+import Model.TraCuuBaoCao;
+
+
+@WebServlet("/ReportServlet")
+public class ReportServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+	private ReportDao reportDao;
+
+	public ReportServlet() {
+		this.reportDao = new ReportDao();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String action = request.getParameter("action");
+		if (action == null) {
+			action = "list";
+		}
+		switch (action) {
+		case "/searchReport":
+			try {
+				selectReport(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	
+	
+	private void selectReport(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		String reportType = request.getParameter("report-type");
+		String tenMon = request.getParameter("search-subject");
+		String tenHK1 = request.getParameter("search-semester1");
+		String tenHK2 = request.getParameter("search-semester2");
+		String HK;
+		if (!(tenHK1 == "")) {
+			HK = tenHK1;
+		} else {
+			HK = tenHK2;
+		}
+		List<TraCuuBaoCao> DSTCBC = reportDao.selectReport(reportType, tenMon, HK);
+		request.setAttribute("DSTCBC", DSTCBC);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("report.jsp");
+		dispatcher.forward(request, response);
+	}
+}

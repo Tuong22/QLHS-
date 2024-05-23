@@ -1,39 +1,56 @@
 package Model;
 
 public class BaoCaoTongKetMon {
-	private String MaBCTKM;
-	private String MaMH;
-	private String MaHK;
-	private String MaNh;
-	public BaoCaoTongKetMon(String maBCTKM, String maMH, String maHK, String maNh) {
-		MaBCTKM = maBCTKM;
-		MaMH = maMH;
-		MaHK = maHK;
-		MaNh = maNh;
+	private String maBCTKM;
+	private String maMH;
+	private String maHK;
+	private String maNh;
+	private String tenLop;
+	private String siSo;
+	public BaoCaoTongKetMon(String maBCTKM, String maMH, String maHK, String maNh, String tenLop, String siSo) {
+		super();
+		this.maBCTKM = maBCTKM;
+		this.maMH = maMH;
+		this.maHK = maHK;
+		this.maNh = maNh;
+		this.tenLop = tenLop;
+		this.siSo = siSo;
 	}
 	public String getMaBCTKM() {
-		return MaBCTKM;
+		return maBCTKM;
 	}
 	public void setMaBCTKM(String maBCTKM) {
-		MaBCTKM = maBCTKM;
+		this.maBCTKM = maBCTKM;
 	}
 	public String getMaMH() {
-		return MaMH;
+		return maMH;
 	}
 	public void setMaMH(String maMH) {
-		MaMH = maMH;
+		this.maMH = maMH;
 	}
 	public String getMaHK() {
-		return MaHK;
+		return maHK;
 	}
 	public void setMaHK(String maHK) {
-		MaHK = maHK;
+		this.maHK = maHK;
 	}
 	public String getMaNh() {
-		return MaNh;
+		return maNh;
 	}
 	public void setMaNh(String maNh) {
-		MaNh = maNh;
+		this.maNh = maNh;
+	}
+	public String getTenLop() {
+		return tenLop;
+	}
+	public void setTenLop(String tenLop) {
+		this.tenLop = tenLop;
+	}
+	public String getSiSo() {
+		return siSo;
+	}
+	public void setSiSo(String siSo) {
+		this.siSo = siSo;
 	}
 	
 	

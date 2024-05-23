@@ -50,9 +50,8 @@
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-graduation-cap"></i>
+								href="./searchStudent.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -62,7 +61,7 @@
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href=".<%=request.getContextPath()%>/SubjectServlet"
+								href="<%=request.getContextPath()%>/SubjectServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
@@ -74,7 +73,8 @@
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./report.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/ReportServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +16,9 @@
 
 </head>
 <body style="background-color: #484848">
+	<%
+	int i = 1;
+	%>
 	<!--  Body Wrapper -->
 	<div class="page-wrapper" id="main-wrapper" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
@@ -56,9 +60,8 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-magnifying-glass"></i>
+								href="./searchStudent.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -74,7 +77,8 @@
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link active"
-								href="#" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/ReportServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
@@ -146,54 +150,62 @@
 							<div class="card-body">
 								<div class="datatable-wrapper">
 									<div class="datatable-top">
-										<div class="datatable-selection">
-											<div class="report-type-selection">
-												<label for="report-type-selection">Loại: </label> <select
-													id="report-type-selection">
-													<option></option>
-													<option value="report-subject">Báo cáo tổng kết
-														môn</option>
-													<option value="report-semester">Báo cáo tổng kết
-														học kỳ</option>
-												</select>
-											</div>
 
-											<div class="report-type-list hidden">
-												<div id="report-semester"
-													class="report-type report-semester-selection">
-													<label>Học kỳ: </label> <select>
+										<form class="d-flex flex-row justify-content-between"
+											action="<%=request.getContextPath()%>/ReportServlet">
+											<input type="hidden" name="action" value="/searchReport">
+											<div class="datatable-selection">
+												<div class="report-type-selection mb-2">
+													<label for="report-type-selection">Loại: </label> <select
+														id="report-type-selection" name="report-type">
 														<option></option>
-														<option>1</option>
-														<option>2</option>
+														<option value="report-subject">Báo cáo tổng kết
+															môn</option>
+														<option value="report-semester">Báo cáo tổng kết
+															học kỳ</option>
 													</select>
 												</div>
 
-												<div id="report-subject"
-													class="report-type report-subject-selection">
-													<label>Môn: </label> <select>
-														<option></option>
-														<option>Toán</option>
-														<option>Văn</option>
-														<option>Đạo đức</option>
-														<option>Sinh</option>
-														<option>Sử</option>
-														<option>Địa</option>
-														<option>Lý</option>
-														<option>Hóa</option>
-														<option>Thể dục</option>
-													</select>
+												<div class="report-type-list hidden">
+													<div class="report-semester report-type">
+														<label>Học kỳ: </label> <select name="search-semester1">
+															<option></option>
+															<option>1</option>
+															<option>2</option>
+														</select>
+													</div>
+
+													<div class="report-subject report-type">
+														<label>Học kỳ: </label> <select name="search-semester2">
+															<option></option>
+															<option>1</option>
+															<option>2</option>
+														</select>
+													</div>
+
+													<div class="report-subject report-type">
+														<label>Môn: </label> <select name="search-subject">
+															<option></option>
+															<option>Toán</option>
+															<option>Văn</option>
+															<option>Đạo đức</option>
+															<option>Sinh</option>
+															<option>Sử</option>
+															<option>Địa</option>
+															<option>Lý</option>
+															<option>Hóa</option>
+															<option>Thể dục</option>
+														</select>
+													</div>
 												</div>
 											</div>
 
 
-										</div>
-
-
-										<div class="search-report">
-											<button class="btn btn-primary search-point-btn">Tìm
-												kiếm</button>
-										</div>
-
+											<div class="search-report">
+												<button type="submit"
+													class="btn btn-primary search-point-btn">Tìm kiếm</button>
+											</div>
+										</form>
 									</div>
 									<div class="datatable-container">
 										<table id="datatablesReport" class="datatable-table">
@@ -213,13 +225,17 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr data-index="0">
-													<td>1</td>
-													<td>Technical Author</td>
-													<td>Nam</td>
-													<td>123 quan hoa</td>
-													<td>vanA@gmail.com</td>
-												</tr>
+
+												<c:forEach var="TCBC" items="${DSTCBC}">
+													<tr data-index="0">
+														<td><%=i++%></td>
+														<td>${TCBC.tenLop}</td>
+														<td>${TCBC.siSo}</td>
+														<td>${TCBC.slDat}</td>
+														<td>${TCBC.tiLe}</td>
+													</tr>
+												</c:forEach>
+
 											</tbody>
 										</table>
 									</div>
@@ -243,7 +259,7 @@
 
 
 	<script src="./js/app.js"></script>
-	<script src="./js/reportTypeHandle.js"></script>
+	<script src="./js/handleReportType.js"></script>
 	<script src="./js/pagination.js"></script>
 
 </body>

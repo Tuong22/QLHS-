@@ -60,9 +60,8 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-magnifying-glass"></i>
+								href="./searchStudent.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -78,7 +77,8 @@
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./report.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/ReportServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>

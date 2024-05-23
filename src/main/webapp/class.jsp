@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.List"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +17,9 @@
 
 </head>
 <body style="background-color: #484848">
+	<%
+	int i = 1;
+	%>
 	<!--  Body Wrapper -->
 	<div class="page-wrapper" id="main-wrapper" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
@@ -56,9 +61,8 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-magnifying-glass"></i>
+								href="./searchStudent.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -74,7 +78,8 @@
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./report.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/ReportServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
@@ -148,25 +153,34 @@
 								<div class="card-body class-list-data">
 									<div class="datatable-wrapper">
 										<div class="datatable-top">
-											<div class="datatable-selection">
 
-												<div id="class-semester" class="class-semester-selection">
-													<label>Khối: </label> <select>
-														<option></option>
-														<option>10</option>
-														<option>11</option>
-														<option>12</option>
-													</select>
+											<form class="d-flex flex-row justify-content-between"
+												action="<%=request.getContextPath()%>/InfoClassServlet">
+												<input type="hidden" name="action" value="/searchByKhoi">
+												<div class="datatable-selection">
+
+													<div id="class-semester" class="class-semester-selection">
+														<label for="search-khoi">Khối: </label> <select
+															id="search-khoi" name="search-khoi">
+															<option></option>
+															<option>Khối 10</option>
+															<option>Khối 11</option>
+															<option>Khối 12</option>
+														</select>
+													</div>
+													<button type="submit"
+														class="btn btn-primary search-class-btn mt-2">Tìm
+														kiếm</button>
+
 												</div>
 
-											</div>
 
-
-											<div class="search-class">
-												<button class="btn btn-primary search-class-btn">Tìm
-													kiếm</button>
-											</div>
-
+												<div class="add-class">
+													<button type="button"
+														class="btn btn-primary add-class-btn mt-4">Thêm
+														lớp</button>
+												</div>
+											</form>
 										</div>
 										<div class="datatable-container">
 											<table id="datatablesClass" class="datatable-table">
@@ -182,26 +196,19 @@
 													</tr>
 												</thead>
 												<tbody>
-													<tr data-index="0">
-														<td>1</td>
-														<td class="className-edit">Technical Author <i
-															class="className-edit-icon fa fa-solid fa-pen-to-square"></i>
-														</td>
-														<td>23</td>
-													</tr>
-													<tr data-index="0">
-														<td>2</td>
-														<td class="className-edit">ABC <i
-															class="className-edit-icon fa fa-solid fa-pen-to-square"></i>
-														</td>
-														<td>45</td>
-													</tr>
+
+													<c:forEach var="Lop" items="${DSTCK}">
+														<tr data-index="0">
+															<td><%=i++%></td>
+															<td class="className-edit">${Lop.tenKhoi}<i
+																class="className-edit-icon fa fa-solid fa-pen-to-square"></i>
+															</td>
+															<td>${Lop.siSo}</td>
+														</tr>
+													</c:forEach>
+
 												</tbody>
 											</table>
-										</div>
-										<div class="datatablefooter justify-content-end ">
-											<button class="btn btn-primary add-class-btn">Thêm
-												lớp</button>
 										</div>
 									</div>
 								</div>
@@ -211,23 +218,37 @@
 										<header class="change-className-top">
 											<h5>Thay đổi tên lớp</h5>
 										</header>
+										<form action="<%=request.getContextPath()%>/InfoClassServlet">
+											<input type="hidden" name="action" value="/update">
+											<div class="change-className-container">
 
-										<div class="change-className-container">
-											<div class="change-className-group">
-												<label for="change-className-input">Nhập tên lớp
-													mới:</label> <input type="text" id="change-className-input"
-													placeholder="Tên lớp mới">
+												<div class="change-className-group">
+													<label for="classNameOld">Tên lớp thay đổi:</label> <input
+														type="text" id="classNameOld" name="nameOld" readonly>
+												</div>
+												<div class="change-className-group">
+													<label for="change-className-input">Nhập tên lớp
+														mới:</label> <input type="text" id="change-className-input"
+														placeholder="Tên lớp mới" name="name">
+												</div>
+												<div class="change-className-group">
+													<label for="numberOfSubject-input">Nhập sỉ số:</label> <input
+														type="text" id="numberOfSubject-input" placeholder="Sỉ số"
+														name="number">
+												</div>
 											</div>
-										</div>
 
 
-										<div class="change-className-bottom">
-											<div class="change-className-confirm">
-												<button class="btn btn-primary change-className-cancel-btn">Hủy</button>
-												<button class="btn btn-primary change-className-confirm-btn">Xác
-													nhận</button>
+											<div class="change-className-bottom">
+												<div class="change-className-confirm">
+													<button type="button"
+														class="btn btn-primary change-className-cancel-btn">Hủy</button>
+													<button type="submit"
+														class="btn btn-primary change-className-confirm-btn">Xác
+														nhận</button>
+												</div>
 											</div>
-										</div>
+										</form>
 									</div>
 								</div>
 							</div>

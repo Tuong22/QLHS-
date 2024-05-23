@@ -77,7 +77,8 @@
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./report.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/ReportServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
@@ -196,9 +197,8 @@
 											<input type="hidden" name="action" value="/update">
 											<div class="change-subjectName-container">
 												<div class="change-subjectName-group">
-													<label for="subjectNameOld">Tên môn
-														thay đổi:</label> <input type="text" id="subjectNameOld"
-														name="nameOld" readonly>
+													<label for="subjectNameOld">Tên môn thay đổi:</label> <input
+														type="text" id="subjectNameOld" name="nameOld" readonly>
 												</div>
 												<div class="change-subjectName-group">
 													<label for="change-subjectName-input">Nhập tên môn

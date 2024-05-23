@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.HocSinh;
 import Model.Mon;
 
 public class SubjectDao {
@@ -113,12 +112,8 @@ public class SubjectDao {
 			while(rs.next()) {
 				currentSubjectName = rs.getString(2);
 				if (currentSubjectName.equalsIgnoreCase(nameSubjectOld.trim())) {
-					System.out.println("nameSubjectOld == currentSubjectName");
 					currentSubjectId = rs.getString(1);
 				}
-				
-				System.out.println("nameSubjectOld: " + nameSubjectOld.trim());
-				System.out.println("currentSubjectId: " + rs.getString(1));	
 			}
 
 			statement.setString(1, mon.getTenMH());
