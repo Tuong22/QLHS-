@@ -1,47 +1,48 @@
 package Model;
 
 public class Lop {
-	private String MaLop;
-	private String TenLop;
-	private int SiSo;
-	private String MaKhoi;
-	private String MaNH;
+	private String maLop;
+	private String tenLop;
+	private int siSo;
+	private String maKhoi;
+	private String maNH;
 	public Lop(String maLop, String tenLop, int siSo, String maKhoi, String maNH) {
-		MaLop = maLop;
-		TenLop = tenLop;
-		SiSo = siSo;
-		MaKhoi = maKhoi;
-		MaNH = maNH;
+		super();
+		this.maLop = maLop;
+		this.tenLop = tenLop;
+		this.siSo = siSo;
+		this.maKhoi = maKhoi;
+		this.maNH = maNH;
 	}
 	public String getMaLop() {
-		return MaLop;
+		return maLop;
 	}
 	public void setMaLop(String maLop) {
-		MaLop = maLop;
+		this.maLop = maLop;
 	}
 	public String getTenLop() {
-		return TenLop;
+		return tenLop;
 	}
 	public void setTenLop(String tenLop) {
-		TenLop = tenLop;
+		this.tenLop = tenLop;
 	}
 	public int getSiSo() {
-		return SiSo;
+		return siSo;
 	}
 	public void setSiSo(int siSo) {
-		SiSo = siSo;
+		this.siSo = siSo;
 	}
 	public String getMaKhoi() {
-		return MaKhoi;
+		return maKhoi;
 	}
 	public void setMaKhoi(String maKhoi) {
-		MaKhoi = maKhoi;
+		this.maKhoi = maKhoi;
 	}
 	public String getMaNH() {
-		return MaNH;
+		return maNH;
 	}
 	public void setMaNH(String maNH) {
-		MaNH = maNH;
+		this.maNH = maNH;
 	}
 	
 	

@@ -151,35 +151,10 @@ html {
     display: none;
 }
 
-.background-white {
-    background-color: #ffffff;
-    color: #333;
-    border: solid 1px #000;
-}
-
-.background-white:hover {
-    background-color:#f1f1f1;
-}
-
-.change-signin {
-    text-decoration: none;
-    color:#f33a58;
-    cursor: pointer;
-}
-
-.have-Account {
-    margin-top: 12px;
-}
-
 .user-icon,
 .key-icon {
     position: absolute;
     margin-left: 12px;
     margin-top: 12px;
     font-size: 12px;
-}
-
-.sign-up {
-    display: block;
-    text-decoration: none;
 }

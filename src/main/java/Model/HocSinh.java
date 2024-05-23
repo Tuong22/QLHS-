@@ -1,79 +1,56 @@
 package Model;
 
 public class HocSinh {
-	private String MaHS;
-	private String TenHS;
-	private String GioiTinh;
-	private int NamSinh;
-	private String DiaChi;
-	private String Email;
-	private String MaLop;
-	
-
-	public HocSinh(String maHS, String tenHS, String gioiTinh, int namSinh, String diaChi, String email, String maLop) {
-		MaHS = maHS;
-		TenHS = tenHS;
-		GioiTinh = gioiTinh;
-		NamSinh = namSinh;
-		DiaChi = diaChi;
-		Email = email;
-		setMaLop(maLop);
+	private String maHS;
+	private String tenHS;
+	private String gioiTinh;
+	private int namSinh;
+	private String diaChi;
+	private String email;
+	public HocSinh(String maHS, String tenHS, String gioiTinh, int namSinh, String diaChi, String email) {
+		super();
+		this.maHS = maHS;
+		this.tenHS = tenHS;
+		this.gioiTinh = gioiTinh;
+		this.namSinh = namSinh;
+		this.diaChi = diaChi;
+		this.email = email;
 	}
-
 	public String getMaHS() {
-		return MaHS;
+		return maHS;
 	}
-
 	public void setMaHS(String maHS) {
-		MaHS = maHS;
+		this.maHS = maHS;
 	}
-
 	public String getTenHS() {
-		return TenHS;
+		return tenHS;
 	}
-
 	public void setTenHS(String tenHS) {
-		TenHS = tenHS;
+		this.tenHS = tenHS;
 	}
-
 	public String getGioiTinh() {
-		return GioiTinh;
+		return gioiTinh;
 	}
-
 	public void setGioiTinh(String gioiTinh) {
-		GioiTinh = gioiTinh;
+		this.gioiTinh = gioiTinh;
 	}
-
 	public int getNamSinh() {
-		return NamSinh;
+		return namSinh;
 	}
-
 	public void setNamSinh(int namSinh) {
-		NamSinh = namSinh;
+		this.namSinh = namSinh;
 	}
-
 	public String getDiaChi() {
-		return DiaChi;
+		return diaChi;
 	}
-
 	public void setDiaChi(String diaChi) {
-		DiaChi = diaChi;
+		this.diaChi = diaChi;
 	}
-
 	public String getEmail() {
-		return Email;
+		return email;
 	}
-
 	public void setEmail(String email) {
-		Email = email;
-	}
-
-	public String getMaLop() {
-		return MaLop;
-	}
-
-	public void setMaLop(String maLop) {
-		MaLop = maLop;
+		this.email = email;
 	}
 	
 	

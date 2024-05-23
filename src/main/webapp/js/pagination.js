@@ -1,12 +1,14 @@
-/**
- * 
- */
+ 
 const datatablesInfoStudent = '#datatablesInfoStudent'
-const datatablesStatistical = '#datatablesStatistical'
+const datatablesClass = '#datatablesClass'
+const datatablesReport = '#datatablesReport'
+const datatablesSearchStudent = '#datatablesSearchStudent'
+const datatablesSubject = '#datatablesSubject'
+const datatablesPoint = '#datatablesPoint'
 
 function Pagination(tableNameID) {
   const table = $(`${tableNameID}`);
-  const rowsPerPage = 4;
+  const rowsPerPage = 6;
   let maxPageShow = 5;
 
   const totalRows = table.find('tr').length - 1;
@@ -120,3 +122,8 @@ function Pagination(tableNameID) {
 }
 
 Pagination(datatablesInfoStudent)
+Pagination(datatablesClass)
+Pagination(datatablesReport)
+Pagination(datatablesSearchStudent)
+Pagination(datatablesSubject)
+Pagination(datatablesPoint)
