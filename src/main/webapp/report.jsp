@@ -43,13 +43,14 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="./account.jsp" aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-user"></i>
+							<li class="sidebar-item mg-l-4"><a
+								class="sidebar-link" href="#" aria-expanded="false">
+									<span> <i class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./class.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/InfoClassServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
@@ -71,8 +72,9 @@
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./tablePoint.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-table"></i>
+								href="<%=request.getContextPath()%>/TablePointServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
@@ -126,7 +128,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">VanA@gmail.com</a>
+							<a href="" target="_blank">Admin</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">

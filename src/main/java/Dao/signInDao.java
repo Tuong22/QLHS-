@@ -9,15 +9,21 @@ import java.sql.SQLException;
 import Model.signIn;
 
 public class signInDao {
+	public static Connection getConnection() throws ClassNotFoundException {
+		Connection connection = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/QuanLyHocSinh", "root", "123456");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return connection;
+	}
+	
 	public boolean validate(signIn signInModel) throws ClassNotFoundException {
 		boolean status = false;
 
-		Class.forName("com.mysql.jdbc.Driver");
-
-		try (Connection connection = DriverManager
-				.getConnection("jdbc:mysql://localhost:3306/QuanLyHocSinh", "root", "123456");
-
-				// Step 2:Create a statement using connection object
+		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement("select * from signin where username = ? and password = ? ")) {
 			preparedStatement.setString(1, signInModel.getUsername());
@@ -28,25 +34,10 @@ public class signInDao {
 			status = rs.next();
 
 		} catch (SQLException e) {
-			// process sql exception
-			printSQLException(e);
+			e.printStackTrace();
 		}
 		return status;
 	}
 
-	private void printSQLException(SQLException ex) {
-		for (Throwable e : ex) {
-			if (e instanceof SQLException) {
-				e.printStackTrace(System.err);
-				System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-				System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-				System.err.println("Message: " + e.getMessage());
-				Throwable t = ex.getCause();
-				while (t != null) {
-					System.out.println("Cause: " + t);
-					t = t.getCause();
-				}
-			}
-		}
-	}
+
 }

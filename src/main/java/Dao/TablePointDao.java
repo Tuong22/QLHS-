@@ -52,11 +52,10 @@ public class TablePointDao {
 
 				BangDiem diem = new BangDiem(tenHS, diem15phut, diem1tiet, diemTB);
 				listPointStudent.add(diem);
-
-				preparedStatement.close();
-				rs.close();
-				connection.close();
 			}
+			preparedStatement.close();
+			rs.close();
+			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

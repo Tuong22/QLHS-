@@ -128,4 +128,32 @@ public class SubjectDao {
 			e.printStackTrace();
 		}
 	}
+	
+	public void deleteSubject(String nameSubject) throws ClassNotFoundException {
+		String SELECT_SUBJECT = "select * from mon";
+		String DELETE_SUBJECT = "delete from mon where MaMH = ?";
+		try (Connection connection = getConnection();
+				Statement stmt = connection.createStatement();
+				PreparedStatement statement = connection.prepareStatement(DELETE_SUBJECT);
+				ResultSet rs = stmt.executeQuery(SELECT_SUBJECT))
+				{
+			String currentSubjectName = "";
+			String currentSubjectId = "";
+			while(rs.next()) {
+				currentSubjectName = rs.getString(2);
+				if (currentSubjectName.equalsIgnoreCase(nameSubject.trim())) {
+					currentSubjectId = rs.getString(1);
+				}
+			}
+
+			statement.setString(1, currentSubjectId);
+				
+			statement.execute();
+
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

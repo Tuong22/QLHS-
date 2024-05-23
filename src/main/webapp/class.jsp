@@ -44,13 +44,14 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="./account.jsp" aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-user"></i>
+							<li class="sidebar-item mg-l-4"><a
+								class="sidebar-link" href="#" aria-expanded="false">
+									<span> <i class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link active"
-								href="#" aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link  active"
+								href="<%=request.getContextPath()%>/InfoClassServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
@@ -72,8 +73,9 @@
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./tablePoint.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-table"></i>
+								href="<%=request.getContextPath()%>/TablePointServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
@@ -127,7 +129,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">VanA@gmail.com</a>
+							<a href="" target="_blank">Admin</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -200,9 +202,11 @@
 													<c:forEach var="Lop" items="${DSTCK}">
 														<tr data-index="0">
 															<td><%=i++%></td>
-															<td class="className-edit">${Lop.tenKhoi}<i
-																class="className-edit-icon fa fa-solid fa-pen-to-square"></i>
-															</td>
+															<td class="className-edit">${Lop.tenKhoi}<span>
+																	<i
+																	class="className-edit-icon fa fa-solid fa-pen-to-square"></i>
+																	<i class="removeClass-icon fa fa-solid fa-trash-can"></i></td>
+															</span>
 															<td>${Lop.siSo}</td>
 														</tr>
 													</c:forEach>
@@ -245,6 +249,35 @@
 														class="btn btn-primary change-className-cancel-btn">Hủy</button>
 													<button type="submit"
 														class="btn btn-primary change-className-confirm-btn">Xác
+														nhận</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+
+								<div class="card-body remove-class hidden">
+									<div class="card">
+										<header class="remove-class-top">
+											<h5>Bạn có chắc chắn xóa lớp</h5>
+										</header>
+										<form action="<%=request.getContextPath()%>/InfoClassServlet">
+											<input type="hidden" name="action" value="/delete">
+											<div class="remove-class-container">
+
+												<div class="remove-class-group">
+													<input type="text" id="classNameRemove" name="nameRemove"
+														readonly>
+												</div>
+											</div>
+
+
+											<div class="remove-class-bottom">
+												<div class="remove-class-confirm">
+													<button type="button"
+														class="btn btn-primary remove-class-cancel-btn">Hủy</button>
+													<button type="submit"
+														class="btn btn-primary remove-class-confirm-btn">Xác
 														nhận</button>
 												</div>
 											</div>
@@ -422,7 +455,7 @@
 
 
 	<script src="./js/app.js"></script>
-	<script src="./js/editClassName.js"></script>
+	<script src="./js/classHandle.js"></script>
 	<script src="./js/pagination.js"></script>
 	<script src="./js/modalAddClass.js"></script>
 	<script src="./js/modalListStudent.js"></script>

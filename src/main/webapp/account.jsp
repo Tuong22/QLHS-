@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,19 +46,20 @@
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./class.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/InfoClassServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-graduation-cap"></i>
+								href="<%=request.getContextPath()%>/InfoStudentsServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/InfoStudentsServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-magnifying-glass"></i>
+								href="./searchStudent.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -67,8 +69,9 @@
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./tablePoint.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-table"></i>
+								href="<%=request.getContextPath()%>/TablePointServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
@@ -122,7 +125,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">VanA@gmail.com</a>
+							<a href="" target="_blank">Admin</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -146,11 +149,12 @@
 
 							<div class="spacer"></div>
 
+
 							<div class="account-info-group">
 								<label><i class="account-icon fa-solid fa-user"></i>Tên
 									tài khoản: </label>
 								<div class="account-name">
-									<p class="account-info-text">Van A</p>
+									<p class="account-info-text">admin</p>
 								</div>
 
 							</div>
@@ -159,8 +163,8 @@
 								<label><i class="account-icon fa-solid fa-key"></i>Mật
 									khẩu: </label>
 								<div class="account-pass">
-									<p class="account-info-text account-pass-text__hide">*******</p>
-									<p class="account-info-text account-pass-text__show hidden">123456</p>
+									<p class="account-info-text account-pass-text__hide">*****</p>
+									<p class="account-info-text account-pass-text__show hidden">admin</p>
 									<div class="pass-selection">
 										<i class="show-pass fa-solid fa-eye"></i> <i
 											class="hide-pass fa-solid fa-eye-slash hidden"></i> <i
@@ -168,20 +172,12 @@
 									</div>
 								</div>
 							</div>
-
-							<div class="account-info-group">
-								<label><i class="account-icon fa-solid fa-envelope"></i>Email:
-								</label>
-								<div class="account-pass">
-									<p class="account-info-text">KienTuong@gmail.com</p>
-								</div>
-							</div>
 						</div>
 
 
 						<footer class="account-info-footer">
 							<span>Last update: </span>
-							<p class="account-last-update">__/__/____</p>
+							<p class="account-last-update">24/05/2024</p>
 						</footer>
 					</div>
 

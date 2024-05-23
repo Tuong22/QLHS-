@@ -101,4 +101,32 @@ public class InfoClassDao {
 			e.printStackTrace();
 		}
 	}
+	
+	public void deleteClass(String nameClass) throws ClassNotFoundException {
+		String SELECT_CLASS = "select * from lop";
+		String DELETE_CLASS = "delete from lop where MaLop = ?";
+		try (Connection connection = getConnection();
+				Statement stmt = connection.createStatement();
+				PreparedStatement statement = connection.prepareStatement(DELETE_CLASS);
+				ResultSet rs = stmt.executeQuery(SELECT_CLASS))
+				{
+			String currentClassName = "";
+			String currentClassId = "";
+			while(rs.next()) {
+				currentClassName = rs.getString(2);
+				if (currentClassName.equalsIgnoreCase(nameClass.trim())) {
+					currentClassId = rs.getString(1);
+				}
+			}
+
+			statement.setString(1, currentClassId);
+				
+			statement.execute();
+
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

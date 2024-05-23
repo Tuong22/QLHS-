@@ -40,13 +40,14 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="./account.jsp" aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-user"></i>
+							<li class="sidebar-item mg-l-4"><a
+								class="sidebar-link" href="#" aria-expanded="false">
+									<span> <i class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./class.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/InfoClassServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
@@ -68,8 +69,9 @@
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./tablePoint.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-table"></i>
+								href="<%=request.getContextPath()%>/TablePointServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
@@ -80,8 +82,8 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link active"
-								href="#" aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-gear"></i>
+								href="./changeRule.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
@@ -123,7 +125,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">VanA@gmail.com</a>
+							<a href="" target="_blank">Admin</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -153,11 +155,7 @@
 												thiểu, tuổi tối đa</option>
 											<option value="QD2">Quy định 2: Thay đổi sỉ số tối
 												đa của các lớp</option>
-											<option value="QD3">Quy định 3: Thay đổi số lượng
-												lớp trong trường</option>
-											<option value="QD4">Quy định 4: Thay đổi số lượng
-												các môn học</option>
-											<option value="QD5">Quy định 5: Thay đổi điểm đạt
+											<option value="QD3">Quy định 3: Thay đổi điểm đạt
 												môn</option>
 										</select>
 									</div>
@@ -223,56 +221,6 @@
 										</div>
 
 										<div id="QD3" class="rule">
-											<div class="card">
-												<header class="change-rule-top">
-													<h5>Thay đổi số lượng lớp trong trường</h5>
-												</header>
-
-												<div class="change-rule-container">
-													<div class="change-rule-group rule3-max-number">
-														<label for="max-number-of-class">Nhập số lượng
-															lớp:</label> <input type="text" id="max-number-of-class"
-															placeholder="Số lượng lớp">
-													</div>
-												</div>
-
-
-												<div class="change-rule-bottom">
-													<div class="change-rule-confirm">
-														<button class="btn btn-primary change-rule-cancel-btn">Hủy</button>
-														<button class="btn btn-primary change-rule-confirm-btn">Xác
-															nhận</button>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div id="QD4" class="rule">
-											<div class="card">
-												<header class="change-rule-top">
-													<h5>Thay đổi số lượng các môn học</h5>
-												</header>
-
-												<div class="change-rule-container">
-													<div class="change-rule-group rule4-max-number">
-														<label for="max-number-of-subject">Nhập số lượng
-															các môn học:</label> <input type="text"
-															id="max-number-of-subject" placeholder="Số lượng môn học">
-													</div>
-												</div>
-
-
-												<div class="change-rule-bottom">
-													<div class="change-rule-confirm">
-														<button class="btn btn-primary change-rule-cancel-btn">Hủy</button>
-														<button class="btn btn-primary change-rule-confirm-btn">Xác
-															nhận</button>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div id="QD5" class="rule">
 											<div class="card">
 												<header class="change-rule-top">
 													<h5>Thay đổi điểm đạt môn</h5>

@@ -41,6 +41,11 @@ public class ReportServlet extends HttpServlet {
 			}
 			break;
 		default:
+			try {
+				selectReport(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+				e.printStackTrace();
+			}
 			break;
 		}
 	}
@@ -53,6 +58,9 @@ public class ReportServlet extends HttpServlet {
 		String tenHK1 = request.getParameter("search-semester1");
 		String tenHK2 = request.getParameter("search-semester2");
 		String HK;
+		if (reportType == null) {
+			reportType = "";
+		}
 		if (!(tenHK1 == "")) {
 			HK = tenHK1;
 		} else {

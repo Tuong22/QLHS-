@@ -46,6 +46,14 @@ public class SubjectServlet extends HttpServlet {
 				e.printStackTrace();
 			} 
 			break;
+		case "/delete":
+			try {
+				deleteSubject(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			break;
 		default:
 			try {
 				render(request, response);
@@ -88,6 +96,13 @@ public class SubjectServlet extends HttpServlet {
 		int numberSubject =Integer.parseInt(request.getParameter("number"));
 		Mon mon = new Mon(null, nameSubject,numberSubject);
 		subjectDao.updateSubject(mon, nameSubjectOld);
+		response.sendRedirect(request.getContextPath() + "/SubjectServlet");
+	}
+	
+	private void deleteSubject(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException {
+		String nameSubject = request.getParameter("nameRemove");
+		subjectDao.deleteSubject(nameSubject);
 		response.sendRedirect(request.getContextPath() + "/SubjectServlet");
 	}
 }

@@ -283,7 +283,9 @@ tbody, td, tfoot, th, thead, tr {
 }
 
 .subjectName-edit .subjectName-edit-icon:hover,
-.className-edit .className-edit-icon:hover {
+.subjectName-edit .removeSubject-icon:hover,
+.className-edit .className-edit-icon:hover,
+.className-edit .removeClass-icon:hover {
 	color: #40E9C0;
 	cursor: pointer;
 }
@@ -299,7 +301,9 @@ tbody, td, tfoot, th, thead, tr {
 }
 
 .card-body.change-subjectName,
-.card-body.change-className {
+.card-body.change-className,
+.card-body.remove-class,
+.card-body.remove-subject {
 	width: 50%;
 	animation: scale 0.3s ease-in-out;
 }
@@ -316,17 +320,23 @@ tbody, td, tfoot, th, thead, tr {
 }
 
 .card-body.change-subjectName .card,
-.card-body.change-className .card {
+.card-body.change-className .card,
+.card-body.remove-class .card,
+.card-body.remove-subject .card {
 	padding: 20px;
 }
 
 .change-subjectName-top,
-.change-className-top {
+.change-className-top,
+.remove-class-top,
+.remove-subject-top {
 	text-align: center;
 }
 
 .change-subjectName-container,
-.change-className-container {
+.change-className-container,
+.remove-class-container,
+.remove-subject-container {
 	margin: 12px 0;
 }
 
@@ -338,7 +348,9 @@ tbody, td, tfoot, th, thead, tr {
 
 
 .change-subjectName-confirm,
-.change-className-confirm {
+.change-className-confirm,
+.remove-class-confirm,
+.remove-subject-confirm {
 	display: flex;
 	justify-content: space-between;
 }
@@ -4679,6 +4691,8 @@ ul {
 	padding: 30px;
 }
 
+.remove-class-group,
+.remove-subject-group,
 .change-className-group,
 .change-rule-group {
 	display: flex;
@@ -4686,12 +4700,17 @@ ul {
 	margin-bottom: 18px;
 }
 
+.remove-class-group label,
+.remove-subject-group label,
 .change-className-group label,
 .change-rule-group label {
 	margin-bottom: 6px;
 }
 
+.remove-class-group input,
+.remove-subject-group input,
 .change-className-group input,
+.change-subjectName-group input,
 .change-rule-group input {
 	padding: 6px;
 }

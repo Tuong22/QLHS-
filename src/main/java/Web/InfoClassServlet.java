@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import Dao.InfoClassDao;
 import Model.Lop;
-import Model.Mon;
 import Model.TraCuuKhoi;
 
 @WebServlet("/InfoClassServlet")
@@ -43,7 +42,15 @@ public class InfoClassServlet extends HttpServlet {
 			break;
 		case "/update":
 			try {
-				updateSubject(request, response);
+				updateClass(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			break;
+		case "/delete":
+			try {
+				deleteClass(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -77,13 +84,20 @@ public class InfoClassServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	
-	private void updateSubject(HttpServletRequest request, HttpServletResponse response) 
+	private void updateClass(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException {
 		String nameClassOld = request.getParameter("nameOld");
 		String nameClass = request.getParameter("name");
 		int numberOfStudent =Integer.parseInt(request.getParameter("number"));
 		Lop lop = new Lop(null, nameClass, numberOfStudent, null, null);
 		infoClassDao.updateClass(lop, nameClassOld);
+		response.sendRedirect(request.getContextPath() + "/InfoClassServlet");
+	}
+	
+	private void deleteClass(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException {
+		String nameClass = request.getParameter("nameRemove");
+		infoClassDao.deleteClass(nameClass);
 		response.sendRedirect(request.getContextPath() + "/InfoClassServlet");
 	}
 }

@@ -33,7 +33,6 @@ public class SignInServlet extends HttpServlet {
 			if (signInDao.validate(signInModel)) {
 				response.sendRedirect("account.jsp");
 			} else {
-				HttpSession session = request.getSession();
 				response.sendRedirect("signIn.jsp");
 			}
 		} catch (ClassNotFoundException e) {
@@ -41,4 +40,5 @@ public class SignInServlet extends HttpServlet {
 		}
 	}
 
+	
 }
