@@ -21,8 +21,10 @@ import javax.sql.DataSource;
 
 import Dao.infoClassDao;
 import Model.Lop;
+import Model.Mon;
 import Model.TraCuuHocSinh;
 import Model.TraCuuKhoi;
+import Model.updateLop;
 
 @WebServlet("/infoClassServlet")
 public class infoClassServlet extends HttpServlet {
@@ -52,6 +54,13 @@ public class infoClassServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			break;
+		case "/update":
+            try {
+                updateClass(request, response);
+            } catch (ClassNotFoundException | ServletException | IOException e) {
+                e.printStackTrace();
+            }
+            break;
 		default:
 			try {
 				render(request, response);
@@ -78,5 +87,14 @@ public class infoClassServlet extends HttpServlet {
 		request.setAttribute("DSTCK", DSK);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("class.jsp");
 		dispatcher.forward(request, response);
+	}
+	
+	private void updateClass(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException {
+		String nameClassOld = request.getParameter("nameOld");
+		String nameClass = request.getParameter("name");
+		updateLop l = new updateLop(null, nameClass);
+		InfoClassDao.updateClass(l, nameClassOld);
+		response.sendRedirect(request.getContextPath() + "/InfoClassServlet");
 	}
 }

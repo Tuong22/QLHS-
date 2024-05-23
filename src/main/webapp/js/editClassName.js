@@ -1,6 +1,3 @@
-/**
- * 
- */
 const editBtns = document.querySelectorAll(".className-edit-icon")
 const classNameEdits = document.querySelectorAll(".className-edit")
 const classListData = document.querySelector(".card-body.class-list-data")
@@ -19,6 +16,8 @@ editBtns.forEach(function(editBtn) {
 		editBtn.parentElement.classList.add("active")
 		searchClassBtn.setAttribute("disabled", "")
 		addClassBtn.setAttribute("disabled", "")
+		var currentClassName =  editClassNameBtn.parentElement.textContent
+		document.getElementById("classNameOld").setAttribute("value", currentClassName)
 	})
 });
 

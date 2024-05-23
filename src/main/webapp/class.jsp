@@ -17,9 +17,7 @@
 
 </head>
 <body>
-	<%
-	int i = 1;
-	%>
+	<%	int i = 1;%>
 	<!--  Body Wrapper -->
 	<div class="page-wrapper" id="main-wrapper" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
@@ -155,8 +153,6 @@
 											<form action="<%=request.getContextPath()%>/infoClassServlet">
 												<input type="hidden" name="action" value="/searchByKhoi">
 												<div class="datatable-selection">
-
-
 													<div id="class-semester" class="class-semester-selection">
 														<label for="search-khoi">Khối: </label> <select id="search-khoi" name="search-khoi">
 															<option></option>
@@ -215,23 +211,32 @@
 										<header class="change-className-top">
 											<h5>Thay đổi tên lớp</h5>
 										</header>
-
+										<form
+											action="<%=request.getContextPath()%>/infoClassServlet">
+											
+											<input type="hidden" name="action" value="/update" />
 										<div class="change-className-container">
+										<div class="change-subjectName-group">
+													<label for="classNameOld">Tên lớp
+														thay đổi:</label> <input type="text" id="classNameOld"
+														name="nameOld" readonly>
+												</div>
 											<div class="change-className-group">
 												<label for="change-className-input">Nhập tên lớp
 													mới:</label> <input type="text" id="change-className-input"
-													placeholder="Tên lớp mới">
+													placeholder="Tên lớp mới" name="name">
 											</div>
 										</div>
 
 
 										<div class="change-className-bottom">
 											<div class="change-className-confirm">
-												<button class="btn btn-primary change-className-cancel-btn">Hủy</button>
-												<button class="btn btn-primary change-className-confirm-btn">Xác
+												<button type = "button" class="btn btn-primary change-className-cancel-btn">Hủy</button>
+												<button type = "submit" class="btn btn-primary change-className-confirm-btn">Xác
 													nhận</button>
 											</div>
 										</div>
+										</form>
 									</div>
 								</div>
 							</div>

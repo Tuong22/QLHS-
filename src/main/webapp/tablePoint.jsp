@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +17,9 @@
 
 </head>
 <body>
+	<%
+	int i = 1;
+	%>
 	<!--  Body Wrapper -->
 	<div class="page-wrapper" id="main-wrapper" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
@@ -44,40 +49,40 @@
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./class.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./class.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./infoStudent.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-graduation-cap"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./infoStudent.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./searchStudent.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-magnifying-glass"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./searchStudent.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./subject.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./subject.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link active" href="#"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-table"></i>
+							<li class="sidebar-item"><a class="sidebar-link active"
+								href="./tablePoint.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
-							<li class="sidebar-item"><a class="sidebar-link" href="./report.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./report.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./changeRule.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-gear"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./changeRule.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
@@ -141,43 +146,47 @@
 								<i class="fas fa-table me-1"></i> Bảng điểm môn
 							</div>
 							<div class="card-body">
-								<div
-									class="datatable-wrapper">
+								<div class="datatable-wrapper">
 									<div class="datatable-top">
-										<div class="datatable-selection">
-											<div class="">
-												<label>Lớp: </label> <input class="" placeholder="..."
-													type="text">
+										<form action="<%=request.getContextPath()%>/tablePointServlet">
+											<input type="hidden" name="action" value="/pointStudent">
+											<div class="datatable-selection">
+												<div class="">
+													<label>Lớp: </label> <input class="" placeholder="Tên lớp"
+														type="text" name="search-lop">
+												</div>
+
+												<div class="">
+													<label>Học kỳ: </label> <select id="search-hk"
+														name="search-hk">
+														<option>1</option>
+														<option>2</option>
+													</select>
+												</div>
+
+												<div class="">
+													<label>Môn: </label> <select id="search-mon"
+														name="search-mon">
+														<option>Toán</option>
+														<option>Văn</option>
+														<option>Đạo đức</option>
+														<option>Sinh</option>
+														<option>Sử</option>
+														<option>Địa</option>
+														<option>Lý</option>
+														<option>Hóa</option>
+														<option>Thể dục</option>
+													</select>
+												</div>
+
 											</div>
 
-											<div class="">
-												<label>Học kỳ: </label> <select>
-													<option>1</option>
-													<option>2</option>
-												</select>
+
+											<div class="search-point">
+												<button type="submit"
+													class="btn btn-primary search-point-btn">Tìm kiếm</button>
 											</div>
-
-											<div class="">
-												<label>Môn: </label> <select>
-													<option>Toán</option>
-													<option>Văn</option>
-													<option>Đạo đức</option>
-													<option>Sinh</option>
-													<option>Sử</option>
-													<option>Địa</option>
-													<option>Lý</option>
-													<option>Hóa</option>
-													<option>Thể dục</option>
-												</select>
-											</div>
-
-										</div>
-
-
-										<div class="search-point">
-											<button class="btn btn-primary search-point-btn">Tìm
-												kiếm</button>
-										</div>
+										</form>
 
 									</div>
 									<div class="datatable-container">
@@ -198,13 +207,15 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr data-index="0">
-													<td>1</td>
-													<td>Technical Author</td>
-													<td>Nam</td>
-													<td>123 quan hoa</td>
-													<td>vanA@gmail.com</td>
-												</tr>
+												<c:forEach var="point" items="${DSD}">
+													<tr data-index="0">
+														<td><%=i++%></td>
+														<td>${point.tenHS}</td>
+														<td>${point.muoiLamPhut}</td>
+														<td>${point.motTiet}</td>
+														<td>${point.tbMon}</td>
+													</tr>
+												</c:forEach>
 											</tbody>
 										</table>
 									</div>

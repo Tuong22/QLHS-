@@ -12,8 +12,10 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import Model.Lop;
+import Model.Mon;
 import Model.TraCuuHocSinh;
 import Model.TraCuuKhoi;
+import Model.updateLop;
 
 public class infoClassDao {
 	
@@ -65,5 +67,32 @@ public class infoClassDao {
 			e.printStackTrace();
 		}
 		return listNameKhoi;
+	}
+	
+	public void updateClass(updateLop nameClass, String nameClassOld) throws ClassNotFoundException {
+		String SELECT_CLASS = "select * from lop";
+		String UPDATE_CLASS = "update mon set TenLop = ? where MaLop = ?";
+		try (Connection connection = datasource.getConnection();
+				Statement stmt = connection.createStatement();
+				PreparedStatement statement = connection.prepareStatement(UPDATE_CLASS);
+				ResultSet rs = stmt.executeQuery(SELECT_CLASS))
+				{
+			String currentClassName = "";
+			String currentClassId = "";
+			while(rs.next()) {
+				currentClassName = rs.getString(2);
+				if (currentClassName.equalsIgnoreCase(nameClassOld.trim())) {
+					currentClassId = rs.getString(1);
+				}
+			}
+			statement.setString(1, nameClass.getTenLop());
+			statement.setString(2, currentClassId);	
+			statement.execute();
+
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
