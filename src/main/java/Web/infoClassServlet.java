@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import Dao.infoClassDao;
+import Model.HocSinh;
 import Model.Lop;
 import Model.Mon;
 import Model.TraCuuHocSinh;
@@ -54,6 +55,15 @@ public class infoClassServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			break;
+			
+		case "/insert":
+			try {
+				insertClass(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
+				e.printStackTrace();
+			} 
+			break;
+			
 		case "/update":
             try {
                 updateClass(request, response);
@@ -61,6 +71,16 @@ public class infoClassServlet extends HttpServlet {
                 e.printStackTrace();
             }
             break;
+            
+		case "/delete":
+			try {
+				deleteClass(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			break;
+			
 		default:
 			try {
 				render(request, response);
@@ -80,11 +100,21 @@ public class infoClassServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	
+	private void insertClass(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException {
+		String nameClass = request.getParameter("newClassName");
+		String num = request.getParameter("newNumber");
+		Lop m = new Lop(null, nameClass, Integer.parseInt(num), null, null);
+		InfoClassDao.insertClass(m);
+		response.sendRedirect(request.getContextPath() + "/infoClassServlet");
+	}
+	
 	private void selectKhoi(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String tenKhoi = request.getParameter("search-khoi");
 		List<TraCuuKhoi> DSK = InfoClassDao.selectKhoi(tenKhoi);
 		request.setAttribute("DSTCK", DSK);
+		request.setAttribute("nameKhoi", tenKhoi);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("class.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -93,8 +123,23 @@ public class infoClassServlet extends HttpServlet {
 			throws ServletException, IOException, ClassNotFoundException {
 		String nameClassOld = request.getParameter("nameOld");
 		String nameClass = request.getParameter("name");
-		updateLop l = new updateLop(null, nameClass);
-		InfoClassDao.updateClass(l, nameClassOld);
-		response.sendRedirect(request.getContextPath() + "/InfoClassServlet");
+		int numberOfStudent =Integer.parseInt(request.getParameter("number"));
+		Lop lop = new Lop(null, nameClass, numberOfStudent, null, null);
+		InfoClassDao.updateClass(lop, nameClassOld);
+		response.sendRedirect(request.getContextPath() + "/infoClassServlet");
+	}
+	
+	private void deleteClass(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException {
+		String nameClass = request.getParameter("nameRemove");
+		boolean isvalid = InfoClassDao.checkDeleteClass(nameClass);
+		
+		if (isvalid) {
+			InfoClassDao.deleteClass(nameClass);
+	        response.sendRedirect(request.getContextPath() + "/infoClassServlet");
+	    } else {
+	        request.setAttribute("messageerror", "Không thể xóa lớp đang học.");
+	        request.getRequestDispatcher("/class.jsp").forward(request, response);
+	    }
 	}
 }

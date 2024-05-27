@@ -13,24 +13,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import Dao.ReportDao;
 import Dao.infoClassDao;
-import Dao.tablePointDao;
-import Model.TraCuuKhoi;
-import Model.tablePointSubjectClass;
+import Model.TraCuuBaoCao;
 
-@WebServlet("/tablePointServlet")
-public class tablePointServlet extends HttpServlet {
+
+@WebServlet("/ReportServlet")
+public class ReportServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private tablePointDao TablePointDao;
+       
+	private ReportDao reportDao;
+
 	@Resource(name="jdbc/student_management")
 	private DataSource datasource;
-       
+	
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		TablePointDao = new tablePointDao(datasource);
+		reportDao = new ReportDao(datasource);
 	}
+
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -39,49 +41,46 @@ public class tablePointServlet extends HttpServlet {
 			action = "list";
 		}
 		switch (action) {
-		case "/pointStudent":
+		case "/searchReport":
 			try {
-				selectPoint(request, response);
+				selectReport(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
 				e.printStackTrace();
 			}
 			break;
 		default:
 			try {
-				selectPoint(request, response);
+				selectReport(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
 				e.printStackTrace();
 			}
 			break;
 		}
-		
 	}
 	
-	private void selectPoint(HttpServletRequest request, HttpServletResponse response) 
+	
+	private void selectReport(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
-		String tenLop = request.getParameter("search-lop");
-		String hocKy = request.getParameter("search-hk");
-		String tenMon = request.getParameter("search-mon");
-		if(tenLop==null) {
-			tenLop = "";
+		String reportType = request.getParameter("report-type");
+		String tenMon = request.getParameter("search-subject");
+		String tenHK1 = request.getParameter("search-semester1");
+		String tenHK2 = request.getParameter("search-semester2");
+		String HK;
+		if (reportType == null) {
+			reportType = "";
 		}
-		if(hocKy == null) {
-			hocKy = "1";
+		if (!(tenHK1 == "")) {
+			HK = tenHK1;
+		} else {
+			HK = tenHK2;
 		}
-		if(tenMon == null) {
-			tenMon = "";
-		}	
-		List<tablePointSubjectClass> DSD = TablePointDao.selectPoint(tenLop, Integer.parseInt(hocKy), tenMon);
-		request.setAttribute("DSD", DSD);
-		request.setAttribute("nameLop", tenLop);
-		request.setAttribute("nameHocKy", hocKy);
+		List<TraCuuBaoCao> DSTCBC = reportDao.selectReport(reportType, tenMon, HK);
+		request.setAttribute("DSTCBC", DSTCBC);
+		request.setAttribute("typeReport", reportType);
 		request.setAttribute("nameMon", tenMon);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/tablePoint.jsp");
+		request.setAttribute("hocKy1", tenHK1);
+		request.setAttribute("hocKy2", tenHK2);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("report.jsp");
 		dispatcher.forward(request, response);
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-
 }

@@ -1,3 +1,4 @@
+
 const editSubjectNameBtns = document.querySelectorAll(".subjectName-edit-icon")
 const subjectNameEdits = document.querySelectorAll(".subjectName-edit")
 const subjectListData = document.querySelector(".card-body.subject-list-data")

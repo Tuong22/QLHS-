@@ -16,8 +16,10 @@
 <style <%@ include file="./css/style.css" %>></style>
 
 </head>
-<body>
-	<%	int i = 1;%>
+<body style="background-color: #484848">
+	<%
+	int i = 1;
+	%>
 	<!--  Body Wrapper -->
 	<div class="page-wrapper" id="main-wrapper" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
@@ -43,11 +45,11 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="./account.jsp" aria-expanded="false"> <span> <i
+								href="#" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link active"
+							<li class="sidebar-item"><a class="sidebar-link  active"
 								href="<%=request.getContextPath()%>/infoClassServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
@@ -65,18 +67,21 @@
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./subject.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/InfoSubjectServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./tablePoint.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-table"></i>
+								href="<%=request.getContextPath()%>/tablePointServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./report.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/ReportServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
@@ -124,7 +129,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">VanA@gmail.com</a>
+							<a href="" target="_blank">Admin</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -149,28 +154,49 @@
 							<div class="class-list-wrap">
 								<div class="card-body class-list-data">
 									<div class="datatable-wrapper">
+										<c:if test="${not empty requestScope.messageerror}">
+											<div class="alert alert-danger">${requestScope.messageerror}</div>
+										</c:if>
 										<div class="datatable-top">
-											<form action="<%=request.getContextPath()%>/infoClassServlet">
+
+											<form class="d-flex flex-row justify-content-between"
+												action="<%=request.getContextPath()%>/infoClassServlet">
 												<input type="hidden" name="action" value="/searchByKhoi">
 												<div class="datatable-selection">
+
+
 													<div id="class-semester" class="class-semester-selection">
-														<label for="search-khoi">Khối: </label> <select id="search-khoi" name="search-khoi">
+														<label for="search-khoi">Khối: </label> <select
+															id="search-khoi" name="search-khoi">
 															<option></option>
-															<option>Khối 10</option>
-															<option>Khối 11</option>
-															<option>Khối 12</option>
+															<option
+																<c:if test="${nameKhoi == 'Khối 10'}">selected</c:if>>Khối
+																10</option>
+															<option
+																<c:if test="${nameKhoi == 'Khối 11'}">selected</c:if>>Khối
+																11</option>
+															<option
+																<c:if test="${nameKhoi == 'Khối 12'}">selected</c:if>>Khối
+																12</option>
 														</select>
 													</div>
+													<button type="submit"
+														class="btn btn-primary search-class-btn mt-2">Tìm
+														kiếm</button>
 
 												</div>
 
 
-												<div class="search-class">
-													<button  type="submit" class="btn btn-primary search-class-btn">Tìm
-														kiếm</button>
+												<div class="add-class">
+													<button type="button"
+														class="btn btn-primary add-class-btn mt-4">Thêm
+														lớp</button>
+														
+													<button type="button" class="btn btn-primary list-of-class-btn mt-4">
+													<a href="<%=request.getContextPath()%>/listStudentOfClass.jsp"> Xem danh sách học sinh</a>
+													</button>
 												</div>
 											</form>
-
 										</div>
 										<div class="datatable-container">
 											<table id="datatablesClass" class="datatable-table">
@@ -186,12 +212,16 @@
 													</tr>
 												</thead>
 												<tbody>
+
 													<c:forEach var="Lop" items="${DSTCK}">
 														<tr data-index="0">
 															<td><%=i++%></td>
-															<td class="className-edit">${Lop.tenKhoi}<i
-																class="className-edit-icon fa fa-solid fa-pen-to-square"></i>
-															</td>
+															<td class="className-edit">${Lop.tenKhoi}<span>
+																	
+																		 <i
+																	class="className-edit-icon fa fa-solid fa-pen-to-square"></i>
+																	<i class="removeClass-icon fa fa-solid fa-trash-can"></i></td>
+															</span>
 															<td>${Lop.siSo}</td>
 														</tr>
 													</c:forEach>
@@ -199,43 +229,77 @@
 												</tbody>
 											</table>
 										</div>
-										<div class="datatablefooter justify-content-end ">
-											<button class="btn btn-primary add-class-btn">Thêm
-												lớp</button>
-										</div>
 									</div>
 								</div>
+
+
+
+
 
 								<div class="card-body change-className hidden">
 									<div class="card">
 										<header class="change-className-top">
 											<h5>Thay đổi tên lớp</h5>
 										</header>
-										<form
-											action="<%=request.getContextPath()%>/infoClassServlet">
-											
-											<input type="hidden" name="action" value="/update" />
-										<div class="change-className-container">
-										<div class="change-subjectName-group">
-													<label for="classNameOld">Tên lớp
-														thay đổi:</label> <input type="text" id="classNameOld"
-														name="nameOld" readonly>
+										<form action="<%=request.getContextPath()%>/infoClassServlet">
+											<input type="hidden" name="action" value="/update">
+											<div class="change-className-container">
+
+												<div class="change-className-group">
+													<label for="classNameOld">Tên lớp thay đổi:</label> <input
+														type="text" id="classNameOld" name="nameOld" readonly>
 												</div>
-											<div class="change-className-group">
-												<label for="change-className-input">Nhập tên lớp
-													mới:</label> <input type="text" id="change-className-input"
-													placeholder="Tên lớp mới" name="name">
+												<div class="change-className-group">
+													<label for="change-className-input">Nhập tên lớp
+														mới:</label> <input type="text" id="change-className-input"
+														placeholder="Tên lớp mới" name="name">
+												</div>
+												<div class="change-className-group">
+													<label for="numberOfSubject-input">Nhập sỉ số:</label> <input
+														type="text" id="numberOfSubject-input" placeholder="Sỉ số"
+														name="number">
+												</div>
 											</div>
-										</div>
 
 
-										<div class="change-className-bottom">
-											<div class="change-className-confirm">
-												<button type = "button" class="btn btn-primary change-className-cancel-btn">Hủy</button>
-												<button type = "submit" class="btn btn-primary change-className-confirm-btn">Xác
-													nhận</button>
+											<div class="change-className-bottom">
+												<div class="change-className-confirm">
+													<button type="button"
+														class="btn btn-primary change-className-cancel-btn">Hủy</button>
+													<button type="submit"
+														class="btn btn-primary change-className-confirm-btn">Xác
+														nhận</button>
+												</div>
 											</div>
-										</div>
+										</form>
+									</div>
+								</div>
+
+								<div class="card-body remove-class hidden">
+									<div class="card">
+										<header class="remove-class-top">
+											<h5>Bạn có chắc chắn xóa lớp</h5>
+										</header>
+										<form action="<%=request.getContextPath()%>/infoClassServlet">
+											<input type="hidden" name="action" value="/delete">
+											<div class="remove-class-container">
+
+												<div class="remove-class-group">
+													<input type="text" id="classNameRemove" name="nameRemove"
+														readonly>
+												</div>
+											</div>
+
+
+											<div class="remove-class-bottom">
+												<div class="remove-class-confirm">
+													<button type="button"
+														class="btn btn-primary remove-class-cancel-btn">Hủy</button>
+													<button type="submit"
+														class="btn btn-primary remove-class-confirm-btn">Xác
+														nhận</button>
+												</div>
+											</div>
 										</form>
 									</div>
 								</div>
@@ -247,74 +311,7 @@
 			</div>
 			<!-- Class end -->
 
-			<!-- List student of class start -->
-			<div id="list-student-of-class"
-				class="container-fluid list-student-of-class hidden">
-				<div class="row">
-					<div class="align-items-stretch">
-						<div class="card">
-							<div class="card-header">
-								<i class="fas fa-table me-1"></i> Danh sách học sinh lớp
-							</div>
 
-							<div class="list-student-wrap">
-								<div class="card-body">
-									<div class="datatable-wrapper">
-										<div class="datatable-top">
-											<div class="datatable-top-group">
-												<p>Lớp:</p>
-												<p class="class-value">...</p>
-											</div>
-
-											<div class="datatable-top-group">
-												<p>Sỉ số:</p>
-												<p class="number-of-student-value">...</p>
-											</div>
-										</div>
-										<div class="datatable-container">
-											<table id="datatablesListStudent" class="datatable-table">
-												<thead>
-													<tr>
-														<th data-sortable="true" style="width: 10%;"><a
-															href="#" class="datatable-sorter">STT</a></th>
-														<th data-sortable="true" aria-sort="descending"
-															class="datatable-descending" style="width: 30%;"><a
-															href="#" class="datatable-sorter">Họ tên</a></th>
-														<th data-sortable="true" style="width: 10%;"><a
-															href="#" class="datatable-sorter">Giới Tính</a></th>
-														<th data-sortable="true" style="width: 15%;"><a
-															href="#" class="datatable-sorter">Ngày sinh</a></th>
-														<th data-sortable="true" style="width: 35%;"><a
-															href="#" class="datatable-sorter">Địa chỉ</a></th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr data-index="0">
-														<td>1</td>
-														<td>Technical Author</td>
-														<td>Nam</td>
-														<td>123 quan hoa</td>
-														<td>vanA@gmail.com</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<div class="datatablefooter justify-content-between">
-											<button
-												class="btn btn-primary list-student-of-class-cancel-btn">Hủy</button>
-											<button
-												class="btn btn-primary list-student-of-class-confirm-btn">Xác
-												nhận</button>
-										</div>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- List student of class end -->
 
 		</div>
 		<!--  Main wrapper -->
@@ -330,89 +327,44 @@
 			</div>
 
 			<header class="modal-header"> Thêm lớp mới </header>
+			<form action="<%=request.getContextPath()%>/infoClassServlet">
+				<input type="hidden" name="action" value="/insert">
 
-			<div class="modal-body">
-				<div class="model-input-item">
-					<label for="new-class" class="modal-label">Tên lớp:</label> <input
-						type="text" id="new-class" class="modal-input"
-						placeholder="Tên lớp">
+				<div class="modal-body">
+					<div class="model-input-item">
+						<label for="new-class" class="modal-label">Tên lớp:</label> <input
+							type="text" id="new-class" class="modal-input"
+							placeholder="Tên lớp" name="newClassName">
+					</div>
+
+
+					<div class="model-input-item">
+						<label for="number-of-student" class="modal-label">Sỉ số:</label>
+						<input type="text" id="number-of-student" class="modal-input"
+							placeholder="Sỉ số" name="newNumber">
+					</div>
+
 				</div>
 
-
-				<div class="model-input-item">
-					<label for="number-of-student" class="modal-label">Sỉ số:</label> <input
-						type="text" id="number-of-student" class="modal-input"
-						placeholder="Sỉ số">
-				</div>
-
-			</div>
-
-			<footer class="modal-footer">
-				<button class="btn btn-primary cancel-add-class-btn">Hủy</button>
-				<button class="btn btn-primary confirm-add-class-btn">Xác
-					nhận</button>
-			</footer>
+				<footer class="modal-footer">
+					<button type="button" class="btn btn-primary cancel-add-class-btn">Hủy</button>
+					<button type="submit" class="btn btn-primary confirm-add-class-btn">Xác
+						nhận</button>
+				</footer>
+			</form>
 		</div>
 	</div>
 
-	<!-- Modal list students to add class -->
-	<div class="modal list-students-modal">
-		<div class="modal-container list-students-modal-container">
-			<div class="icon-close js-modal-list-students-close">
-				<i class="modal-icon-close fa-solid fa-xmark"></i>
-			</div>
-
-			<header class="modal-header"> Danh sách học sinh </header>
-
-
-			<div class="datatable-container">
-				<table id="datatablesListStudent" class="datatable-table">
-					<thead>
-						<tr>
-							<th data-sortable="true" style="width: 10%;"><a href="#"
-								class="datatable-sorter">STT</a></th>
-							<th data-sortable="true" aria-sort="descending"
-								class="datatable-descending" style="width: 25%;"><a
-								href="#" class="datatable-sorter">Tên</a></th>
-							<th data-sortable="true" style="width: 15%;"><a href="#"
-								class="datatable-sorter">Giới Tính</a></th>
-							<th data-sortable="true" style="width: 25%;"><a href="#"
-								class="datatable-sorter">Địa chỉ</a></th>
-							<th data-sortable="true" style="width: 25%;"><a href="#"
-								class="datatable-sorter">Email</a></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr data-index="0">
-							<td>1</td>
-							<td>Technical Author</td>
-							<td>Nam</td>
-							<td>123 quan hoa</td>
-							<td>vanA@gmail.com</td>
-							<td class="choose-student-to-class"><input
-								class="choose-student-to-class-input" type="checkbox"></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-
-			<footer class="modal-footer">
-				<button class="btn btn-primary cancel-list-students-btn">Hủy</button>
-				<button class="btn btn-primary confirm-list-students-btn">Xác
-					nhận</button>
-			</footer>
-		</div>
-	</div>
 
 
 	<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 
 
 	<script src="./js/app.js"></script>
-	<script src="./js/editClassName.js"></script>
+	<script src="./js/classHandle.js"></script>
 	<script src="./js/pagination.js"></script>
-	<script src="./js/modalAddClass.js"></script>
-	<script src="./js/modalListStudent.js"></script>
+	<script src="./js/addClass.js"></script>
+	<script src="./js/modalListStudents.js"></script>
 
 </body>
 </html>

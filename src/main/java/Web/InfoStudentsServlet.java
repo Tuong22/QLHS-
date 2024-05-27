@@ -55,7 +55,6 @@ public class InfoStudentsServlet extends HttpServlet {
 			try {
 				selectStudentByName(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
@@ -63,7 +62,6 @@ public class InfoStudentsServlet extends HttpServlet {
 			try {
 				render(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
@@ -75,6 +73,7 @@ public class InfoStudentsServlet extends HttpServlet {
 			throws ServletException, IOException, ClassNotFoundException {
 		List<HocSinh> DSHS = infoStudentsDao.selectAllStudent();
 		request.setAttribute("DSHS", DSHS);
+		request.setAttribute("messageerror", "");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/infoStudent.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -82,9 +81,13 @@ public class InfoStudentsServlet extends HttpServlet {
 	private void selectStudentByName(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String name = request.getParameter("search-student-name");
-		List<TraCuuHocSinh> DSTCHS = infoStudentsDao.selectStudent(name);
+		String nameClass = request.getParameter("search-student-class");
+		List<TraCuuHocSinh> DSTCHS = infoStudentsDao.selectStudent(name, nameClass);
 		request.setAttribute("DSTCHS", DSTCHS);
+		request.setAttribute("searchStudentName", name);
+		request.setAttribute("searchStudentClass", nameClass);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("searchStudent.jsp");
+		
 		dispatcher.forward(request, response);
 	}
 	
@@ -95,8 +98,18 @@ public class InfoStudentsServlet extends HttpServlet {
 		String year = request.getParameter("studentYear");
 		String address = request.getParameter("studentAddress");
 		String email = request.getParameter("studentEmail");
+		
+		
 		HocSinh hs = new HocSinh(null, name, gender, Integer.parseInt(year), address, email);
-		infoStudentsDao.insertStudent(hs);
-		response.sendRedirect(request.getContextPath() + "/InfoStudentsServlet");
+		
+		boolean isvalid = infoStudentsDao.checkAge(hs);
+		if (isvalid) {
+			infoStudentsDao.insertStudent(hs);
+			response.sendRedirect(request.getContextPath() + "/InfoStudentsServlet");
+		}
+		else {
+			request.setAttribute("messageerror", "Tuổi không hợp lệ.");
+			request.getRequestDispatcher("/infoStudent.jsp").forward(request, response);
+		}
 	}
 }

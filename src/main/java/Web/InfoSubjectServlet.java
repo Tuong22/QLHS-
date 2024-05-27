@@ -64,6 +64,15 @@ public class InfoSubjectServlet extends HttpServlet {
                 e.printStackTrace();
             }
             break;
+            
+		case "/delete":
+			try {
+				deleteSubject(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			break;
 		
 		default:
 			try {
@@ -88,6 +97,13 @@ public class InfoSubjectServlet extends HttpServlet {
 			throws ServletException, IOException, ClassNotFoundException {
 		String name = request.getParameter("subjectName");
 		String heSo = request.getParameter("heSo");
+		if(name==null) {
+			name = "";
+		}
+		if(heSo == null) {
+			heSo = "1";
+		}
+		
 		Mon m = new Mon(null, name, Integer.parseInt(heSo));
 		InfoSubjectDao.insertMon(m);
 		response.sendRedirect(request.getContextPath() + "/InfoSubjectServlet");
@@ -100,6 +116,13 @@ public class InfoSubjectServlet extends HttpServlet {
 		int numberSubject =Integer.parseInt(request.getParameter("number"));
 		Mon mon = new Mon(null, nameSubject,numberSubject);
 		InfoSubjectDao.updateSubject(mon, nameSubjectOld);
+		response.sendRedirect(request.getContextPath() + "/InfoSubjectServlet");
+	}
+	
+	private void deleteSubject(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException {
+		String nameSubject = request.getParameter("nameRemove");
+		InfoSubjectDao.deleteSubject(nameSubject);
 		response.sendRedirect(request.getContextPath() + "/InfoSubjectServlet");
 	}
 	

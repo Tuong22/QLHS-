@@ -269,7 +269,7 @@ tbody, td, tfoot, th, thead, tr {
 }
 
 .btn a:hover {
-	color: #40E9C0;
+	color: #40E9C0; 	
 }
 
 #list-student-of-class .datatablefooter,
@@ -287,6 +287,8 @@ tbody, td, tfoot, th, thead, tr {
 }
 
 .subjectName-edit .subjectName-edit-icon:hover,
+.className-edit .showListStudent-icon:hover,
+.className-edit .removeClass-icon:hover,
 .className-edit .className-edit-icon:hover {
 	color: #40E9C0;
 	cursor: pointer;
@@ -308,6 +310,11 @@ tbody, td, tfoot, th, thead, tr {
 	animation: scale 0.3s ease-in-out;
 }
 
+.card-body.show-listStudentOfClass {
+	width: 100%;
+	animation: scale 0.3s ease-in-out;
+}
+
 @keyframes scale {
   from {
     opacity: 0;
@@ -320,7 +327,8 @@ tbody, td, tfoot, th, thead, tr {
 }
 
 .card-body.change-subjectName .card,
-.card-body.change-className .card {
+.card-body.change-className .card,
+.card-body.show-listStudentOfClass .card {
 	padding: 20px;
 }
 
@@ -1855,6 +1863,10 @@ output {
 	color: var(--bs-btn-hover-color);
 	background-color: var(--bs-btn-hover-bg);
 	border-color: var(--bs-btn-hover-border-color)
+}
+
+.btn a:hover  {
+	color: var(--bs-btn-hover-color);
 }
 
 .btn-check+.btn:hover {

@@ -155,9 +155,13 @@
 											<input type="hidden" name="action" value="/searchByName">
 											<div class="datatable-search">
 												<input name="search-student-name" class="datatable-input"
-													placeholder="Search..." type="text"
+													placeholder="Tên học sinh" type="text"
 													title="Search within table"
-													aria-controls="datatablesSimple">
+													aria-controls="datatablesSimple" <c:if test="${not empty searchStudentName}">value="${searchStudentName}"</c:if>>
+												<input name="search-student-class" class="datatable-input"
+													placeholder="Lớp" type="text"
+													title="Search within table"
+													aria-controls="datatablesSimple" <c:if test="${not empty searchStudentClass}">value="${searchStudentClass}"</c:if>>
 											</div>
 
 											<div class="search-student">

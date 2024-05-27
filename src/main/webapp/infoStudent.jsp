@@ -65,7 +65,8 @@
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/InfoSubjectServlet" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/InfoSubjectServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
@@ -148,8 +149,11 @@
 							</div>
 							<div class="card-body">
 								<div class="datatable-wrapper">
-
+									<c:if test="${not empty requestScope.messageerror}">
+										<div class="alert alert-danger">${requestScope.messageerror}</div>
+									</c:if>
 									<div class="add-student">
+
 										<button class="btn btn-primary add-student-btn">Thêm
 											học sinh</button>
 									</div>

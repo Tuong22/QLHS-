@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -16,7 +15,7 @@
 <style <%@ include file="./css/style.css" %>></style>
 
 </head>
-<body>
+<body style="background-color: #484848">
 	<%
 	int i = 1;
 	%>
@@ -44,13 +43,14 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="./account.jsp" aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-user"></i>
+							<li class="sidebar-item mg-l-4"><a
+								class="sidebar-link" href="#" aria-expanded="false">
+									<span> <i class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./class.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/infoClassServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
@@ -72,13 +72,15 @@
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./tablePoint.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-table"></i>
+								href="<%=request.getContextPath()%>/tablePointServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./report.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/ReportServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
@@ -126,7 +128,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">VanA@gmail.com</a>
+							<a href="" target="_blank">Admin</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -153,6 +155,11 @@
 
 									<div class="datatable-wrapper">
 
+										<div class="add-subject">
+											<button class="btn btn-primary add-subject-btn">Thêm
+												môn</button>
+										</div>
+
 										<div class="datatable-container">
 											<table id="datatablesSubject" class="datatable-table">
 												<thead>
@@ -171,21 +178,18 @@
 														<tr>
 															<td><%=i++%></td>
 															<td class="subjectName-edit"><c:out
-																	value="${Mon.tenMH}" /><i
-																class="subjectName-edit-icon fa fa-solid fa-pen-to-square"></i></td>
+																	value="${Mon.tenMH}" /><span><i
+																class="subjectName-edit-icon fa fa-solid fa-pen-to-square"></i>
+															<i class="removeSubject-icon fa fa-solid fa-trash-can"></i>
+															</span>
+															</td>
 															<td><c:out value="${Mon.heSo}" /></td>
 														</tr>
 													</c:forEach>
 												</tbody>
 											</table>
 										</div>
-										<div class="datatablefooter justify-content-end ">
-											<button class="btn btn-primary add-subject-btn">Thêm
-												môn</button>
-										</div>
 									</div>
-
-
 
 								</div>
 								<div class="card-body change-subjectName hidden">
@@ -193,15 +197,12 @@
 										<header class="change-subjectName-top">
 											<h5>Thay đổi tên môn</h5>
 										</header>
-										<form
-											action="<%=request.getContextPath()%>/InfoSubjectServlet">
-											
-											<input type="hidden" name="action" value="/update" /> 
+										<form action="<%=request.getContextPath()%>/InfoSubjectServlet">
+											<input type="hidden" name="action" value="/update">
 											<div class="change-subjectName-container">
-											<div class="change-subjectName-group">
-													<label for="subjectNameOld">Tên môn
-														thay đổi:</label> <input type="text" id="subjectNameOld"
-														name="nameOld" readonly>
+												<div class="change-subjectName-group">
+													<label for="subjectNameOld">Tên môn thay đổi:</label> <input
+														type="text" id="subjectNameOld" name="nameOld" readonly>
 												</div>
 												<div class="change-subjectName-group">
 													<label for="change-subjectName-input">Nhập tên môn
@@ -215,16 +216,46 @@
 												</div>
 											</div>
 
+
 											<div class="change-subjectName-bottom">
 												<div class="change-subjectName-confirm">
-													<button type = "button"
+													<button type="button"
 														class="btn btn-primary change-subjectName-cancel-btn">Hủy</button>
 													<button type="submit"
 														class="btn btn-primary change-subjectName-confirm-btn">Xác
 														nhận</button>
 												</div>
 											</div>
-											</form>
+										</form>
+									</div>
+								</div>
+								
+								<div class="card-body remove-subject hidden">
+									<div class="card">
+										<header class="remove-subject-top">
+											<h5>Bạn có chắc chắn xóa môn</h5>
+										</header>
+										<form action="<%=request.getContextPath()%>/InfoSubjectServlet">
+											<input type="hidden" name="action" value="/delete">
+											<div class="remove-subject-container">
+
+												<div class="remove-subject-group">
+													<input type="text" id="subjectNameRemove" name="nameRemove"
+														readonly>
+												</div>
+											</div>
+
+
+											<div class="remove-subject-bottom">
+												<div class="remove-subject-confirm">
+													<button type="button"
+														class="btn btn-primary remove-subject-cancel-btn">Hủy</button>
+													<button type="submit"
+														class="btn btn-primary remove-subject-confirm-btn">Xác
+														nhận</button>
+												</div>
+											</div>
+										</form>
 									</div>
 								</div>
 							</div>
@@ -287,7 +318,7 @@
 
 	<script src="./js/app.js"></script>
 	<script src="./js/pagination.js"></script>
-	<script src="./js/editSubjectName.js"></script>
+	<script src="./js/subjectHandle.js"></script>
 	<script src="./js/modalAddSubject.js"></script>
 </body>
 </html>

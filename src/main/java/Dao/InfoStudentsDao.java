@@ -4,14 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.time.Year;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import Model.HocSinh;
+import Model.Lop;
 import Model.TraCuuHocSinh;
 
 public class InfoStudentsDao {
@@ -44,18 +47,19 @@ public class InfoStudentsDao {
 		return DSHS;
 	}
 	
-	public List<TraCuuHocSinh> selectStudent (String name) throws ClassNotFoundException, SQLException {
+	public List<TraCuuHocSinh> selectStudent (String name, String nameClass) throws ClassNotFoundException, SQLException {
 		List<TraCuuHocSinh> tchsList = new ArrayList<>();
 		String SELECT_STUDENT_BY_NAME = "SELECT HocSinh.TenHS, Lop.TenLop, qthk1.DiemTBHK, qthk2.DiemTBHK"
 				+ " FROM HocSinh JOIN QuaTrinh qthk1 ON HocSinh.MaHS = qthk1.MaHS"
 				+ " JOIN HocKy hk1 ON qthk1.MaHK = hk1.MaHK AND hk1.TenHK = '1'"
 				+ " JOIN QuaTrinh qthk2 ON HocSinh.MaHS = qthk2.MaHS"
 				+ " JOIN HocKy hk2 ON qthk2.MaHK = hk2.MaHK AND hk2.TenHK = '2'"
-				+ " JOIN Lop ON qthk1.MaLop = Lop.MaLop WHERE HocSinh.TenHS = ?;";
+				+ " JOIN Lop ON qthk1.MaLop = Lop.MaLop WHERE HocSinh.TenHS = ? AND Lop.TenLop = ?;";
 		try (Connection connection = datasource.getConnection();
 				Statement stmt = connection.createStatement();
 				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_STUDENT_BY_NAME)){
 			preparedStatement.setString(1, name);
+			preparedStatement.setString(2, nameClass);
 			ResultSet rs = preparedStatement.executeQuery();
 			
 			while (rs.next()) {
@@ -63,7 +67,7 @@ public class InfoStudentsDao {
 				String lop = rs.getString(2);
 				float tbhk1 = rs.getFloat(3);
 				float tbhk2 = rs.getFloat(4);
-				TraCuuHocSinh tchs = new TraCuuHocSinh(namehs, lop, tbhk1,tbhk2);
+				TraCuuHocSinh tchs = new TraCuuHocSinh(namehs, lop, tbhk1, tbhk2);
 				tchsList.add(tchs);
 			}
 		}	catch (SQLException e) {
@@ -127,6 +131,32 @@ public class InfoStudentsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+	}
+	
+	public boolean checkAge(HocSinh hs) throws ClassNotFoundException {
+		String querySelectId = "SELECT TuoiHSToiThieu, TuoiHSToiDa FROM ThamSo";
+		boolean isvalid = false;
+		try (Connection connection = datasource.getConnection();
+				Statement stmt = connection.createStatement();
+				ResultSet rs = stmt.executeQuery(querySelectId)) {
+			int toiThieu = -1;
+			int toiDa = -1;
+			while (rs.next()) {
+				toiThieu = rs.getInt(1);
+				toiDa = rs.getInt(2);
+			}
+			
+			int year = Year.now().getValue();
+			if (year - hs.getNamSinh() >= toiThieu && year - hs.getNamSinh() <= toiDa) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isvalid;
 	}
 }

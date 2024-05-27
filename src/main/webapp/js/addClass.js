@@ -5,17 +5,17 @@ const modalAddClassContainer = document.querySelector('.add-class-modal-containe
 const closeModalAddClassBtn = document.querySelector('.js-modal-add-class-close')
 const cancelAddClassBtn = document.querySelector('.cancel-add-class-btn')
 
-function Open() {
+function OpenBuyTicket() {
 	modalAddClass.classList.add('open')
 }
 
-function Hide() {
+function HideBuyTicket() {
 	modalAddClass.classList.remove('open')
 }
 
-addClass.addEventListener('click', Open)
+addClass.addEventListener('click', OpenBuyTicket)
 
-closeModalAddClassBtn.addEventListener('click', Hide)
-cancelAddClassBtn.addEventListener('click', Hide)
-modalAddClass.addEventListener('click', Hide)
+closeModalAddClassBtn.addEventListener('click', HideBuyTicket)
+cancelAddClassBtn.addEventListener('click', HideBuyTicket)
+modalAddClass.addEventListener('click', HideBuyTicket)
 modalAddClassContainer.addEventListener('click', function(event) { event.stopPropagation() })

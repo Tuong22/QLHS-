@@ -1,10 +1,13 @@
- 
+/**
+ * 
+ */
 const datatablesInfoStudent = '#datatablesInfoStudent'
 const datatablesClass = '#datatablesClass'
 const datatablesReport = '#datatablesReport'
 const datatablesSearchStudent = '#datatablesSearchStudent'
 const datatablesSubject = '#datatablesSubject'
 const datatablesPoint = '#datatablesPoint'
+const datatablesListStudent = '#datatablesListStudent'
 
 function Pagination(tableNameID) {
   const table = $(`${tableNameID}`);
@@ -127,3 +130,5 @@ Pagination(datatablesReport)
 Pagination(datatablesSearchStudent)
 Pagination(datatablesSubject)
 Pagination(datatablesPoint)
+Pagination(datatablesListStudent)
+

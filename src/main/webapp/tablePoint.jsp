@@ -16,7 +16,7 @@
 <style <%@ include file="./css/style.css" %>></style>
 
 </head>
-<body>
+<body style="background-color: #484848">
 	<%
 	int i = 1;
 	%>
@@ -70,13 +70,13 @@
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link active"
-								href="./tablePoint.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/tablePointServlet" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./report.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/ReportServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
@@ -153,29 +153,29 @@
 											<div class="datatable-selection">
 												<div class="">
 													<label>Lớp: </label> <input class="" placeholder="Tên lớp"
-														type="text" name="search-lop">
+														type="text" name="search-lop" <c:if test="${not empty nameLop}">value="${nameLop}"</c:if>>
 												</div>
 
 												<div class="">
 													<label>Học kỳ: </label> <select id="search-hk"
 														name="search-hk">
-														<option>1</option>
-														<option>2</option>
+														<option <c:if test="${nameHocKy == '1'}">selected</c:if>>1</option>
+														<option <c:if test="${nameHocKy == '2'}">selected</c:if>>2</option>
 													</select>
 												</div>
 
 												<div class="">
 													<label>Môn: </label> <select id="search-mon"
 														name="search-mon">
-														<option>Toán</option>
-														<option>Văn</option>
-														<option>Đạo đức</option>
-														<option>Sinh</option>
-														<option>Sử</option>
-														<option>Địa</option>
-														<option>Lý</option>
-														<option>Hóa</option>
-														<option>Thể dục</option>
+														<option <c:if test="${nameMon == 'Toán'}">selected</c:if>>Toán</option>
+														<option <c:if test="${nameMon == 'Văn'}">selected</c:if>>Văn</option>
+														<option <c:if test="${nameMon == 'Đạo đức'}">selected</c:if>>Đạo đức</option>
+														<option <c:if test="${nameMon == 'Sinh'}">selected</c:if>>Sinh</option>
+														<option <c:if test="${nameMon == 'Sử'}">selected</c:if>>Sử</option>
+														<option <c:if test="${nameMon == 'Địa'}">selected</c:if>>Địa</option>
+														<option <c:if test="${nameMon == 'Lý'}">selected</c:if>>Lý</option>
+														<option <c:if test="${nameMon == 'Hóa'}">selected</c:if>>Hóa</option>
+														<option <c:if test="${nameMon == 'Thể dục'}">selected</c:if>>Thể dục</option>
 													</select>
 												</div>
 
@@ -236,8 +236,6 @@
 
 
 	<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
-
-
 	<script src="./js/app.js"></script>
 	<script src="./js/pagination.js"></script>
 
