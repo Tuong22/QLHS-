@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Quản lý học sinh</title>
 
 
 <link rel="stylesheet"
@@ -32,7 +32,7 @@
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
 						class="logo-img" src="./image/logo.jpg" alt="">
-						StudentManager
+						Quản lý học sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -49,7 +49,7 @@
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./class.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/infoClassServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
@@ -71,13 +71,13 @@
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./tablePoint.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/tablePointServlet" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./report.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/ReportServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
@@ -125,7 +125,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">VanA@gmail.com</a>
+							<a href="" target="_blank">Admin</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">

@@ -71,10 +71,10 @@ public class listStudentOfClassDao {
 	}
 
 	public int selectSiSo(String nameClass) {
-		int siso = -1;
+		int siso = 0;
 		String SELECT_STUDENT_OF_CLASS = "SELECT lop.siso " + "FROM lop " + "WHERE lop.TenLop = ?;";
 		try (Connection connection = datasource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(SELECT_STUDENT_OF_CLASS)) {
+			PreparedStatement statement = connection.prepareStatement(SELECT_STUDENT_OF_CLASS)) {
 			statement.setString(1, nameClass);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {

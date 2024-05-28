@@ -38,14 +38,36 @@ public class ChangeRuleServlet extends HttpServlet {
 			action = "list";
 		}
 		switch (action) {
-		case "/update":
+		case "/updateTuoi":
             try {
             	updateTuoi(request, response);
             } catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
                 e.printStackTrace();
             }
             break;
-		
+            
+		case "/updateSiSo":
+            try {
+            	updateSiSo(request, response);
+            } catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            break;
+            
+		case "/updateDiemDat":
+            try {
+            	updateDiemDat(request, response);
+            } catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            break;
+		case "/updateDiem":
+            try {
+            	updateDiem(request, response);
+            } catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            break;
 		}
 	}
 		
@@ -54,6 +76,28 @@ public class ChangeRuleServlet extends HttpServlet {
 		int tuoiToiDa = Integer.parseInt(request.getParameter("tuoiHSToiDa"));
         int tuoiToiThieu = Integer.parseInt(request.getParameter("tuoiHSToiThieu"));
 		ChangeRuleDao.updateTuoiToiThieuToiDa(tuoiToiThieu, tuoiToiDa);
+		response.sendRedirect(request.getContextPath() + "/changeRule.jsp");
+	}
+	
+	private void updateSiSo(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		int siSoToiDa = Integer.parseInt(request.getParameter("siSoToiDa"));
+		ChangeRuleDao.updateSiSoToiDa(siSoToiDa);
+		response.sendRedirect(request.getContextPath() + "/changeRule.jsp");
+	}
+	
+	private void updateDiemDat(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		int diemDat = Integer.parseInt(request.getParameter("pointPass"));
+		ChangeRuleDao.updateDiemDat(diemDat);
+		response.sendRedirect(request.getContextPath() + "/changeRule.jsp");
+	}
+	
+	private void updateDiem(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		int diemToiDa = Integer.parseInt(request.getParameter("maxPoint"));
+        int diemToiThieu = Integer.parseInt(request.getParameter("minPoint"));
+		ChangeRuleDao.updateDiem(diemToiThieu, diemToiDa);
 		response.sendRedirect(request.getContextPath() + "/changeRule.jsp");
 	}
 

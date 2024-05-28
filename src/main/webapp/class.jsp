@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Quản lý học sinh</title>
 
 
 <link rel="stylesheet"
@@ -33,7 +33,7 @@
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
 						class="logo-img" src="./image/logo.jpg" alt="">
-						StudentManager
+						Quản lý học sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -45,7 +45,7 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="#" aria-expanded="false"> <span> <i
+								href="./account.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>

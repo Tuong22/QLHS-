@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Quản lý học sinh</title>
 
 
 <link rel="stylesheet"
@@ -28,7 +30,7 @@
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
 						class="logo-img" src="./image/logo.jpg" alt="">
-						StudentManager
+						Quản lý học sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -60,7 +62,7 @@
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./subject.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/InfoSubjectServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
@@ -76,7 +78,7 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link active"
-								href="./changeRule.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/changeRule.jsp" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
@@ -119,7 +121,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">VanA@gmail.com</a>
+							<a href="" target="_blank">Admin</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -151,6 +153,7 @@
 												đa của các lớp</option>
 											<option value="QD3">Quy định 3: Thay đổi điểm đạt
 												môn</option>
+											<option value="QD4">Quy định 4: Thay đổi điểm tối thiểu, điểm tối đa</option>
 										</select>
 									</div>
 
@@ -162,15 +165,15 @@
 													<h5>Thay đổi số tuổi tối thiểu, tuổi tối đa</h5>
 												</header>
 												<form action="<%=request.getContextPath()%>/ChangeRule">
-													<input type="hidden" name="action" value="/update">
+													<input type="hidden" name="action" value="/updateTuoi">
 													<div class="change-rule-container">
-														
+
 														<div class="change-rule-group rule1-min-age">
 															<label for="min-age-rule">Nhập tuổi tối thiểu:</label> <input
 																type="text" id="min-age-rule"
 																placeholder="Tuổi tối thiểu" name="tuoiHSToiThieu">
 														</div>
-														
+
 
 														<div class="change-rule-group rule1-max-age">
 															<label for="max-age-rule">Nhập tuổi tối đa:</label> <input
@@ -200,21 +203,26 @@
 												<header class="change-rule-top">
 													<h5>Thay đổi sỉ số tối đa của các lớp</h5>
 												</header>
-												<div class="change-rule-container">
-													<div class="change-rule-group rule2-max-number">
-														<label for="max-number-of-student">Nhập sỉ số tối
-															đa:</label> <input type="text" id="max-number-of-student"
-															placeholder="Sỉ số tối đa">
-													</div>
+												<form action="<%=request.getContextPath()%>/ChangeRule">
+													<input type="hidden" name="action" value="/updateSiSo">
+													<div class="change-rule-container">
+														<div class="change-rule-group rule2-max-number">
+															<label for="max-number-of-student">Nhập sỉ số tối
+																đa:</label> <input type="text" id="max-number-of-student"
+																placeholder="Sỉ số tối đa" name="siSoToiDa">
+														</div>
 
-												</div>
-												<div class="change-rule-bottom">
-													<div class="change-rule-confirm">
-														<button class="btn btn-primary change-rule-cancel-btn">Hủy</button>
-														<button class="btn btn-primary change-rule-confirm-btn">Xác
-															nhận</button>
 													</div>
-												</div>
+													<div class="change-rule-bottom">
+														<div class="change-rule-confirm">
+															<button type="button"
+																class="btn btn-primary change-rule-cancel-btn">Hủy</button>
+															<button type="submit"
+																class="btn btn-primary change-rule-confirm-btn">Xác
+																nhận</button>
+														</div>
+													</div>
+												</form>
 											</div>
 										</div>
 
@@ -223,22 +231,62 @@
 												<header class="change-rule-top">
 													<h5>Thay đổi điểm đạt môn</h5>
 												</header>
-
+												<form action="<%=request.getContextPath()%>/ChangeRule">
+													<input type="hidden" name="action" value="/updateDiemDat">
 												<div class="change-rule-container">
 													<div class="change-rule-group rule5-point">
 														<label for="min-point">Nhập điểm đạt môn học:</label> <input
-															type="text" id="min-point" placeholder="Điểm đạt">
+															type="text" id="min-point" placeholder="Điểm đạt" name="pointPass">
 													</div>
 												</div>
 
 												<div class="change-rule-bottom">
 													<div class="change-rule-confirm">
-														<button class="btn btn-primary change-rule-cancel-btn">Hủy</button>
-														<button class="btn btn-primary change-rule-confirm-btn">Xác
+														<button type="button" class="btn btn-primary change-rule-cancel-btn">Hủy</button>
+														<button type="submit" class="btn btn-primary change-rule-confirm-btn">Xác
 															nhận</button>
 													</div>
 												</div>
+												</form>
 											</div>
+										</div>
+										<div id="QD4" class="rule">
+
+											<div class="card">
+												<header class="change-rule-top">
+													<h5>Thay đổi điểm tối thiểu, điểm tối đa</h5>
+												</header>
+												<form action="<%=request.getContextPath()%>/ChangeRule">
+													<input type="hidden" name="action" value="/updateDiem">
+													<div class="change-rule-container">
+
+														<div class="change-rule-group rule1-min-point">
+															<label for="max-point-rule">Điểm tối thiểu:</label> <input
+																type="text" id="min-point-rule"
+																placeholder="Điểm tối thiểu" name="minPoint">
+														</div>
+
+
+														<div class="change-rule-group rule1-max-point">
+															<label for="max-point-rule">Điểm tối đa:</label> <input
+																type="text" id="max-point-rule" placeholder="Điểm tối đa"
+																name="maxPoint">
+														</div>
+													</div>
+
+
+													<div class="change-rule-bottom">
+														<div class="change-rule-confirm">
+															<button type="button"
+																class="btn btn-primary change-rule-cancel-btn">Hủy</button>
+															<button type="submit"
+																class="btn btn-primary change-rule-confirm-btn">Xác
+																nhận</button>
+														</div>
+													</div>
+												</form>
+											</div>
+
 										</div>
 									</div>
 								</div>

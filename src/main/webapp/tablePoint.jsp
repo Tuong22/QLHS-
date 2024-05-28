@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Quản lý học sinh</title>
 
 
 <link rel="stylesheet"
@@ -33,7 +33,7 @@
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
 						class="logo-img" src="./image/logo.jpg" alt="">
-						StudentManager
+						Quản lý học sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -65,18 +65,20 @@
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./subject.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/InfoSubjectServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link active"
-								href="<%=request.getContextPath()%>/tablePointServlet" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-table"></i>
+								href="<%=request.getContextPath()%>/tablePointServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/ReportServlet" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/ReportServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
@@ -124,7 +126,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">VanA@gmail.com</a>
+							<a href="" target="_blank">Admin</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -153,7 +155,8 @@
 											<div class="datatable-selection">
 												<div class="">
 													<label>Lớp: </label> <input class="" placeholder="Tên lớp"
-														type="text" name="search-lop" <c:if test="${not empty nameLop}">value="${nameLop}"</c:if>>
+														type="text" name="search-lop"
+														<c:if test="${not empty nameLop}">value="${nameLop}"</c:if>>
 												</div>
 
 												<div class="">
@@ -169,13 +172,17 @@
 														name="search-mon">
 														<option <c:if test="${nameMon == 'Toán'}">selected</c:if>>Toán</option>
 														<option <c:if test="${nameMon == 'Văn'}">selected</c:if>>Văn</option>
-														<option <c:if test="${nameMon == 'Đạo đức'}">selected</c:if>>Đạo đức</option>
+														<option
+															<c:if test="${nameMon == 'Đạo đức'}">selected</c:if>>Đạo
+															đức</option>
 														<option <c:if test="${nameMon == 'Sinh'}">selected</c:if>>Sinh</option>
 														<option <c:if test="${nameMon == 'Sử'}">selected</c:if>>Sử</option>
 														<option <c:if test="${nameMon == 'Địa'}">selected</c:if>>Địa</option>
 														<option <c:if test="${nameMon == 'Lý'}">selected</c:if>>Lý</option>
 														<option <c:if test="${nameMon == 'Hóa'}">selected</c:if>>Hóa</option>
-														<option <c:if test="${nameMon == 'Thể dục'}">selected</c:if>>Thể dục</option>
+														<option
+															<c:if test="${nameMon == 'Thể dục'}">selected</c:if>>Thể
+															dục</option>
 													</select>
 												</div>
 
@@ -193,15 +200,21 @@
 										<table id="datatablesPoint" class="datatable-table">
 											<thead>
 												<tr>
-													<th data-sortable="true" style="width: 10%;"><a
+													<th data-sortable="true" style="width: 5%;"><a
 														href="#" class="datatable-sorter">STT</a></th>
 													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 30%;"><a
+														class="datatable-descending" style="width: 25%;"><a
 														href="#" class="datatable-sorter">Tên</a></th>
-													<th data-sortable="true" style="width: 20%;"><a
+													<th data-sortable="true" aria-sort="descending"
+														class="datatable-descending" style="width: 10%;"><a
+														href="#" class="datatable-sorter">Miệng</a></th>
+													<th data-sortable="true" style="width: 10%;"><a
 														href="#" class="datatable-sorter">15'</a></th>
-													<th data-sortable="true" style="width: 20%;"><a
+													<th data-sortable="true" style="width: 10%;"><a
 														href="#" class="datatable-sorter">1T</a></th>
+													<th data-sortable="true" aria-sort="descending"
+														class="datatable-descending" style="width: 10%;"><a
+														href="#" class="datatable-sorter">HK</a></th>
 													<th data-sortable="true" style="width: 20%;"><a
 														href="#" class="datatable-sorter">TB môn</a></th>
 												</tr>
@@ -211,8 +224,10 @@
 													<tr data-index="0">
 														<td><%=i++%></td>
 														<td>${point.tenHS}</td>
+														<td>${point.mieng}</td>
 														<td>${point.muoiLamPhut}</td>
 														<td>${point.motTiet}</td>
+														<td>${point.hocKy}</td>
 														<td>${point.tbMon}</td>
 													</tr>
 												</c:forEach>

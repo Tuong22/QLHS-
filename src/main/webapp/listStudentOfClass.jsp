@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Quản lý học sinh</title>
 
 
 <link rel="stylesheet"
@@ -34,7 +34,7 @@
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
 						class="logo-img" src="./image/logo.jpg" alt="">
-						StudentManager
+						Quản lý học sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -131,7 +131,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">VanA@gmail.com</a>
+							<a href="" target="_blank">Admin</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Quản lý học sinh</title>
 
 
 <link rel="stylesheet"
@@ -28,7 +28,7 @@
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
 						class="logo-img" src="./image/logo.jpg" alt="">
-						StudentManager
+						Quản lý học sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -119,7 +119,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">VanA@gmail.com</a>
+							<a href="" target="_blank">Admin</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -147,7 +147,7 @@
 								<label><i class="account-icon fa-solid fa-user"></i>Tên
 									tài khoản: </label>
 								<div class="account-name">
-									<p class="account-info-text">Van A</p>
+									<p class="account-info-text">Admin</p>
 								</div>
 
 							</div>
@@ -165,20 +165,12 @@
 									</div>
 								</div>
 							</div>
-
-							<div class="account-info-group">
-								<label><i class="account-icon fa-solid fa-envelope"></i>Email:
-								</label>
-								<div class="account-pass">
-									<p class="account-info-text">KienTuong@gmail.com</p>
-								</div>
-							</div>
 						</div>
 
 
 						<footer class="account-info-footer">
 							<span>Last update: </span>
-							<p class="account-last-update">__/__/____</p>
+							<p class="account-last-update">28/05/2024</p>
 						</footer>
 					</div>
 
