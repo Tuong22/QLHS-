@@ -285,7 +285,8 @@ tbody, td, tfoot, th, thead, tr {
 .subjectName-edit .subjectName-edit-icon:hover,
 .subjectName-edit .removeSubject-icon:hover,
 .className-edit .className-edit-icon:hover,
-.className-edit .removeClass-icon:hover {
+.className-edit .removeClass-icon:hover,
+.className-edit .showListStudent-icon:hover {
 	color: #40E9C0;
 	cursor: pointer;
 }
@@ -305,6 +306,11 @@ tbody, td, tfoot, th, thead, tr {
 .card-body.remove-class,
 .card-body.remove-subject {
 	width: 50%;
+	animation: scale 0.3s ease-in-out;
+}
+
+.card-body.show-student-of-class{
+	width: 100%;
 	animation: scale 0.3s ease-in-out;
 }
 
@@ -4161,7 +4167,7 @@ keyframes progress-bar-stripes {
 
 .left-sidebar .scroll-sidebar {
 	overflow-y: auto;
-	padding: 0 24px;
+	padding: 16px 24px 0 24px;
 	height: calc(100vh - 80px);
 	border-radius: 7px
 }

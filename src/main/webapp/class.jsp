@@ -44,13 +44,13 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a
-								class="sidebar-link" href="#" aria-expanded="false">
-									<span> <i class="fa fa-solid fa-user"></i>
+							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
+								href="#" aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link  active"
-								href="<%=request.getContextPath()%>/InfoClassServlet"
+								href="<%=request.getContextPath()%>/infoClassServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
@@ -67,13 +67,13 @@
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/SubjectServlet"
+								href="<%=request.getContextPath()%>/InfoSubjectServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/TablePointServlet"
+								href="<%=request.getContextPath()%>/tablePointServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
@@ -154,6 +154,9 @@
 							<div class="class-list-wrap">
 								<div class="card-body class-list-data">
 									<div class="datatable-wrapper">
+										<c:if test="${not empty requestScope.messageerror}">
+											<div class="alert alert-danger">${requestScope.messageerror}</div>
+										</c:if>
 										<div class="datatable-top">
 
 											<form class="d-flex flex-row justify-content-between"
@@ -161,13 +164,20 @@
 												<input type="hidden" name="action" value="/searchByKhoi">
 												<div class="datatable-selection">
 
+
 													<div id="class-semester" class="class-semester-selection">
 														<label for="search-khoi">Khối: </label> <select
 															id="search-khoi" name="search-khoi">
 															<option></option>
-															<option>Khối 10</option>
-															<option>Khối 11</option>
-															<option>Khối 12</option>
+															<option
+																<c:if test="${nameKhoi == 'Khối 10'}">selected</c:if>>Khối
+																10</option>
+															<option
+																<c:if test="${nameKhoi == 'Khối 11'}">selected</c:if>>Khối
+																11</option>
+															<option
+																<c:if test="${nameKhoi == 'Khối 12'}">selected</c:if>>Khối
+																12</option>
 														</select>
 													</div>
 													<button type="submit"
@@ -181,6 +191,13 @@
 													<button type="button"
 														class="btn btn-primary add-class-btn mt-4">Thêm
 														lớp</button>
+
+													<button type="button"
+														class="btn btn-primary list-of-class-btn mt-4">
+														<a
+															href="<%=request.getContextPath()%>/listStudentOfClass.jsp">
+															Xem danh sách học sinh</a>
+													</button>
 												</div>
 											</form>
 										</div>
@@ -203,6 +220,7 @@
 														<tr data-index="0">
 															<td><%=i++%></td>
 															<td class="className-edit">${Lop.tenKhoi}<span>
+
 																	<i
 																	class="className-edit-icon fa fa-solid fa-pen-to-square"></i>
 																	<i class="removeClass-icon fa fa-solid fa-trash-can"></i></td>
@@ -216,6 +234,10 @@
 										</div>
 									</div>
 								</div>
+
+
+
+
 
 								<div class="card-body change-className hidden">
 									<div class="card">
@@ -292,75 +314,7 @@
 			</div>
 			<!-- Class end -->
 
-			<!-- List student of class start -->
-			<div id="list-student-of-class"
-				class="container-fluid list-student-of-class hidden">
-				<div class="row">
-					<div class="align-items-stretch">
-						<div class="card">
-							<div class="card-header">
-								<i class="fas fa-table me-1"></i> Danh sách học sinh lớp
-							</div>
 
-							<div class="list-student-wrap">
-								<div class="card-body">
-									<div class="datatable-wrapper">
-										<div class="datatable-top">
-											<div class="datatable-top-group">
-												<p>Lớp:</p>
-												<p class="class-value">...</p>
-											</div>
-
-											<div class="datatable-top-group">
-												<p>Sỉ số:</p>
-												<p class="number-of-student-value">...</p>
-											</div>
-										</div>
-										<div class="datatable-container">
-											<table id="datatablesListStudent" class="datatable-table">
-												<thead>
-													<tr>
-														<th data-sortable="true" style="width: 10%;"><a
-															href="#" class="datatable-sorter">STT</a></th>
-														<th data-sortable="true" aria-sort="descending"
-															class="datatable-descending" style="width: 30%;"><a
-															href="#" class="datatable-sorter">Họ tên</a></th>
-														<th data-sortable="true" style="width: 10%;"><a
-															href="#" class="datatable-sorter">Giới Tính</a></th>
-														<th data-sortable="true" style="width: 15%;"><a
-															href="#" class="datatable-sorter">Ngày sinh</a></th>
-														<th data-sortable="true" style="width: 35%;"><a
-															href="#" class="datatable-sorter">Địa chỉ</a></th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr data-index="0">
-														<td>1</td>
-														<td>Technical Author</td>
-														<td>23</td>
-														<td>Technical Author</td>
-														<td>23</td>
-													</tr>
-
-												</tbody>
-											</table>
-										</div>
-										<div class="datatablefooter justify-content-between">
-											<button
-												class="btn btn-primary list-student-of-class-cancel-btn">Hủy</button>
-											<button
-												class="btn btn-primary list-student-of-class-confirm-btn">Xác
-												nhận</button>
-										</div>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- List student of class end -->
 
 		</div>
 		<!--  Main wrapper -->
@@ -376,79 +330,34 @@
 			</div>
 
 			<header class="modal-header"> Thêm lớp mới </header>
+			<form action="<%=request.getContextPath()%>/InfoClassServlet">
+				<input type="hidden" name="action" value="/insert">
 
-			<div class="modal-body">
-				<div class="model-input-item">
-					<label for="new-class" class="modal-label">Tên lớp:</label> <input
-						type="text" id="new-class" class="modal-input"
-						placeholder="Tên lớp">
+				<div class="modal-body">
+					<div class="model-input-item">
+						<label for="new-class" class="modal-label">Tên lớp:</label> <input
+							type="text" id="new-class" class="modal-input"
+							placeholder="Tên lớp" name="newClassName">
+					</div>
+
+
+					<div class="model-input-item">
+						<label for="number-of-student" class="modal-label">Sỉ số:</label>
+						<input type="text" id="number-of-student" class="modal-input"
+							placeholder="Sỉ số" name="newNumber">
+					</div>
+
 				</div>
 
-
-				<div class="model-input-item">
-					<label for="number-of-student" class="modal-label">Sỉ số:</label> <input
-						type="text" id="number-of-student" class="modal-input"
-						placeholder="Sỉ số">
-				</div>
-
-			</div>
-
-			<footer class="modal-footer">
-				<button class="btn btn-primary cancel-add-class-btn">Hủy</button>
-				<button class="btn btn-primary confirm-add-class-btn">Xác
-					nhận</button>
-			</footer>
+				<footer class="modal-footer">
+					<button type="button" class="btn btn-primary cancel-add-class-btn">Hủy</button>
+					<button type="submit" class="btn btn-primary confirm-add-class-btn">Xác
+						nhận</button>
+				</footer>
+			</form>
 		</div>
 	</div>
 
-	<!-- Modal list students to add class -->
-	<div class="modal list-students-modal">
-		<div class="modal-container list-students-modal-container">
-			<div class="icon-close js-modal-list-students-close">
-				<i class="modal-icon-close fa-solid fa-xmark"></i>
-			</div>
-
-			<header class="modal-header"> Danh sách học sinh </header>
-
-
-			<div class="datatable-container">
-				<table id="datatablesListStudent" class="datatable-table">
-					<thead>
-						<tr>
-							<th data-sortable="true" style="width: 10%;"><a href="#"
-								class="datatable-sorter">STT</a></th>
-							<th data-sortable="true" aria-sort="descending"
-								class="datatable-descending" style="width: 25%;"><a
-								href="#" class="datatable-sorter">Tên</a></th>
-							<th data-sortable="true" style="width: 15%;"><a href="#"
-								class="datatable-sorter">Giới Tính</a></th>
-							<th data-sortable="true" style="width: 25%;"><a href="#"
-								class="datatable-sorter">Địa chỉ</a></th>
-							<th data-sortable="true" style="width: 25%;"><a href="#"
-								class="datatable-sorter">Email</a></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr data-index="0">
-							<td>1</td>
-							<td>Technical Author</td>
-							<td>Nam</td>
-							<td>123 quan hoa</td>
-							<td>vanA@gmail.com</td>
-							<td class="choose-student-to-class"><input
-								class="choose-student-to-class-input" type="checkbox"></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-
-			<footer class="modal-footer">
-				<button class="btn btn-primary cancel-list-students-btn">Hủy</button>
-				<button class="btn btn-primary confirm-list-students-btn">Xác
-					nhận</button>
-			</footer>
-		</div>
-	</div>
 
 
 	<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
@@ -457,8 +366,34 @@
 	<script src="./js/app.js"></script>
 	<script src="./js/classHandle.js"></script>
 	<script src="./js/pagination.js"></script>
-	<script src="./js/modalAddClass.js"></script>
-	<script src="./js/modalListStudent.js"></script>
+
+	<script>
+		const addClass = document.querySelector('.add-class-btn')
+		const modalAddClass = document.querySelector('.add-class-modal')
+		const modalAddClassContainer = document
+				.querySelector('.add-class-modal-container')
+		const closeModalAddClassBtn = document
+				.querySelector('.js-modal-add-class-close')
+		const cancelAddClassBtn = document
+				.querySelector('.cancel-add-class-btn')
+
+		function Open() {
+			modalAddClass.classList.add('open')
+		}
+
+		function Hide() {
+			modalAddClass.classList.remove('open')
+		}
+
+		addClass.addEventListener('click', Open)
+
+		closeModalAddClassBtn.addEventListener('click', Hide)
+		cancelAddClassBtn.addEventListener('click', Hide)
+		modalAddClass.addEventListener('click', Hide)
+		modalAddClassContainer.addEventListener('click', function(event) {
+			event.stopPropagation()
+		})
+	</script>
 
 </body>
 </html>

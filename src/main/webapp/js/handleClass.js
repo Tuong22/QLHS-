@@ -25,9 +25,13 @@ function getParent(element, selector) {
 }
 
 showListStudentBtns.forEach(function(showListStudentBtn) {
-	classListData.style.width = '0'
-	showListStudentForm.classList.remove('hidden')
-})
+	showListStudentBtn.addEventListener('click', function() {
+		classListData.style.width = '0'
+		showListStudentForm.classList.remove('hidden')
+		document.getElementById("className").setAttribute("value", getParent(showListStudentBtn, ".className-edit").textContent)
+
+	})
+});
 
 editClassNameBtns.forEach(function(editClassNameBtn) {
 	editClassNameBtn.addEventListener('click', function() {
@@ -100,4 +104,6 @@ cancelRemoveNameBtn.addEventListener('click', function() {
 	})
 	searchClassBtn.removeAttribute("disabled")
 	addClassBtn.removeAttribute("disabled")
-});
+});/**
+ * 
+ */
