@@ -47,12 +47,18 @@ public class InfoClassServlet extends HttpServlet {
 				insertClass(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException e) {
 				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			break;
 		case "/update":
 			try {
 				updateClass(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -63,66 +69,87 @@ public class InfoClassServlet extends HttpServlet {
 			} catch (ClassNotFoundException | ServletException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			break;
 		default:
 			try {
-				render(request, response);
-			} catch (ClassNotFoundException | ServletException | IOException e) {
+				selectKhoi(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
 		}
 	}
-
-	private void render(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, ClassNotFoundException {
-		List<Lop> DSL = infoClassDao.selectAllClass();
-		request.setAttribute("DSL", DSL);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/class.jsp");
-		dispatcher.forward(request, response);
-	}
-
-	private void insertClass(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, ClassNotFoundException {
-		String nameClass = request.getParameter("newClassName");
-		String num = request.getParameter("newNumber");
-		Lop m = new Lop(null, nameClass, Integer.parseInt(num), null, null);
-		infoClassDao.insertClass(m);
-		response.sendRedirect(request.getContextPath() + "/InfoClassServlet");
-	}
-
+	
 	private void selectKhoi(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String tenKhoi = request.getParameter("search-khoi");
 		List<TraCuuKhoi> DSK = infoClassDao.selectKhoi(tenKhoi);
 		request.setAttribute("DSTCK", DSK);
+		request.setAttribute("nameKhoi", tenKhoi);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("class.jsp");
 		dispatcher.forward(request, response);
 	}
 
+	private void insertClass(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		String nameClass = request.getParameter("newClassName");
+		String num = request.getParameter("newNumber");
+		Lop m = new Lop(null, nameClass, Integer.parseInt(num), null, null);
+		boolean isvalid = infoClassDao.insertClass(m);
+		if (isvalid) {
+	        request.setAttribute("messageInfoAddClass", "Thêm lớp mới thành công.");
+	    } else {
+	        request.setAttribute("messageErrorAddClass", "Tên lớp bị trùng");
+	    }
+		String tenKhoi = request.getParameter("tenKhoi");
+		List<TraCuuKhoi> DSK = infoClassDao.selectKhoi(tenKhoi);
+		request.setAttribute("DSTCK", DSK);
+		request.setAttribute("nameKhoi", tenKhoi);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("class.jsp");
+		dispatcher.forward(request, response);
+		
+	}
+
 	private void updateClass(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, ClassNotFoundException {
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String nameClassOld = request.getParameter("nameOld");
 		String nameClass = request.getParameter("name");
 		int numberOfStudent = Integer.parseInt(request.getParameter("number"));
 		Lop lop = new Lop(null, nameClass, numberOfStudent, null, null);
-		infoClassDao.updateClass(lop, nameClassOld);
-		response.sendRedirect(request.getContextPath() + "/InfoClassServlet");
-	}
+		boolean isvalid = infoClassDao.updateClass(lop, nameClassOld);
+		
+		if (isvalid) {
+	        request.setAttribute("messageInfoUpdateClass", "Sửa thông tin lớp thành công.");
+	    } else {
+	        request.setAttribute("messageErrorUpdateClass", "Sửa thông tin lớp không thành công. Tên lớp muốn thay đổi đã tồn tại.");
+	    }
+		String tenKhoi = request.getParameter("tenKhoi");
+		List<TraCuuKhoi> DSK = infoClassDao.selectKhoi(tenKhoi);
+		request.setAttribute("DSTCK", DSK);
+		request.setAttribute("nameKhoi", tenKhoi);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("class.jsp");
+		dispatcher.forward(request, response);	}
 
 	private void deleteClass(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, ClassNotFoundException {
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String nameClass = request.getParameter("nameRemove");
-		boolean isvalid = infoClassDao.checkDeleteClass(nameClass);
+		boolean isvalid = infoClassDao.deleteClass(nameClass);
 
 		if (isvalid) {
-			infoClassDao.deleteClass(nameClass);
-			response.sendRedirect(request.getContextPath() + "/InfoClassServlet");
-		} else {
-			request.setAttribute("messageerror", "Không thể xóa lớp đang học.");
-			request.getRequestDispatcher("/class.jsp").forward(request, response);
-		}
+	        request.setAttribute("messageInfoClass", "Xoá lớp không có học sinh thành công.");
+	    } else {
+	        request.setAttribute("messageErrorClass", "Không thể xóa lớp đang học.");
+	    }
+		String tenKhoi = request.getParameter("tenKhoi");
+		List<TraCuuKhoi> DSK = infoClassDao.selectKhoi(tenKhoi);
+		request.setAttribute("DSTCK", DSK);
+		request.setAttribute("nameKhoi", tenKhoi);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("class.jsp");
+		dispatcher.forward(request, response);	
 	}
 }

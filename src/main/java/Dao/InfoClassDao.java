@@ -26,32 +26,12 @@ public class InfoClassDao {
 		return connection;
 	}
 	
-	public List<Lop> selectAllClass() throws ClassNotFoundException {
-		List<Lop> DSL = new ArrayList<>();
-		try	(Connection connection = getConnection();
-			Statement statement = connection.createStatement();	
-			ResultSet rs = statement.executeQuery("select * from Lop")) {
-			while (rs.next()) {
-				String maLop = rs.getString(1);
-				String tenLop = rs.getString(2);
-				int siSo = rs.getInt(3);
-				String maKhoi = rs.getString(4);
-				String maNH = rs.getString(5);
-
-				Lop l = new Lop(maLop, tenLop, siSo, maKhoi, maNH);
-				DSL.add(l);
-			} 
-		}catch (SQLException e) {
-            e.printStackTrace();
-        }
-		return DSL;
-	}
-	
-	public void insertClass(Lop l) throws ClassNotFoundException {
+	public boolean insertClass(Lop l) throws ClassNotFoundException {
 		String querySelectId = "SELECT MaLop FROM Lop order by length(MaLop), MaLop";
 		String INSERT_CLASS = "INSERT INTO Lop VALUES (?,?,?,?,?)";
 		String maKhoi = idKhoi(l.getTenLop());
         String maNH = "NH1"; 
+        boolean isvalid = false;
 		try (Connection connection = getConnection();
 				Statement stmt = connection.createStatement();
 				PreparedStatement statement = connection.prepareStatement(INSERT_CLASS);
@@ -93,6 +73,13 @@ public class InfoClassDao {
 			statement.setInt(3, l.getSiSo());
 			statement.setString(4, maKhoi);
             statement.setString(5, maNH);
+            
+            int rowAffected = statement.executeUpdate();
+			if (rowAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
 			
 			statement.execute();
 			statement.close();
@@ -102,6 +89,7 @@ public class InfoClassDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return isvalid;
 	}
 	
 	private String idKhoi(String tenLop) {
@@ -142,9 +130,10 @@ public class InfoClassDao {
 		return listNameKhoi;
 	}
 	
-	public void updateClass(Lop lop, String nameClassOld) throws ClassNotFoundException {
+	public boolean updateClass(Lop lop, String nameClassOld) throws ClassNotFoundException {
 		String SELECT_CLASS = "select * from lop";
 		String UPDATE_CLASS = "update lop set TenLop = ?, SiSo = ? where MaLop = ?";
+		boolean isvalid = false;
 		try (Connection connection = getConnection();
 				Statement stmt = connection.createStatement();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_CLASS);
@@ -162,19 +151,26 @@ public class InfoClassDao {
 			statement.setString(1, lop.getTenLop());
 			statement.setInt(2, lop.getSiSo());	
 			statement.setString(3, currentClassId);	
-				
-			statement.execute();
+			int rowsAffected = statement.executeUpdate();
+
+			if (rowsAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
 
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return isvalid;
 	}
 	
-	public void deleteClass(String nameClass) throws ClassNotFoundException {
+	public boolean deleteClass(String nameClass) throws ClassNotFoundException {
 		String SELECT_CLASS = "select * from lop";
 		String DELETE_CLASS = "delete from lop where MaLop = ?";
+		boolean isvalid = false;
 		try (Connection connection = getConnection();
 				Statement stmt = connection.createStatement();
 				PreparedStatement statement = connection.prepareStatement(DELETE_CLASS);
@@ -190,31 +186,23 @@ public class InfoClassDao {
 			}
 
 			statement.setString(1, currentClassId);
-				
-			statement.execute();
+			int rowsAffected = statement.executeUpdate();
+
+			if (rowsAffected > 0) {
+				isvalid = true;
+				System.out.println("Xóa lớp thành công.");
+			} else {
+				isvalid = false;
+				System.out.println("Lớp không tồn tại hoặc không thể xóa.");
+			}
 
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public boolean checkDeleteClass(String nameClass) throws ClassNotFoundException {
-		String querySelectId = "SELECT COUNT(*) AS studentCount FROM Lop WHERE TenLop = ?";
-		boolean isvalid = false;
-		try (Connection connection = getConnection();
-		         PreparedStatement preparedStatement = connection.prepareStatement(querySelectId)) {
-		        preparedStatement.setString(1, nameClass);
-		        try (ResultSet rs = preparedStatement.executeQuery()) {
-		            if (rs.next()) {
-		                int studentCount = rs.getInt("studentCount");
-		                isvalid = studentCount < 1;
-		            }
-		        }
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }
 		return isvalid;
 	}
+
+	
 }
