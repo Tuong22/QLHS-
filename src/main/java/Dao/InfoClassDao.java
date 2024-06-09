@@ -26,6 +26,27 @@ public class InfoClassDao {
 		return connection;
 	}
 	
+	public List<Lop> selectAllClass() throws ClassNotFoundException {
+		List<Lop> DSL = new ArrayList<>();
+		try (Connection connection = getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet rs = statement.executeQuery("select * from Lop")) {
+			while (rs.next()) {
+				String maLop = rs.getString(1);
+				String tenLop = rs.getString(2);
+				int siSo = rs.getInt(3);
+				String maKhoi = rs.getString(4);
+				String maNH = rs.getString(5);
+
+				Lop l = new Lop(maLop, tenLop, siSo, maKhoi, maNH);
+				DSL.add(l);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return DSL;
+	}
+	
 	public boolean insertClass(Lop l) throws ClassNotFoundException {
 		String querySelectId = "SELECT MaLop FROM Lop order by length(MaLop), MaLop";
 		String INSERT_CLASS = "INSERT INTO Lop VALUES (?,?,?,?,?)";

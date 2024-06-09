@@ -286,7 +286,8 @@ tbody, td, tfoot, th, thead, tr {
 .subjectName-edit .removeSubject-icon:hover,
 .className-edit .className-edit-icon:hover,
 .className-edit .removeClass-icon:hover,
-.className-edit .showListStudent-icon:hover {
+.className-edit .showListStudent-icon:hover,
+.changeRule-edit-icon:hover {
 	color: #40E9C0;
 	cursor: pointer;
 }
@@ -3647,6 +3648,8 @@ keyframes progress-bar-stripes {
 .left-sidebar .sidebar-nav ul .sidebar-item .sidebar-link:hover {
 	background-color: rgba(93, 135, 255, 0.1);
 	color: #40e9c0;
+	scale: 1.04;
+	transition: 0.25s;
 }
 
 .sidebar-nav ul .sidebar-item .sidebar-link:hover.has-arrow:after {
@@ -4312,6 +4315,11 @@ ul {
 	color: #40E9C0;
 }
 
+.changeRuleName-edit {
+	border: none;
+}
+
+
 .form {
     width: 360px;
     min-height: 100px;
@@ -4570,7 +4578,17 @@ ul {
 	font-size: 14px;
 }
 
-.modal {
+.rule .card {
+	background-image: linear-gradient(to bottom right, #cdfaef, #fbd0e3);
+	animation: scale ease 0.4s; 
+}
+
+.rule .btn {
+	border: none;
+}
+
+.modal,
+.changeRuleForm {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -4580,9 +4598,11 @@ ul {
     display: none;
     align-items: center;
     justify-content: center;
+    z-index: 100;
 }
 
-.modal.open {
+.modal.open,
+.changeRuleForm.open {
     display: flex;
 }
 

@@ -11,17 +11,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Dao.SubjectDao;
+import Dao.InfoClassDao;
 import Dao.TablePointDao;
 import Model.BangDiem;
+import Model.Lop;
+import Model.Mon;
 
 @WebServlet("/TablePointServlet")
 public class TablePointServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TablePointDao tablePointDao;
+	private SubjectDao subjectDao;
+	private InfoClassDao infoClassDao;
 
 	public TablePointServlet() {
 		this.tablePointDao = new TablePointDao();
+		this.infoClassDao = new InfoClassDao();
+		this.subjectDao = new SubjectDao();
 	}
+
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -39,15 +48,25 @@ public class TablePointServlet extends HttpServlet {
 			break;
 		default:
 			try {
-				selectPoint(request, response);
-			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+				renderClassAndSubject(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
 				e.printStackTrace();
 			}
 			break;
 		}
 	}
-
-	private void selectPoint(HttpServletRequest request, HttpServletResponse response)
+	
+	private void renderClassAndSubject(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException {
+		List<Lop> DSL = infoClassDao.selectAllClass();
+		List<Mon> DSMH = subjectDao.selectAllSubject();
+		request.setAttribute("DSL", DSL);
+		request.setAttribute("DSMH", DSMH);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/tablePoint.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+	private void selectPoint(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String tenLop = request.getParameter("search-lop");
 		String hocKy = request.getParameter("search-hk");
@@ -60,16 +79,19 @@ public class TablePointServlet extends HttpServlet {
 		}
 		if(tenMon == null) {
 			tenMon = "";
-		}		
+		}	
 		List<BangDiem> DSD = tablePointDao.selectPoint(tenLop, Integer.parseInt(hocKy), tenMon);
+		List<Lop> DSL = infoClassDao.selectAllClass();
+		List<Mon> DSMH = subjectDao.selectAllSubject();
+		request.setAttribute("DSL", DSL);
+		request.setAttribute("DSMH", DSMH);
 		request.setAttribute("DSD", DSD);
+		request.setAttribute("nameLop", tenLop);
+		request.setAttribute("nameHocKy", hocKy);
+		request.setAttribute("nameMon", tenMon);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/tablePoint.jsp");
 		dispatcher.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
-	}
 
 }
