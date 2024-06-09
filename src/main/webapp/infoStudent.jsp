@@ -125,7 +125,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">Admin</a>
+							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -271,7 +271,9 @@
 									</c:if>
 									<div class="add-student">
 
-										<button class="btn btn-primary add-student-btn">Thêm
+										<button class="btn btn-primary add-student-btn" <c:if test="${sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>>Thêm
 											học sinh</button>
 									</div>
 
@@ -280,18 +282,18 @@
 										<table id="datatablesInfoStudent" class="datatable-table">
 											<thead>
 												<tr>
-													<th data-sortable="true" style="width: 10%;"><a
+													<th data-sortable="true" style="width: 6%; margin-left: 20px; text-align: center;"><a
 														href="#" class="datatable-sorter">STT</a></th>
 													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 20%;"><a
+														class="datatable-descending" style="width: 24%; text-align: center;"><a
 														href="#" class="datatable-sorter">Tên</a></th>
-													<th data-sortable="true" style="width: 10%;"><a
+													<th data-sortable="true" style="width: 12%; text-align: center;"><a
 														href="#" class="datatable-sorter">Giới Tính</a></th>
-													<th data-sortable="true" style="width: 10%;"><a
+													<th data-sortable="true" style="width: 5%; text-align: center;"><a
 														href="#" class="datatable-sorter">Năm</a></th>
-													<th data-sortable="true" style="width: 25%;"><a
+													<th data-sortable="true" style="width: 20%; text-align: center;"><a
 														href="#" class="datatable-sorter">Địa chỉ</a></th>
-													<th data-sortable="true" style="width: 25%;"><a
+													<th data-sortable="true" style="width: 33%; text-align: center;"><a
 														href="#" class="datatable-sorter">Email</a></th>
 												</tr>
 											</thead>
@@ -299,7 +301,7 @@
 
 												<c:forEach var="HocSinh" items="${DSHS}">
 													<tr>
-														<td><%=i++%></td>
+														<td style="text-align: center;"><%=i++%></td>
 														<td><c:out value="${HocSinh.tenHS}" /></td>
 														<td><c:out value="${HocSinh.gioiTinh}" /></td>
 														<td><c:out value="${HocSinh.namSinh}" /></td>

@@ -18,6 +18,9 @@
 
 </head>
 <body>
+	<%
+	int i = 1;
+	%>
 	<!--  Body Wrapper -->
 	<div class="page-wrapper" id="main-wrapper" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
@@ -43,23 +46,26 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a
-								class="sidebar-link active" href="#" aria-expanded="false">
+								class="sidebar-link active" href="<%=request.getContextPath()%>/changePasswordServlet" aria-expanded="false">
 									<span> <i class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
+
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="./class.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
+
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="./infoStudent.jsp" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/searchStudentServlet" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-magnifying-glass"></i>
+								href="<%=request.getContextPath()%>/searchStudentServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -79,11 +85,13 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/ChangeRule" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-gear"></i>
+								href="<%=request.getContextPath()%>/ChangeRule"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
+
 						<div class="sidebarnav-bottom">
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="./signIn.jsp" aria-expanded="false"> <span> <i
@@ -122,7 +130,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">Admin</a>
+							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -145,12 +153,40 @@
 							<h3 class="account-info-heading">Thông tin tài khoản</h3>
 
 							<div class="spacer"></div>
+							
+							<c:if test="${sessionScope.account.isAdmin == 1}">
 
+							<table id="datatablesChangeRule" class="datatable-table">
+								<thead>
+									<tr>
+										<th data-sortable="true" style="text-align: center;"><a
+											href="#" class="datatable-sorter">STT</a></th>
+										<th data-sortable="true" aria-sort="descending"
+											class="datatable-descending" style="text-align: center;"><a
+											href="#" class="datatable-sorter">Tên tài khoản</a></th>
+										<th data-sortable="true" style="text-align: center;"><a
+											href="#" class="datatable-sorter">Mật khẩu</a></th>
+									</tr>
+								</thead>
+								<tbody>
+								<c:forEach var="acc" items="${DSTK}">
+									<tr>
+										<td style="text-align: center;"><%=i++%></td>
+										<td class="changeRuleName-edit d-flex justify-content-between ps-4"> ${acc.username}
+											<i class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square"></i>
+										</td>
+										<td> ${acc.password}</td>
+									</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+							</c:if>
+							<c:if test="${sessionScope.account.isAdmin != 1}">
 							<div class="account-info-group">
 								<label><i class="account-icon fa-solid fa-user"></i>Tên
 									tài khoản: </label>
 								<div class="account-name">
-									<p class="account-info-text">Admin</p>
+									<p class="account-info-text">${sessionScope.account.username}</p>
 								</div>
 
 							</div>
@@ -159,8 +195,8 @@
 								<label><i class="account-icon fa-solid fa-key"></i>Mật
 									khẩu: </label>
 								<div class="account-pass">
-									<p class="account-info-text account-pass-text__hide">*******</p>
-									<p class="account-info-text account-pass-text__show hidden">123456</p>
+									<p class="account-info-text account-pass-text__hide">${sessionScope.account.password}</p>
+									<p class="account-info-text account-pass-text__show hidden">admin</p>
 									<div class="pass-selection">
 										<i class="show-pass fa-solid fa-eye"></i> <i
 											class="hide-pass fa-solid fa-eye-slash hidden"></i> <i
@@ -168,6 +204,9 @@
 									</div>
 								</div>
 							</div>
+							</c:if>
+
+
 						</div>
 						<c:if test="${not empty requestScope.messageinfo}">
 							<div class="alert alert-success">${requestScope.messageinfo}</div>
@@ -219,13 +258,15 @@
 					<div class="model-input-item">
 						<label for="comfirm-new-password" class="modal-label">Xác
 							nhận mật khẩu mới:</label> <input type="text" id="comfirm-new-password"
-							class="modal-input" placeholder="Xác nhận mật khẩu mới" name="cNewPass">
+							class="modal-input" placeholder="Xác nhận mật khẩu mới"
+							name="cNewPass">
 					</div>
 
 				</div>
 
 				<footer class="modal-footer">
-					<button type="button" class="btn btn-primary cancel-edit-pass-btn btn-cancel">Hủy</button>
+					<button type="button"
+						class="btn btn-primary cancel-edit-pass-btn btn-cancel">Hủy</button>
 					<button type="submit" class="btn btn-primary confirm-edit-pass-btn">Xác
 						nhận</button>
 				</footer>

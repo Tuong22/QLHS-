@@ -6,32 +6,31 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
 import Model.signIn;
 
 public class signInDao {
-	public boolean validate(signIn signInModel) throws ClassNotFoundException {
-		boolean status = false;
-
-		Class.forName("com.mysql.jdbc.Driver");
-
-		try (Connection connection = DriverManager
-				.getConnection("jdbc:mysql://localhost:3306/student_management", "root", "trinhtuantu1723@");
-
-				// Step 2:Create a statement using connection object
-				PreparedStatement preparedStatement = connection
-						.prepareStatement("select * from signin where username = ? and password = ? ")) {
-			preparedStatement.setString(1, signInModel.getUsername());
-			preparedStatement.setString(2, signInModel.getPassword());
-
-			System.out.println(preparedStatement);
-			ResultSet rs = preparedStatement.executeQuery();
-			status = rs.next();
-
-		} catch (SQLException e) {
-			// process sql exception
-			printSQLException(e);
+	private DataSource datasource;
+	
+	public signInDao(DataSource datasource) {
+		this.datasource = datasource;
+	}
+	
+	public signIn Login(String username, String pass) throws SQLException, ClassNotFoundException{
+		
+		String sql = "select * from signin where username = ? and pass = ?";
+		try (Connection connection = datasource.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)){
+			statement.setString(1, username);
+			statement.setString(2, pass);
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				return new signIn(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
+			}
+		} catch (Exception e) {
 		}
-		return status;
+		return null;
 	}
 
 	private void printSQLException(SQLException ex) {

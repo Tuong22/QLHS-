@@ -132,7 +132,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">Admin</a>
+							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -231,7 +231,9 @@
 												<a href="./class.jsp">Quay lại</a>
 											</button>
 											<button
-												class="btn btn-primary list-student-of-class-confirm-btn">
+												class="btn btn-primary list-student-of-class-confirm-btn" <c:if test="${sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>>
 												<a>Thêm học sinh</a>
 											</button>
 										</div>

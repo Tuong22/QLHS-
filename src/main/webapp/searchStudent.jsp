@@ -127,7 +127,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">Admin</a>
+							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -182,16 +182,16 @@
 										<table id="datatablesSearchStudent" class="datatable-table">
 											<thead>
 												<tr>
-													<th data-sortable="true" style="width: 10%;"><a
+													<th data-sortable="true" style="width: 10%; text-align: center; margin-left: 20px;"><a
 														href="#" class="datatable-sorter">STT</a></th>
 													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 25%;"><a
+														class="datatable-descending" style="width: 25%; text-align: center;"><a
 														href="#" class="datatable-sorter">Tên</a></th>
-													<th data-sortable="true" style="width: 15%;"><a
+													<th data-sortable="true" style="width: 15%; text-align: center;"><a
 														href="#" class="datatable-sorter">Lớp</a></th>
-													<th data-sortable="true" style="width: 25%;"><a
+													<th data-sortable="true" style="width: 25%; text-align: center;"><a
 														href="#" class="datatable-sorter">TB HKI</a></th>
-													<th data-sortable="true" style="width: 25%;"><a
+													<th data-sortable="true" style="width: 25%; text-align: center;"><a
 														href="#" class="datatable-sorter">TB HKII</a></th>
 												</tr>
 											</thead>
@@ -199,9 +199,9 @@
 
 												<c:forEach var="HocSinh" items="${DSTCHS}">
 													<tr>
-														<td><%=i++%></td>
+														<td style="text-align: center;"><%=i++%></td>
 														<td><c:out value="${HocSinh.tenHS}" /></td>
-														<td><c:out value="${HocSinh.lop}" /></td>
+														<td style="text-align: center;"><c:out value="${HocSinh.lop}" /></td>
 														<td><c:out value="${HocSinh.tbhk1}" /></td>
 														<td><c:out value="${HocSinh.tbhk2}" /></td>
 													</tr>

@@ -2,8 +2,10 @@ package Web;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +15,9 @@ import javax.sql.DataSource;
 
 import Dao.changePasswordDao;
 import Dao.changeRuleDao;
+import Dao.signInDao;
+import Model.HocSinh;
+import Model.signIn;
 
 @WebServlet("/changePasswordServlet")
 public class changePasswordServlet extends HttpServlet {
@@ -43,8 +48,26 @@ public class changePasswordServlet extends HttpServlet {
                 e.printStackTrace();
             }
             break;
+        default:
+        	try {
+            	renderAccountRoleAdmin(request, response);
+            } catch (ClassNotFoundException | ServletException | IOException e) {
+                e.printStackTrace();
+            }
+            break;
 		}
 	}
+	
+	private void renderAccountRoleAdmin(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException {
+		List<signIn> DSTK = ChangePasswordDao.renderAccountRoleAdmin();
+		request.setAttribute("DSTK", DSTK);
+		request.setAttribute("messageerror", "");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/account.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+	
 	public static final char SPACE = ' ';
     public static final char TAB = '\t';
     public static final char BREAK_LINE = '\n';

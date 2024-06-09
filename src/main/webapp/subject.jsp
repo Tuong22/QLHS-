@@ -129,7 +129,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">Admin</a>
+							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -258,7 +258,9 @@
 										</c:if>
 
 										<div class="add-subject">
-											<button class="btn btn-primary add-subject-btn">Thêm
+											<button class="btn btn-primary add-subject-btn" <c:if test="${sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>>Thêm
 												môn</button>
 										</div>
 
@@ -281,8 +283,12 @@
 															<td><%=i++%></td>
 															<td class="subjectName-edit"><c:out
 																	value="${Mon.tenMH}" /><span><i
-																	class="subjectName-edit-icon fa fa-solid fa-pen-to-square"></i>
-																	<i class="removeSubject-icon fa fa-solid fa-trash-can"></i>
+																	class="subjectName-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
+																	<i class="removeSubject-icon fa fa-solid fa-trash-can" <c:if test="${sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
 															</span></td>
 															<td><c:out value="${Mon.heSo}" /></td>
 														</tr>

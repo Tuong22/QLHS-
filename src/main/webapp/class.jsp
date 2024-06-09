@@ -45,7 +45,7 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top scroll-sidebar p-0">
 							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="./account.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/changePasswordServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
@@ -62,8 +62,9 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/searchStudentServlet" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-magnifying-glass"></i>
+								href="<%=request.getContextPath()%>/searchStudentServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -86,17 +87,18 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/ChangeRule" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-gear"></i>
+								href="<%=request.getContextPath()%>/ChangeRule"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
-							
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="#" aria-expanded="false"> <span>
-										<i class="fas fa-pen-nib"></i>
+
+							<li class="sidebar-item"><a class="sidebar-link" href="#"
+								aria-expanded="false"> <span> <i
+										class="fas fa-pen-nib"></i>
 								</span> <span class="hide-menu">Chấm điểm</span>
 							</a></li>
-							
+
 						</div>
 						<div class="sidebarnav-bottom">
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -105,8 +107,8 @@
 								</span> <span class="hide-menu">Đăng xuất</span>
 							</a></li>
 						</div>
-						
-						
+
+
 
 
 					</ul>
@@ -138,7 +140,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">Admin</a>
+							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -172,17 +174,18 @@
 												<div class="datatable-selection">
 
 
-													<div id="class-semester" class="class-semester-selection mb-3">
+													<div id="class-semester"
+														class="class-semester-selection mb-3">
 														<label for="search-khoi">Khối: </label> <select
 															id="search-khoi" name="search-khoi">
-															
-															<option value = "Khối 10"
+
+															<option value="Khối 10"
 																<c:if test="${nameKhoi == 'Khối 10'}">selected</c:if>>Khối
 																10</option>
-															<option value = "Khối 11"
+															<option value="Khối 11"
 																<c:if test="${nameKhoi == 'Khối 11'}">selected</c:if>>Khối
 																11</option>
-															<option value = "Khối 12"
+															<option value="Khối 12"
 																<c:if test="${nameKhoi == 'Khối 12'}">selected</c:if>>Khối
 																12</option>
 														</select>
@@ -195,9 +198,13 @@
 
 
 												<div class="add-class" style="margin-top: 16px">
-													<button type="button"
-														class="btn btn-primary add-class-btn mt-4 me-4">Thêm
-														lớp</button>
+													
+														<button type="button"
+															class="btn btn-primary add-class-btn mt-4 me-4" <c:if test="${sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>>Thêm
+															lớp</button>
+													
 
 													<button type="button"
 														class="btn btn-primary list-of-class-btn mt-4">
@@ -211,33 +218,41 @@
 											<table id="datatablesClass" class="datatable-table">
 												<thead>
 													<tr>
-														<th data-sortable="true" style="width: 10%;"><a
-															href="#" class="datatable-sorter">STT</a></th>
+														<th data-sortable="true"
+															style="width: 10%; text-align: center;"><a href="#"
+															class="datatable-sorter">STT</a></th>
 														<th data-sortable="true" aria-sort="descending"
-															class="datatable-descending" style="width: 30%;"><a
-															href="#" class="datatable-sorter">Tên Lớp</a></th>
-														<th data-sortable="true" style="width: 20%;"><a
-															href="#" class="datatable-sorter">Sỉ số</a></th>
+															class="datatable-descending"
+															style="width: 30%; text-align: center;"><a href="#"
+															class="datatable-sorter">Tên Lớp</a></th>
+														<th data-sortable="true"
+															style="width: 20%; text-align: center;"><a href="#"
+															class="datatable-sorter">Sỉ số</a></th>
 													</tr>
 												</thead>
 												<tbody>
 
 													<c:forEach var="Lop" items="${DSTCK}">
 														<tr data-index="0">
-															<td><%=i++%></td>
-															<td class="className-edit">${Lop.tenKhoi}<span>
-
-																	<i
+															<td style="text-align: center;"><%=i++%></td>
+															<td class="className-edit" style="margin-left: 30px;">${Lop.tenKhoi}<span>
+																	<i <c:if test="${sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>
 																	class="className-edit-icon fa fa-solid fa-pen-to-square"></i>
-																	<i class="removeClass-icon fa fa-solid fa-trash-can"></i></td>
+																	<i class="removeClass-icon fa fa-solid fa-trash-can" <c:if test="${sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
+																	</td>
 															</span>
-															<td>${Lop.siSo}</td>
+															<td style="text-align: center;">${Lop.siSo}</td>
 														</tr>
 													</c:forEach>
 
 												</tbody>
 											</table>
-											<c:if test="${not empty requestScope.messageErrorClassDelete}">
+											<c:if
+												test="${not empty requestScope.messageErrorClassDelete}">
 												<div id="toast">
 													<div class="toast toast--error">
 														<div class="toast__icon">
@@ -263,7 +278,8 @@
 														</div>
 														<div class="toast__body">
 															<h3 class="toast__title">Thành công</h3>
-															<p class="toast__msg">Xoá lớp không có học sinh thành công.</p>
+															<p class="toast__msg">Xoá lớp không có học sinh thành
+																công.</p>
 														</div>
 														<div class="toast__close">
 															<i class="fa-solid fa-xmark"></i>
@@ -271,7 +287,7 @@
 													</div>
 												</div>
 											</c:if>
-											
+
 
 											<c:if test="${not empty requestScope.messageErrorAddClass}">
 												<div id="toast">
@@ -315,7 +331,8 @@
 														</div>
 														<div class="toast__body">
 															<h3 class="toast__title">Thất bại</h3>
-															<p class="toast__msg">Sửa thông tin lớp không thành công. Tên lớp muốn thay đổi đã tồn tại.</p>
+															<p class="toast__msg">Sửa thông tin lớp không thành
+																công. Tên lớp muốn thay đổi đã tồn tại.</p>
 														</div>
 														<div class="toast__close">
 															<i class="fa-solid fa-xmark"></i>
@@ -353,8 +370,8 @@
 											<h5>Thay đổi tên lớp</h5>
 										</header>
 										<form action="<%=request.getContextPath()%>/infoClassServlet">
-											<input type="hidden" name="action" value="/update">
-											<input class="searchByKhoi" type="hidden" name="tenKhoi">
+											<input type="hidden" name="action" value="/update"> <input
+												class="searchByKhoi" type="hidden" name="tenKhoi">
 											<div class="change-className-container">
 
 												<div class="change-className-group">
@@ -390,14 +407,15 @@
 									</div>
 								</div>
 
-								<div class="card-body remove-class hidden" style="margin-top: 113px;">
+								<div class="card-body remove-class hidden"
+									style="margin-top: 113px;">
 									<div class="card">
 										<header class="remove-class-top">
 											<h5>Bạn có chắc chắn xóa lớp</h5>
 										</header>
 										<form action="<%=request.getContextPath()%>/infoClassServlet">
-											<input type="hidden" name="action" value="/delete">
-											<input class="searchByKhoi" type="hidden" name="tenKhoi">
+											<input type="hidden" name="action" value="/delete"> <input
+												class="searchByKhoi" type="hidden" name="tenKhoi">
 											<div class="remove-class-container">
 
 												<div class="remove-class-group">
@@ -444,8 +462,8 @@
 
 			<header class="modal-header"> Thêm lớp mới </header>
 			<form action="<%=request.getContextPath()%>/infoClassServlet">
-				<input type="hidden" name="action" value="/insert">
-				<input class="searchByKhoi" type="hidden" name="tenKhoi">
+				<input type="hidden" name="action" value="/insert"> <input
+					class="searchByKhoi" type="hidden" name="tenKhoi">
 				<div class="modal-body">
 					<div class="model-input-item">
 						<label for="new-class" class="modal-label">Tên lớp:</label> <input
@@ -466,7 +484,8 @@
 				</div>
 
 				<footer class="modal-footer">
-					<button type="button" class="btn btn-primary cancel-add-class-btn btn-cancel">Hủy</button>
+					<button type="button"
+						class="btn btn-primary cancel-add-class-btn btn-cancel">Hủy</button>
 					<button type="submit" class="btn btn-primary confirm-add-class-btn">Xác
 						nhận</button>
 				</footer>
@@ -509,119 +528,160 @@
 			event.stopPropagation()
 		})
 	</script>
-	
+
 	<script>
+		const editClassNameBtns = document
+				.querySelectorAll(".className-edit-icon")
+		const removeClassBtns = document.querySelectorAll(".removeClass-icon")
+		const showListStudentBtns = document
+				.querySelectorAll(".showListStudent-icon")
 
-	const editClassNameBtns = document.querySelectorAll(".className-edit-icon")
-	const removeClassBtns = document.querySelectorAll(".removeClass-icon")
-	const showListStudentBtns = document.querySelectorAll(".showListStudent-icon")
+		const classNameEdits = document.querySelectorAll(".className-edit")
+		const classListData = document
+				.querySelector(".card-body.class-list-data")
+		const showListStudentForm = document
+				.querySelector(".card-body.show-student-of-class")
+		const changeClassNameForm = document
+				.querySelector(".card-body.change-className")
+		const removeClassForm = document
+				.querySelector(".card-body.remove-class")
 
-	const classNameEdits = document.querySelectorAll(".className-edit")
-	const classListData = document.querySelector(".card-body.class-list-data")
-	const showListStudentForm = document.querySelector(".card-body.show-student-of-class")
-	const changeClassNameForm = document.querySelector(".card-body.change-className")
-	const removeClassForm = document.querySelector(".card-body.remove-class")
+		const cancelChangeNameBtn = document
+				.querySelector(".change-className-cancel-btn")
+		const cancelRemoveNameBtn = document
+				.querySelector(".remove-class-cancel-btn")
 
-	const cancelChangeNameBtn = document.querySelector(".change-className-cancel-btn")
-	const cancelRemoveNameBtn = document.querySelector(".remove-class-cancel-btn")
+		const searchClassBtn = document.querySelector(".search-class-btn")
+		const addClassBtn = document.querySelector(".add-class-btn")
 
-	const searchClassBtn = document.querySelector(".search-class-btn")
-	const addClassBtn = document.querySelector(".add-class-btn")
-
-	function getParent(element, selector) {
-		while (element.parentElement) {
-			if (element.parentElement.matches(selector)) {
-				return element.parentElement
+		function getParent(element, selector) {
+			while (element.parentElement) {
+				if (element.parentElement.matches(selector)) {
+					return element.parentElement
+				}
+				element = element.parentElement
 			}
-			element = element.parentElement
 		}
-	}
 
-	showListStudentBtns.forEach(function(showListStudentBtn) {
-		classListData.style.width = '0'
-		showListStudentForm.classList.remove('hidden')
-	})
+		showListStudentBtns.forEach(function(showListStudentBtn) {
+			classListData.style.width = '0'
+			showListStudentForm.classList.remove('hidden')
+		})
 
-	editClassNameBtns.forEach(function(editClassNameBtn) {
-		editClassNameBtn.addEventListener('click', function() {
-			classListData.style.width = '50%'
-			changeClassNameForm.classList.remove('hidden')
+		editClassNameBtns
+				.forEach(function(editClassNameBtn) {
+					editClassNameBtn
+							.addEventListener(
+									'click',
+									function() {
+										classListData.style.width = '50%'
+										changeClassNameForm.classList
+												.remove('hidden')
+										classNameEdits.forEach(function(
+												classNameEdit) {
+											classNameEdit.classList
+													.remove("active")
+										});
+										removeClassBtns.forEach(function(
+												removeClassBtn) {
+											removeClassBtn.classList
+													.add("hidden")
+										})
+										showListStudentBtns.forEach(function(
+												showListStudentBtn) {
+											showListStudentBtn.classList
+													.add("hidden")
+										})
+										getParent(editClassNameBtn,
+												".className-edit").classList
+												.add("active")
+										searchClassBtn.classList.add("hidden")
+										addClassBtn.classList.add("hidden")
+										document
+												.getElementById("classNameOld")
+												.setAttribute(
+														"value",
+														getParent(
+																editClassNameBtn,
+																".className-edit").textContent)
+									})
+				});
+
+		removeClassBtns.forEach(function(removeClassBtn) {
+			removeClassBtn.addEventListener('click',
+					function() {
+						classListData.style.width = '50%'
+						removeClassForm.classList.remove('hidden')
+						classNameEdits.forEach(function(classNameEdit) {
+							classNameEdit.classList.remove("active")
+						});
+						editClassNameBtns.forEach(function(editClassNameBtn) {
+							editClassNameBtn.classList.add("hidden")
+						});
+						showListStudentBtns
+								.forEach(function(showListStudentBtn) {
+									showListStudentBtn.classList.add("hidden")
+								})
+						getParent(removeClassBtn, ".className-edit").classList
+								.add("active")
+						searchClassBtn.classList.add("hidden")
+						addClassBtn.classList.add("hidden")
+						document.getElementById("classNameRemove")
+								.setAttribute(
+										"value",
+										getParent(removeClassBtn,
+												".className-edit").textContent)
+					})
+		});
+
+		cancelChangeNameBtn.addEventListener('click', function() {
+			classListData.style.width = '100%'
+			changeClassNameForm.classList.add('hidden')
 			classNameEdits.forEach(function(classNameEdit) {
 				classNameEdit.classList.remove("active")
 			});
 			removeClassBtns.forEach(function(removeClassBtn) {
-				removeClassBtn.classList.add("hidden")
+				removeClassBtn.classList.remove("hidden")
 			})
 			showListStudentBtns.forEach(function(showListStudentBtn) {
-				showListStudentBtn.classList.add("hidden")
+				showListStudentBtn.classList.remove("hidden")
 			})
-			getParent(editClassNameBtn, ".className-edit").classList.add("active")
-			searchClassBtn.classList.add("hidden")
-			addClassBtn.classList.add("hidden")
-			document.getElementById("classNameOld").setAttribute("value", getParent(editClassNameBtn, ".className-edit").textContent)
-		})
-	});
+			searchClassBtn.classList.remove("hidden")
+			addClassBtn.classList.remove("hidden")
+		});
 
-	removeClassBtns.forEach(function(removeClassBtn) {
-		removeClassBtn.addEventListener('click', function() {
-			classListData.style.width = '50%'
-			removeClassForm.classList.remove('hidden')
+		cancelRemoveNameBtn.addEventListener('click', function() {
+			classListData.style.width = '100%'
+			removeClassForm.classList.add('hidden')
 			classNameEdits.forEach(function(classNameEdit) {
 				classNameEdit.classList.remove("active")
 			});
 			editClassNameBtns.forEach(function(editClassNameBtn) {
-				editClassNameBtn.classList.add("hidden")
+				editClassNameBtn.classList.remove("hidden")
 			});
 			showListStudentBtns.forEach(function(showListStudentBtn) {
-				showListStudentBtn.classList.add("hidden")
+				showListStudentBtn.classList.remove("hidden")
 			})
-			getParent(removeClassBtn, ".className-edit").classList.add("active")
-			searchClassBtn.classList.add("hidden")
-			addClassBtn.classList.add("hidden")
-			document.getElementById("classNameRemove").setAttribute("value", getParent(removeClassBtn, ".className-edit").textContent)
-		})
-	});
-
-
-	cancelChangeNameBtn.addEventListener('click', function() {
-		classListData.style.width = '100%'
-		changeClassNameForm.classList.add('hidden')
-		classNameEdits.forEach(function(classNameEdit) {
-			classNameEdit.classList.remove("active")
+			searchClassBtn.classList.remove("hidden")
+			addClassBtn.classList.remove("hidden")
 		});
-		removeClassBtns.forEach(function(removeClassBtn) {
-			removeClassBtn.classList.remove("hidden")
-		})
-		showListStudentBtns.forEach(function(showListStudentBtn) {
-			showListStudentBtn.classList.remove("hidden")
-		})
-		searchClassBtn.classList.remove("hidden")
-		addClassBtn.classList.remove("hidden")
-	});
-
-	cancelRemoveNameBtn.addEventListener('click', function() {
-		classListData.style.width = '100%'
-		removeClassForm.classList.add('hidden')
-		classNameEdits.forEach(function(classNameEdit) {
-			classNameEdit.classList.remove("active")
-		});
-		editClassNameBtns.forEach(function(editClassNameBtn) {
-			editClassNameBtn.classList.remove("hidden")
-		});
-		showListStudentBtns.forEach(function(showListStudentBtn) {
-			showListStudentBtn.classList.remove("hidden")
-		})
-		searchClassBtn.classList.remove("hidden")
-		addClassBtn.classList.remove("hidden")
-	});
 	</script>
-	
+
 	<script>
-	let input = document.querySelectorAll('.searchByKhoi')
-	let select = document.getElementById('search-khoi')
-	const options = select.options;
-	console.log(input)
-	select.addEventListener("change", function() {
+		let input = document.querySelectorAll('.searchByKhoi')
+		let select = document.getElementById('search-khoi')
+		const options = select.options;
+		console.log(input)
+		select.addEventListener("change", function() {
+			for (let i = 0; i < options.length; i++) {
+				if (options[i].selected) {
+					for (let e = 0; e < input.length; e++) {
+						input[e].setAttribute("value", options[i].value)
+					}
+					break;
+				}
+			}
+		})
 		for (let i = 0; i < options.length; i++) {
 			if (options[i].selected) {
 				for (let e = 0; e < input.length; e++) {
@@ -630,17 +690,7 @@
 				break;
 			}
 		}
-	})
-	for (let i = 0; i < options.length; i++) {
-			if (options[i].selected) {
-				for (let e = 0; e < input.length; e++) {
-					input[e].setAttribute("value", options[i].value)
-				}
-				break;
-			}
-	}
-        
-    </script>
+	</script>
 
 </body>
 </html>

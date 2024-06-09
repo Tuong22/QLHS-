@@ -127,7 +127,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">Admin</a>
+							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -148,8 +148,8 @@
 							<div class="card-header">Thay đổi quy định</div>
 							<div class="card-body">
 								<div class="datatable-wrapper">
-									<h3 style="text-align: center;">Tiêu chuẩn của các quy
-										định hiện tại</h3>
+									<h3 class="text-center mb-4">Tiêu chuẩn của các quy định
+										hiện tại</h3>
 
 									<div class="datatable-container">
 										<table id="datatablesChangeRule" class="datatable-table">
@@ -170,117 +170,127 @@
 											<tbody>
 												<tr>
 													<td style="text-align: center;"><%=i++%></td>
-													<td class="changeRuleName-edit" style="padding-left: 20px;">Tuổi
+													<td
+														class="changeRuleName-edit d-flex justify-content-between ps-4">Tuổi
 														tối đa <span> <i
-															class="changeRule-edit-icon fa fa-solid fa-pen-to-square"></i>
-															<i class="removeChangeRule-icon fa fa-solid fa-trash-can"></i></span>
+															class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
 													</td>
 													<td style="text-align: center;">${CR.tuoiHSToiDa}</td>
 												</tr>
 												<tr>
 													<td style="text-align: center;"><%=i++%></td>
-													<td class="changeRuleName-edit" style="padding-left: 20px;">Tuổi
+													<td
+														class="changeRuleName-edit d-flex justify-content-between ps-4">Tuổi
 														tối thiểu<span> <i
-															class="changeRule-edit-icon fa fa-solid fa-pen-to-square"></i>
-															<i class="removeChangeRule-icon fa fa-solid fa-trash-can"></i></span>
+															class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
 													</td>
 													<td style="text-align: center;">${CR.tuoiHSToiThieu}</td>
 												</tr>
 												<tr>
 													<td style="text-align: center;"><%=i++%></td>
-													<td class="changeRuleName-edit" style="padding-left: 20px;">Sĩ
+													<td
+														class="changeRuleName-edit d-flex justify-content-between ps-4">Sĩ
 														số tối đa<span> <i
-															class="changeRule-edit-icon1 fa fa-solid fa-pen-to-square"></i>
-															<i class="removeChangeRule-icon fa fa-solid fa-trash-can"></i></span>
+															class="changeRule2 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
 													</td>
 													<td style="text-align: center;">${CR.soLuongHSToiDa}</td>
 												</tr>
 												<tr>
 													<td style="text-align: center;"><%=i++%></td>
-													<td class="changeRuleName-edit" style="padding-left: 20px;">Điểm
+													<td
+														class="changeRuleName-edit d-flex justify-content-between ps-4">Điểm
 														tối đa<span> <i
-															class="changeRule-edit-icon2 fa fa-solid fa-pen-to-square"></i>
-															<i class="removeChangeRule-icon fa fa-solid fa-trash-can"></i></span>
+															class="changeRule3 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
 													</td>
 													<td style="text-align: center;">${CR.diemToiDa}</td>
 												</tr>
 												<tr>
 													<td style="text-align: center;"><%=i++%></td>
-													<td class="changeRuleName-edit" style="padding-left: 20px;">Điểm
+													<td
+														class="changeRuleName-edit d-flex justify-content-between ps-4">Điểm
 														tối thiểu<span> <i
-															class="changeRule-edit-icon2 fa fa-solid fa-pen-to-square"></i>
-															<i class="removeChangeRule-icon fa fa-solid fa-trash-can"></i></span>
+															class="changeRule3 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
 													</td>
 													<td style="text-align: center;">${CR.diemToiThieu}</td>
 												</tr>
 												<tr>
 													<td style="text-align: center;"><%=i++%></td>
-													<td class="changeRuleName-edit" style="padding-left: 20px;">Điểm
-														đạt<span> <i
-															class="changeRule-edit-icon3 fa fa-solid fa-pen-to-square"></i>
-															<i class="removeChangeRule-icon fa fa-solid fa-trash-can"></i></span>
+													<td
+														class="changeRuleName-edit d-flex justify-content-between ps-4">Điểm
+														đạt<span> 
+														<i class="changeRule4 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
 													</td>
 													<td style="text-align: center;">${CR.diemDat}</td>
 												</tr>
 											</tbody>
 										</table>
 									</div>
-									<div class="right-sidebar">
-											<div id="QD1" class="rule">
-												<div class="card">
-													<header class="change-rule-top">
-														<h5>Thay đổi số tuổi tối thiểu, tuổi tối đa</h5>
-													</header>
-													<form action="<%=request.getContextPath()%>/ChangeRule">
-														<input type="hidden" name="action" value="/updateTuoi">
-														<div class="change-rule-container">
 
-															<div class="change-rule-group rule1-min-age">
-																<label for="min-age-rule">Nhập tuổi tối thiểu:</label> <select
-																	id="min-age-rule" name="tuoiHSToiThieu">
-																	<option>10</option>
-																	<option>11</option>
-																	<option>12</option>
-																	<option>13</option>
-																	<option>14</option>
-																	<option>15</option>
-																</select>
+									<div id="QD1" class="changeRuleForm">
+										<div class="rule">
+											<div class="card">
+												<header class="change-rule-top">
+													<h5>Thay đổi số tuổi tối thiểu, tuổi tối đa</h5>
+												</header>
+												<form action="<%=request.getContextPath()%>/ChangeRule">
+													<input type="hidden" name="action" value="/updateTuoi">
+													<div class="change-rule-container">
 
-
-															</div>
+														<div class="change-rule-group rule1-min-age">
+															<label for="min-age-rule">Nhập tuổi tối thiểu:</label> <select
+																id="min-age-rule" name="tuoiHSToiThieu">
+																<option>10</option>
+																<option>11</option>
+																<option>12</option>
+																<option>13</option>
+																<option>14</option>
+																<option>15</option>
+															</select>
 
 
-															<div class="change-rule-group rule1-max-age">
-																<label for="max-age-rule">Nhập tuổi tối đa:</label> <select
-																	id="max-age-rule" name="tuoiHSToiDa">
-																	<option>20</option>
-																	<option>21</option>
-																	<option>22</option>
-																	<option>23</option>
-																	<option>24</option>
-																	<option>25</option>
-																</select>
-															</div>
 														</div>
 
-
-														<div class="change-rule-bottom">
-															<div class="change-rule-confirm">
-																<button type="button"
-																	class="btn btn-primary change-rule-cancel-btn btn-cancel">Hủy</button>
-																<button type="submit"
-																	class="btn btn-primary change-rule-confirm-btn">Xác
-																	nhận</button>
-															</div>
+														<div class="change-rule-group rule1-max-age">
+															<label for="max-age-rule">Nhập tuổi tối đa:</label> <select
+																id="max-age-rule" name="tuoiHSToiDa">
+																<option>20</option>
+																<option>21</option>
+																<option>22</option>
+																<option>23</option>
+																<option>24</option>
+																<option>25</option>
+															</select>
 														</div>
-													</form>
-												</div>
+													</div>
 
+													<div class="change-rule-bottom">
+														<div class="change-rule-confirm">
+															<button type="button"
+																class="btn btn-primary change-rule-cancel-btn btn-cancel">Hủy</button>
+															<button type="submit"
+																class="btn btn-primary change-rule-confirm-btn">Xác
+																nhận</button>
+														</div>
+													</div>
+												</form>
 											</div>
 										</div>
-										
-										<div class="right-sidebar1">
-											<div id="QD2" class="rule">
+									</div>
+
+									<div id="QD2" class="changeRuleForm">
+										<div class="rule">
 											<div class="card">
 												<header class="change-rule-top">
 													<h5>Thay đổi sỉ số tối đa của các lớp</h5>
@@ -296,12 +306,11 @@
 																<option>40</option>
 															</select>
 														</div>
-
 													</div>
 													<div class="change-rule-bottom">
 														<div class="change-rule-confirm">
 															<button type="button"
-																class="btn btn-primary change-rule-cancel-btn1 btn-cancel">Hủy</button>
+																class="btn btn-primary change-rule-cancel-btn btn-cancel">Hủy</button>
 															<button type="submit"
 																class="btn btn-primary change-rule-confirm-btn">Xác
 																nhận</button>
@@ -310,10 +319,11 @@
 												</form>
 											</div>
 										</div>
-										</div>
-										
-										<div class="right-sidebar2">
-										<div class="card">
+									</div>
+
+									<div id="QD3" class="changeRuleForm">
+										<div class="rule">
+											<div class="card">
 												<header class="change-rule-top">
 													<h5>Thay đổi điểm tối thiểu, điểm tối đa</h5>
 												</header>
@@ -342,11 +352,10 @@
 														</div>
 													</div>
 
-
 													<div class="change-rule-bottom">
 														<div class="change-rule-confirm">
 															<button type="button"
-																class="btn btn-primary change-rule-cancel-btn2 btn-cancel">Hủy</button>
+																class="btn btn-primary change-rule-cancel-btn btn-cancel">Hủy</button>
 															<button type="submit"
 																class="btn btn-primary change-rule-confirm-btn">Xác
 																nhận</button>
@@ -355,9 +364,10 @@
 												</form>
 											</div>
 										</div>
-										
-										<div class="right-sidebar3">
-										<div id="QD3" class="rule">
+									</div>
+
+									<div id="QD4" class="changeRuleForm">
+										<div class="rule">
 											<div class="card">
 												<header class="change-rule-top">
 													<h5>Thay đổi điểm đạt môn</h5>
@@ -378,7 +388,7 @@
 													<div class="change-rule-bottom">
 														<div class="change-rule-confirm">
 															<button type="button"
-																class="btn btn-primary change-rule-cancel-btn3 btn-cancel">Hủy</button>
+																class="btn btn-primary change-rule-cancel-btn btn-cancel">Hủy</button>
 															<button type="submit"
 																class="btn btn-primary change-rule-confirm-btn">Xác
 																nhận</button>
@@ -387,110 +397,89 @@
 												</form>
 											</div>
 										</div>
-										</div>
-
-
 									</div>
+
+
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
-			<!-- Change rule end -->
 
 		</div>
-		<!--  Main wrapper -->
+		<!-- Change rule end -->
 
 	</div>
+	<!--  Main wrapper -->
 
 
 
 	<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
-
-
 	<script src="./js/app.js"></script>
-	<script src="./js/changeRule.js"></script>
 	<script src="./js/pagination.js"></script>
-
 	<script>
-	document.addEventListener('DOMContentLoaded', function() {
-	    const editIcons = document.querySelectorAll('.changeRule-edit-icon');
-	    const editIcons1 = document.querySelectorAll('.changeRule-edit-icon1');
-	    const editIcons2 = document.querySelectorAll('.changeRule-edit-icon2');
-	    const editIcons3 = document.querySelectorAll('.changeRule-edit-icon3');
-	    const rightSidebars = document.querySelectorAll('.right-sidebar');
-	    const rightSidebars1 = document.querySelectorAll('.right-sidebar1');
-	    const rightSidebars2 = document.querySelectorAll('.right-sidebar2');
-	    const rightSidebars3 = document.querySelectorAll('.right-sidebar3');
-	    const cancelButtons = document.querySelectorAll('.change-rule-cancel-btn');
-	    const cancelButtons1 = document.querySelectorAll('.change-rule-cancel-btn1');
-	    const cancelButtons2 = document.querySelectorAll('.change-rule-cancel-btn2');
-	    const cancelButtons3 = document.querySelectorAll('.change-rule-cancel-btn3');
+	const changeRule1 = document.querySelectorAll('.changeRule1')
+	const changeRule2 = document.querySelector('.changeRule2')
+	const changeRule3 = document.querySelectorAll('.changeRule3')
+	const changeRule4 = document.querySelector('.changeRule4')
+	const changeRuleForm1 = document.getElementById('QD1')
+	const changeRuleForm2 = document.getElementById('QD2')
+	const changeRuleForm3 = document.getElementById('QD3')
+	const changeRuleForm4 = document.getElementById('QD4')
+	const changeRuleFormContainer = document.querySelectorAll('.rule')
+	const cancelChangeRuleBtn = document.querySelectorAll('.change-rule-cancel-btn')
+	const changeRuleForms = document.querySelectorAll('.changeRuleForm')
 
-	    editIcons.forEach(function(editIcon) {
-	        editIcon.addEventListener('click', function() {
-	            rightSidebars.forEach(function(rightSidebar) {
-	                rightSidebar.classList.toggle('show-sidebar');
-	            });
-	        });
-	    });
-	    
-	    editIcons1.forEach(function(editIcon) {
-	        editIcon.addEventListener('click', function() {
-	            rightSidebars1.forEach(function(rightSidebar) {
-	                rightSidebar.classList.toggle('show-sidebar1');
-	            });
-	        });
-	    });
-	    
-	    editIcons2.forEach(function(editIcon) {
-	        editIcon.addEventListener('click', function() {
-	            rightSidebars2.forEach(function(rightSidebar) {
-	                rightSidebar.classList.toggle('show-sidebar2');
-	            });
-	        });
-	    });
-	    
-	    editIcons3.forEach(function(editIcon) {
-	        editIcon.addEventListener('click', function() {
-	            rightSidebars3.forEach(function(rightSidebar) {
-	                rightSidebar.classList.toggle('show-sidebar3');
-	            });
-	        });
-	    });
-
-	    cancelButtons.forEach(function(cancelButton) {
-	        cancelButton.addEventListener('click', function() {
-	            rightSidebars.forEach(function(rightSidebar) {
-	                rightSidebar.classList.remove('show-sidebar');
-	            });
-	        });
-	    });
-	    
-	    cancelButtons1.forEach(function(cancelButton) {
-	        cancelButton.addEventListener('click', function() {
-	            rightSidebars1.forEach(function(rightSidebar) {
-	                rightSidebar.classList.remove('show-sidebar1');
-	            });
-	        });
-	    });
-	    cancelButtons2.forEach(function(cancelButton) {
-	        cancelButton.addEventListener('click', function() {
-	            rightSidebars2.forEach(function(rightSidebar) {
-	                rightSidebar.classList.remove('show-sidebar2');
-	            });
-	        });
-	    });
-	    cancelButtons3.forEach(function(cancelButton) {
-	        cancelButton.addEventListener('click', function() {
-	            rightSidebars3.forEach(function(rightSidebar) {
-	                rightSidebar.classList.remove('show-sidebar3');
-	            });
-	        });
-	    });
+	changeRule1.forEach(function(item) {
+		item.addEventListener('click', () => {
+			changeRuleForm1.classList.add('open')
+		})
 	});
+
+	changeRule2.addEventListener('click', () => {
+		changeRuleForm2.classList.add('open')
+	})
+	
+	changeRule3.forEach(function(item) {
+		item.addEventListener('click', () => {
+			changeRuleForm3.classList.add('open')
+		})
+	});
+	
+	changeRule4.addEventListener('click', () => {
+		changeRuleForm4.classList.add('open')
+	})
+	
+	
+	changeRuleForm1.addEventListener('click', () => {
+		changeRuleForm1.classList.remove('open')
+	})
+	changeRuleForm2.addEventListener('click', () => {
+		changeRuleForm2.classList.remove('open')
+	})
+	
+	changeRuleForm3.addEventListener('click', () => {
+		changeRuleForm3.classList.remove('open')
+	})
+	changeRuleForm4.addEventListener('click', () => {
+		changeRuleForm4.classList.remove('open')
+	})
+	
+	changeRuleFormContainer.forEach(function(item) {
+		item.addEventListener('click', (event) => {event.stopPropagation()})
+	});
+	
+	cancelChangeRuleBtn.forEach(function(item) {
+		item.addEventListener('click', () => {
+			changeRuleForms.forEach(function(changeRuleForm) {
+				if(changeRuleForm.classList.contains("open")) {
+					changeRuleForm.classList.remove('open')
+				}
+			});
+		})
+	});
+	
 	</script>
 
 </body>
