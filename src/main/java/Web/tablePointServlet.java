@@ -14,7 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import Dao.infoClassDao;
+import Dao.infoSubjectDao;
 import Dao.tablePointDao;
+import Model.Lop;
+import Model.Mon;
 import Model.TraCuuKhoi;
 import Model.tablePointSubjectClass;
 
@@ -23,6 +26,8 @@ public class tablePointServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private tablePointDao TablePointDao;
+	private infoSubjectDao InfoSubjectDao;
+	private infoClassDao InfoClassDao;
 	@Resource(name="jdbc/student_management")
 	private DataSource datasource;
        
@@ -30,6 +35,8 @@ public class tablePointServlet extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 		TablePointDao = new tablePointDao(datasource);
+		InfoSubjectDao = new infoSubjectDao(datasource);
+		InfoClassDao = new infoClassDao(datasource);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -48,13 +55,22 @@ public class tablePointServlet extends HttpServlet {
 			break;
 		default:
 			try {
-				selectPoint(request, response);
-			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+				renderClassAndSubject(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
 				e.printStackTrace();
 			}
 			break;
 		}
-		
+	}
+	
+	private void renderClassAndSubject(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException {
+		List<Lop> DSL = InfoClassDao.selectAllClass();
+		List<Mon> DSMH = InfoSubjectDao.selectAllSubject();
+		request.setAttribute("DSL", DSL);
+		request.setAttribute("DSMH", DSMH);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/tablePoint.jsp");
+		dispatcher.forward(request, response);
 	}
 	
 	private void selectPoint(HttpServletRequest request, HttpServletResponse response) 
@@ -72,6 +88,10 @@ public class tablePointServlet extends HttpServlet {
 			tenMon = "";
 		}	
 		List<tablePointSubjectClass> DSD = TablePointDao.selectPoint(tenLop, Integer.parseInt(hocKy), tenMon);
+		List<Lop> DSL = InfoClassDao.selectAllClass();
+		List<Mon> DSMH = InfoSubjectDao.selectAllSubject();
+		request.setAttribute("DSL", DSL);
+		request.setAttribute("DSMH", DSMH);
 		request.setAttribute("DSD", DSD);
 		request.setAttribute("nameLop", tenLop);
 		request.setAttribute("nameHocKy", hocKy);

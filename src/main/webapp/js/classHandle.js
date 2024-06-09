@@ -3,11 +3,9 @@ const editClassNameBtns = document.querySelectorAll(".className-edit-icon")
 const removeClassBtns = document.querySelectorAll(".removeClass-icon")
 const showListStudentBtns = document.querySelectorAll(".showListStudent-icon")
 
-
 const classNameEdits = document.querySelectorAll(".className-edit")
-
-
 const classListData = document.querySelector(".card-body.class-list-data")
+const showListStudentForm = document.querySelector(".card-body.show-student-of-class")
 const changeClassNameForm = document.querySelector(".card-body.change-className")
 const removeClassForm = document.querySelector(".card-body.remove-class")
 
@@ -26,6 +24,10 @@ function getParent(element, selector) {
 	}
 }
 
+showListStudentBtns.forEach(function(showListStudentBtn) {
+	classListData.style.width = '0'
+	showListStudentForm.classList.remove('hidden')
+})
 
 editClassNameBtns.forEach(function(editClassNameBtn) {
 	editClassNameBtn.addEventListener('click', function() {

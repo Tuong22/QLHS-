@@ -131,4 +131,3 @@ Pagination(datatablesSearchStudent)
 Pagination(datatablesSubject)
 Pagination(datatablesPoint)
 Pagination(datatablesListStudent)
-

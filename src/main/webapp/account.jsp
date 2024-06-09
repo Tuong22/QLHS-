@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,8 +30,8 @@
 				<div
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
-						class="logo-img" src="./image/logo.jpg" alt="">
-						Quản lý học sinh
+						class="logo-img" src="./image/logo.jpg" alt=""> Quản lý học
+						sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -39,45 +42,45 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a class="sidebar-link active"
-								href="#" aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-user"></i>
+							<li class="sidebar-item mg-l-4"><a
+								class="sidebar-link active" href="#" aria-expanded="false">
+									<span> <i class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./class.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./class.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./infoStudent.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-graduation-cap"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./infoStudent.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./searchStudent.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-magnifying-glass"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="<%=request.getContextPath()%>/searchStudentServlet" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./subject.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./subject.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./tablePoint.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-table"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./tablePoint.jsp" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
-							<li class="sidebar-item"><a class="sidebar-link" href="./report.jsp"
-								aria-expanded="false"> <span> <i
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="./report.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./changeRule.jsp"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-gear"></i>
+							<li class="sidebar-item"><a class="sidebar-link"
+								href="<%=request.getContextPath()%>/ChangeRule" aria-expanded="false"> <span>
+										<i class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
@@ -166,12 +169,19 @@
 								</div>
 							</div>
 						</div>
+						<c:if test="${not empty requestScope.messageinfo}">
+							<div class="alert alert-success">${requestScope.messageinfo}</div>
+						</c:if>
+						<c:if test="${not empty requestScope.messageerror}">
+							<div class="alert alert-danger">${requestScope.messageerror}</div>
+						</c:if>
 
 
 						<footer class="account-info-footer">
 							<span>Last update: </span>
 							<p class="account-last-update">28/05/2024</p>
 						</footer>
+
 					</div>
 
 				</div>
@@ -187,36 +197,40 @@
 
 	<!-- Modal edit password -->
 	<div class="modal edit-pass-modal">
-		<div class="modal-container edit-pass-modal-container">
 
-			<div class="icon-close js-modal-edit-pass-close">
-				<i class="modal-icon-close fa-solid fa-xmark"></i>
-			</div>
+		<form action="<%=request.getContextPath()%>/changePasswordServlet">
+			<input type="hidden" name="action" value="/updatePass">
+			<div class="modal-container edit-pass-modal-container">
 
-			<header class="modal-header"> Đổi mật khẩu </header>
-
-			<div class="modal-body">
-				<div class="model-input-item">
-					<label for="new-password" class="modal-label">Mật khẩu mới:</label>
-					<input type="text" id="new-password" class="modal-input"
-						placeholder="Mật khẩu mới">
+				<div class="icon-close js-modal-edit-pass-close">
+					<i class="modal-icon-close fa-solid fa-xmark"></i>
 				</div>
 
+				<header class="modal-header"> Đổi mật khẩu </header>
 
-				<div class="model-input-item">
-					<label for="comfirm-new-password" class="modal-label">Xác
-						nhận mật khẩu mới:</label> <input type="text" id="comfirm-new-password"
-						class="modal-input" placeholder="Xác nhận mật khẩu mới">
+
+				<div class="modal-body">
+					<div class="model-input-item">
+						<label for="new-password" class="modal-label">Mật khẩu
+							mới:</label> <input type="text" id="new-password" class="modal-input"
+							placeholder="Mật khẩu mới" name="newPass">
+					</div>
+
+					<div class="model-input-item">
+						<label for="comfirm-new-password" class="modal-label">Xác
+							nhận mật khẩu mới:</label> <input type="text" id="comfirm-new-password"
+							class="modal-input" placeholder="Xác nhận mật khẩu mới" name="cNewPass">
+					</div>
+
 				</div>
 
+				<footer class="modal-footer">
+					<button type="button" class="btn btn-primary cancel-edit-pass-btn btn-cancel">Hủy</button>
+					<button type="submit" class="btn btn-primary confirm-edit-pass-btn">Xác
+						nhận</button>
+				</footer>
 			</div>
-
-			<footer class="modal-footer">
-				<button class="btn btn-primary cancel-edit-pass-btn">Hủy</button>
-				<button class="btn btn-primary confirm-edit-pass-btn">Xác
-					nhận</button>
-			</footer>
-		</div>
+		</form>
 	</div>
 
 

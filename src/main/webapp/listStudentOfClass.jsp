@@ -33,8 +33,8 @@
 				<div
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
-						class="logo-img" src="./image/logo.jpg" alt="">
-						Quản lý học sinh
+						class="logo-img" src="./image/logo.jpg" alt=""> Quản lý học
+						sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -46,7 +46,7 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="#" aria-expanded="false"> <span> <i
+								href="account.jsp" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
@@ -63,7 +63,7 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/searchStudentServlet" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
@@ -87,8 +87,9 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./changeRule.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-gear"></i>
+								href="<%=request.getContextPath()%>/ChangeRule"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
@@ -163,23 +164,31 @@
 												action="<%=request.getContextPath()%>/listStudentOfClassServlet">
 												<input type="hidden" name="action" value="/show">
 												<div class="datatable-top-group">
-													<input class="" placeholder="Tên lớp" type="text"
-														name="search-lop" <c:if test="${not empty searchClass}">value="${searchClass}"</c:if>>
+													<label for="search-Class" style="margin-right: 20px;">Tên
+														lớp: </label> <select class="search-class" name="search-lop"
+														style="margin-bottom: 50px;">
+														<c:forEach var="c" items="${DSL}">
+															<option <c:if test="${searchClass == c.tenLop}">selected</c:if>>${c.tenLop}</option>
+														</c:forEach>
+
+													</select>
 												</div>
 
+
+
+												<div class="datatable-top-group">
+													<p class="">
+														Sỉ số:
+														<c:out value="${siso}" />
+													</p>
+												</div>
 												<div class="add-class">
 													<button type="submit"
-														class="btn btn-primary show-list-student-of-class">Xem</button>
+														class="btn btn-primary show-list-student-of-class mb-1">Xem</button>
 												</div>
-											</form>
-
-											<div class="datatable-top-group">
-												<p class="mt-2">
-													Sỉ số:
-													<c:out value="${siso}" />
-												</p>
-											</div>
 										</div>
+
+										</form>
 										<div class="datatable-container">
 											<table id="datatablesListStudent" class="datatable-table">
 												<thead>
@@ -227,6 +236,42 @@
 											</button>
 										</div>
 
+										<c:if
+											test="${not empty requestScope.messageErrorInsertToClass}">
+											<div id="toast">
+												<div class="toast toast--error">
+													<div class="toast__icon">
+														<i class="fa-solid fa-triangle-exclamation"></i>
+													</div>
+													<div class="toast__body">
+														<h3 class="toast__title">Thất bại</h3>
+														<p class="toast__msg">Thêm học sinh thất bại.</p>
+													</div>
+													<div class="toast__close">
+														<i class="fa-solid fa-xmark"></i>
+													</div>
+												</div>
+											</div>
+										</c:if>
+										<c:if
+											test="${not empty requestScope.messageInfoInsertToClass}">
+											<div id="toast">
+												<div class="toast toast--success">
+													<div class="toast__icon">
+														<i class="fa-solid fa-circle-check"></i>
+													</div>
+													<div class="toast__body">
+														<h3 class="toast__title">Thành công</h3>
+														<p class="toast__msg">Thêm học sinh vào lớp thành
+															công.</p>
+													</div>
+													<div class="toast__close">
+														<i class="fa-solid fa-xmark"></i>
+													</div>
+												</div>
+											</div>
+										</c:if>
+
 									</div>
 								</div>
 
@@ -236,52 +281,59 @@
 									<header class="modal-header"> Danh sách học sinh chưa
 										có lớp </header>
 
-									<table id="datatablesListStudent" class="datatable-table">
-										<thead>
-											<tr>
-												<th data-sortable="true" style="width: 8%;"><a href="#"
-													class="datatable-sorter">STT</a></th>
-												<th data-sortable="true" aria-sort="descending"
-													class="datatable-descending" style="width: 20%;"><a
-													href="#" class="datatable-sorter">Tên</a></th>
-												<th data-sortable="true" style="width: 15%;"><a
-													href="#" class="datatable-sorter">Giới Tính</a></th>
-												<th data-sortable="true" style="width: 10%;"><a
-													href="#" class="datatable-sorter">Năm sinh</a></th>
-												<th data-sortable="true" style="width: 22%;"><a
-													href="#" class="datatable-sorter">Địa chỉ</a></th>
-												<th data-sortable="true" style="width: 25%;"><a
-													href="#" class="datatable-sorter">Email</a></th>
-												<th data-sortable="true"><input
-													class="listStudentNotClass-input" type="hidden"
-													name="listStudentNotClass"></th>
-											</tr>
-										</thead>
-										<tbody>
-
-											<c:forEach var="HocSinh" items="${DSHSNotClass}">
+									<form class="d-flex flex-column"
+										action="<%=request.getContextPath()%>/listStudentOfClassServlet">
+										<input type="hidden" name="action" value="/addStdNotClass">
+										<table id="datatablesListStudent" class="datatable-table">
+											<thead>
 												<tr>
-													<td><%=e++%></td>
-													<td><c:out value="${HocSinh.tenHS}" /></td>
-													<td><c:out value="${HocSinh.gioiTinh}" /></td>
-													<td><c:out value="${HocSinh.namSinh}" /></td>
-													<td><c:out value="${HocSinh.diaChi}" /></td>
-													<td><c:out value="${HocSinh.email}" /></td>
-													<td class="choose-student-to-class"><label><input
-															class="choose-student-to-class-input" type="checkbox"
-															name="selectStudent" value="123"></label></td>
+													<th data-sortable="true" style="width: 8%;"><a
+														href="#" class="datatable-sorter">STT</a></th>
+													<th data-sortable="true" aria-sort="descending"
+														class="datatable-descending" style="width: 20%;"><a
+														href="#" class="datatable-sorter">Tên</a></th>
+													<th data-sortable="true" style="width: 15%;"><a
+														href="#" class="datatable-sorter">Giới Tính</a></th>
+													<th data-sortable="true" style="width: 10%;"><a
+														href="#" class="datatable-sorter">Năm sinh</a></th>
+													<th data-sortable="true" style="width: 22%;"><a
+														href="#" class="datatable-sorter">Địa chỉ</a></th>
+													<th data-sortable="true" style="width: 25%;"><a
+														href="#" class="datatable-sorter">Email</a></th>
+													<th data-sortable="true"><input
+														class="listStudentNotClass-input" type="hidden"
+														name="listStudentNotClass"> <input
+														class="className-input" type="hidden" name="className"></th>
+
 												</tr>
-											</c:forEach>
+											</thead>
+											<tbody>
 
-										</tbody>
-									</table>
+												<c:forEach var="HocSinh" items="${DSHSNotClass}">
+													<tr>
+														<td><%=e++%></td>
+														<td><c:out value="${HocSinh.tenHS}" /></td>
+														<td><c:out value="${HocSinh.gioiTinh}" /></td>
+														<td><c:out value="${HocSinh.namSinh}" /></td>
+														<td><c:out value="${HocSinh.diaChi}" /></td>
+														<td class="stdNotClass-email"><c:out
+																value="${HocSinh.email}" /></td>
+														<td class="choose-student-to-class"><label><input
+																class="choose-student-to-class-input" type="checkbox"
+																name="selectStudent"></label></td>
+													</tr>
+												</c:forEach>
 
-									<footer class="modal-footer" style="padding: 15px 0">
-										<button class="btn btn-primary cancel-list-students-btn">Hủy</button>
-										<button type="button" class="btn btn-primary "
-											id="confirm-list-students-btn">Xác nhận</button>
-									</footer>
+											</tbody>
+										</table>
 
+										<footer class="modal-footer" style="padding: 15px 0">
+											<button type="button"
+												class="btn btn-primary cancel-list-students-btn">Hủy</button>
+											<button type="submit" class="btn btn-primary "
+												id="confirm-list-students-btn">Xác nhận</button>
+										</footer>
+									</form>
 
 								</div>
 
@@ -302,21 +354,47 @@
 			<script>
 				const addListStudentBtn = document
 						.querySelector(".list-student-of-class-confirm-btn")
-				console.log(addListStudentBtn)
 				addListStudentBtn.addEventListener('click', function() {
 					document.getElementById("listStudentNotClass").classList
 							.remove('hidden')
 				})
 			</script>
-			<script>
-			 
+			<script> 
+			function getParent(element, selector) {
+				while (element.parentElement) {
+					if (element.parentElement.matches(selector)) {
+						return element.parentElement
+					}
+					element = element.parentElement
+				}
+			}
+			
+			function getSibling(element, className) {
+			    const parent = element.parentElement;
+			    if (!parent) return null; // Kiểm tra nếu không có phần tử cha
+			    
+			    const siblings = parent.children;
+			    for (let i = 0; i < siblings.length; i++) {
+			        if (siblings[i] !== element && siblings[i].classList.contains(className)) {
+			            return siblings[i];
+			        }
+			    }
+			    
+			    return null; // Trả về null nếu không tìm thấy phần tử ngang cấp với class truyền vào
+			}
+			
 			document.getElementById('confirm-list-students-btn').addEventListener('click', function() {
 			    const checkboxes = document.querySelectorAll('input[name="selectStudent"]:checked');
-			    let selectedValues = [];
+			    let selectedValues = "";
 			    checkboxes.forEach((checkbox) => {
-			        selectedValues.push(checkbox.value);
+			    	checkbox.setAttribute("value", getSibling(getParent(checkbox, ".choose-student-to-class"), 'stdNotClass-email').textContent)
 			    });
-			    console.log("Selected checkboxes: ", selectedValues);
+			    checkboxes.forEach((checkbox) => {
+			        selectedValues += checkbox.value + ",";
+			    });
+			    document.querySelector(".listStudentNotClass-input").setAttribute("value", selectedValues)
+			    document.querySelector(".className-input").setAttribute("value", document.querySelector(".search-class").value)
+			    console.log(document.querySelector(".className-input").value);
 			});
 			</script>
 </body>

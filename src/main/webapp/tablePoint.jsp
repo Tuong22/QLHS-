@@ -32,8 +32,8 @@
 				<div
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
-						class="logo-img" src="./image/logo.jpg" alt="">
-						Quản lý học sinh
+						class="logo-img" src="./image/logo.jpg" alt=""> Quản lý học
+						sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -60,12 +60,13 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/searchStudentServlet" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/InfoSubjectServlet" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/InfoSubjectServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
@@ -83,8 +84,9 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./changeRule.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-gear"></i>
+								href="<%=request.getContextPath()%>/ChangeRule"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
@@ -154,9 +156,14 @@
 											<input type="hidden" name="action" value="/pointStudent">
 											<div class="datatable-selection">
 												<div class="">
-													<label>Lớp: </label> <input class="" placeholder="Tên lớp"
-														type="text" name="search-lop"
-														<c:if test="${not empty nameLop}">value="${nameLop}"</c:if>>
+													<label>Lớp: </label> <select class="search-class"
+														name="search-lop">
+														<c:forEach var="c" items="${DSL}">
+														<option <c:if test="${nameLop == c.tenLop}">selected</c:if>>${c.tenLop}</option>
+														</c:forEach>
+
+													</select>
+
 												</div>
 
 												<div class="">
@@ -167,24 +174,15 @@
 													</select>
 												</div>
 
-												<div class="">
-													<label>Môn: </label> <select id="search-mon"
-														name="search-mon">
-														<option <c:if test="${nameMon == 'Toán'}">selected</c:if>>Toán</option>
-														<option <c:if test="${nameMon == 'Văn'}">selected</c:if>>Văn</option>
-														<option
-															<c:if test="${nameMon == 'Đạo đức'}">selected</c:if>>Đạo
-															đức</option>
-														<option <c:if test="${nameMon == 'Sinh'}">selected</c:if>>Sinh</option>
-														<option <c:if test="${nameMon == 'Sử'}">selected</c:if>>Sử</option>
-														<option <c:if test="${nameMon == 'Địa'}">selected</c:if>>Địa</option>
-														<option <c:if test="${nameMon == 'Lý'}">selected</c:if>>Lý</option>
-														<option <c:if test="${nameMon == 'Hóa'}">selected</c:if>>Hóa</option>
-														<option
-															<c:if test="${nameMon == 'Thể dục'}">selected</c:if>>Thể
-															dục</option>
-													</select>
-												</div>
+													<div class="">
+
+														<label>Môn: </label> <select id="search-mon"
+															name="search-mon">
+															<c:forEach var="subject" items="${DSMH}">
+															<option <c:if test="${nameMon == subject.tenMH}">selected</c:if>>${subject.tenMH}</option>
+															</c:forEach>
+														</select>
+													</div>
 
 											</div>
 
@@ -192,6 +190,10 @@
 											<div class="search-point">
 												<button type="submit"
 													class="btn btn-primary search-point-btn">Tìm kiếm</button>
+
+												<a href="./insertPoint.jsp"><button type="button"
+														class="btn btn-primary search-point-btn">Nhập
+														điểm</button></a>
 											</div>
 										</form>
 

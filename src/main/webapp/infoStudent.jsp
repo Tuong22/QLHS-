@@ -60,7 +60,7 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/searchStudentServlet" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
@@ -82,7 +82,7 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./changeRule.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/ChangeRule" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
@@ -149,8 +149,125 @@
 							</div>
 							<div class="card-body">
 								<div class="datatable-wrapper">
-									<c:if test="${not empty requestScope.messageerror}">
-										<div class="alert alert-danger">${requestScope.messageerror}</div>
+									<c:if test="${not empty requestScope.messagEerrorName}">
+										<div id="toast">
+													<div class="toast toast--error">
+														<div class="toast__icon">
+															<i class="fa-solid fa-triangle-exclamation"></i>
+														</div>
+														<div class="toast__body">
+															<h3 class="toast__title">Thất bại</h3>
+															<p class="toast__msg">Thêm học sinh thất bại. Chưa nhập tên học sinh.</p>
+														</div>
+														<div class="toast__close">
+															<i class="fa-solid fa-xmark"></i>
+														</div>
+													</div>
+												</div>
+									</c:if>
+									
+									<c:if test="${not empty requestScope.messageErrorGender}">
+										<div id="toast">
+													<div class="toast toast--error">
+														<div class="toast__icon">
+															<i class="fa-solid fa-triangle-exclamation"></i>
+														</div>
+														<div class="toast__body">
+															<h3 class="toast__title">Thất bại</h3>
+															<p class="toast__msg">Thêm học sinh thất bại. Chưa nhập giới tính.</p>
+														</div>
+														<div class="toast__close">
+															<i class="fa-solid fa-xmark"></i>
+														</div>
+													</div>
+												</div>
+									</c:if>
+									
+									<c:if test="${not empty requestScope.messageErrorAddress}">
+										<div id="toast">
+													<div class="toast toast--error">
+														<div class="toast__icon">
+															<i class="fa-solid fa-triangle-exclamation"></i>
+														</div>
+														<div class="toast__body">
+															<h3 class="toast__title">Thất bại</h3>
+															<p class="toast__msg">Thêm học sinh thất bại. Chưa nhập địa chỉ.</p>
+														</div>
+														<div class="toast__close">
+															<i class="fa-solid fa-xmark"></i>
+														</div>
+													</div>
+												</div>
+									</c:if>
+									
+									<c:if test="${not empty requestScope.messageErrorEmail}">
+										<div id="toast">
+													<div class="toast toast--error">
+														<div class="toast__icon">
+															<i class="fa-solid fa-triangle-exclamation"></i>
+														</div>
+														<div class="toast__body">
+															<h3 class="toast__title">Thất bại</h3>
+															<p class="toast__msg">Thêm học sinh thất bại. Chưa nhập email.</p>
+														</div>
+														<div class="toast__close">
+															<i class="fa-solid fa-xmark"></i>
+														</div>
+													</div>
+												</div>
+									</c:if>
+									
+									<c:if test="${not empty requestScope.messageErrorAge}">
+										<div id="toast">
+													<div class="toast toast--error">
+														<div class="toast__icon">
+															<i class="fa-solid fa-triangle-exclamation"></i>
+														</div>
+														<div class="toast__body">
+															<h3 class="toast__title">Thất bại</h3>
+															<p class="toast__msg">Thêm học sinh thất bại. Tuổi không hợp lệ.</p>
+														</div>
+														<div class="toast__close">
+															<i class="fa-solid fa-xmark"></i>
+														</div>
+													</div>
+												</div>
+									</c:if>
+									
+									<c:if test="${not empty requestScope.messageErrorEmailExist}">
+										<div id="toast">
+													<div class="toast toast--error">
+														<div class="toast__icon">
+															<i class="fa-solid fa-triangle-exclamation"></i>
+														</div>
+														<div class="toast__body">
+															<h3 class="toast__title">Thất bại</h3>
+															<p class="toast__msg">Thêm học sinh thất bại. Email đã tồn tại.</p>
+														</div>
+														<div class="toast__close">
+															<i class="fa-solid fa-xmark"></i>
+														</div>
+													</div>
+												</div>
+									</c:if>
+									
+									
+									
+									<c:if test="${not empty requestScope.messageInfo}">
+										<div id="toast">
+													<div class="toast toast--success">
+														<div class="toast__icon">
+															<i class="fa-solid fa-circle-check"></i>
+														</div>
+														<div class="toast__body">
+															<h3 class="toast__title">Thành công</h3>
+															<p class="toast__msg">Thêm học sinh thành công.</p>
+														</div>
+														<div class="toast__close">
+															<i class="fa-solid fa-xmark"></i>
+														</div>
+													</div>
+												</div>
 									</c:if>
 									<div class="add-student">
 
@@ -269,7 +386,7 @@
 
 				<footer class="modal-footer">
 					<button type="button"
-						class="btn btn-primary cancel-add-student-btn">Hủy</button>
+						class="btn btn-primary cancel-add-student-btn btn-cancel">Hủy</button>
 					<button type="submit"
 						class="btn btn-primary confirm-add-studen-btn">Xác nhận</button>
 				</footer>

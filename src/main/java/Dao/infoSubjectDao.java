@@ -39,9 +39,10 @@ public class infoSubjectDao {
 		return DSM;
 	}
 	
-	public void insertMon(Mon m) throws ClassNotFoundException {
+	public boolean insertMon(Mon m) throws ClassNotFoundException {
 		String querySelectId = "SELECT MaMH FROM Mon order by length(MaMH), MaMH";
 		String INSERT_STUDENT = "INSERT INTO Mon VALUES (?,?,?)";
+		boolean isvalid = false;
 		try (Connection connection = datasource.getConnection();
 				Statement stmt = connection.createStatement();
 				PreparedStatement statement = connection.prepareStatement(INSERT_STUDENT);
@@ -82,7 +83,12 @@ public class infoSubjectDao {
 			statement.setString(2, m.getTenMH());
 			statement.setInt(3, m.getHeSo());
 				
-			statement.execute();
+			int rowAffected = statement.executeUpdate();
+			if (rowAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
 			statement.close();
 			rs.close();
 			stmt.close();
@@ -90,7 +96,7 @@ public class infoSubjectDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		return isvalid;
 	}
 	
 	private void close(Connection conn, Statement stmt, ResultSet rs) throws SQLException {
@@ -99,9 +105,10 @@ public class infoSubjectDao {
 		if(rs != null) rs.close();
 	}
 	
-	public void updateSubject(Mon mon, String nameSubjectOld) throws ClassNotFoundException {
+	public boolean updateSubject(Mon mon, String nameSubjectOld) throws ClassNotFoundException {
 		String SELECT_SUBJECT = "select * from mon";
 		String UPDATE_SUBJECT = "update mon set TenMH = ?, HeSo = ? where MaMH = ?";
+		boolean isvalid = false;
 		try (Connection connection = datasource.getConnection();
 				Statement stmt = connection.createStatement();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_SUBJECT);
@@ -121,18 +128,26 @@ public class infoSubjectDao {
 			statement.setInt(2, mon.getHeSo());	
 			statement.setString(3, currentSubjectId);	
 				
-			statement.execute();
+			int rowsAffected = statement.executeUpdate();
+
+			if (rowsAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
 
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return isvalid;
 	}
 	
-	public void deleteSubject(String nameSubject) throws ClassNotFoundException {
+	public boolean deleteSubject(String nameSubject) throws ClassNotFoundException {
 		String SELECT_SUBJECT = "select * from mon";
 		String DELETE_SUBJECT = "delete from mon where MaMH = ?";
+		boolean isvalid = false;
 		try (Connection connection = datasource.getConnection();
 				Statement stmt = connection.createStatement();
 				PreparedStatement statement = connection.prepareStatement(DELETE_SUBJECT);
@@ -149,13 +164,20 @@ public class infoSubjectDao {
 
 			statement.setString(1, currentSubjectId);
 				
-			statement.execute();
+			int rowsAffected = statement.executeUpdate();
+
+			if (rowsAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
 
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return isvalid;
 	}
 	
 }

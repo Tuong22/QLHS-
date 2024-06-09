@@ -13,14 +13,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import Dao.infoClassDao;
 import Dao.listStudentOfClassDao;
 import Model.HocSinh;
+import Model.Lop;
+import Model.Mon;
 
 @WebServlet("/listStudentOfClassServlet")
 public class listStudentOfClassServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private listStudentOfClassDao ListStudentOfClassDao;
+	private infoClassDao InfoClassDao;
 	@Resource(name = "jdbc/student_management")
 	private DataSource datasource;
 
@@ -28,6 +32,7 @@ public class listStudentOfClassServlet extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 		ListStudentOfClassDao = new listStudentOfClassDao(datasource);
+		InfoClassDao = new infoClassDao(datasource);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,13 +46,38 @@ public class listStudentOfClassServlet extends HttpServlet {
 		case "/show":
 			try {
 				renderStudentOfClass(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case "/addStdNotClass":
+			try {
+				insertStdNotClassToClass(request, response);
 
 			} catch (ClassNotFoundException | ServletException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
-		}
+		default:
+			try {
+				renderClass(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		}	
+
+	}
+	
+	private void renderClass(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException {
+		List<Lop> DSL = InfoClassDao.selectAllClass();
+		request.setAttribute("DSL", DSL);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/listStudentOfClass.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	private void renderStudentOfClass(HttpServletRequest request, HttpServletResponse response)
@@ -56,6 +86,8 @@ public class listStudentOfClassServlet extends HttpServlet {
 		List<HocSinh> DSHS = ListStudentOfClassDao.renderStudentOfClass(className);
 		int SiSo = ListStudentOfClassDao.selectSiSo(className);
 		List<HocSinh> DSHSNotClass = ListStudentOfClassDao.listStudenNotClass();
+		List<Lop> DSL = InfoClassDao.selectAllClass();
+		request.setAttribute("DSL", DSL);
 		request.setAttribute("DSHSNotClass", DSHSNotClass);
 		request.setAttribute("HS", DSHS);
 		request.setAttribute("siso", SiSo);
@@ -64,6 +96,33 @@ public class listStudentOfClassServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
+	private void insertStdNotClassToClass(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, ClassNotFoundException {
+		String className = request.getParameter("className");
+		String listEmailOfStdNotClass = request.getParameter("listStudentNotClass");
+		String[] emailSplit = ListStudentOfClassDao.splitStringByComma(listEmailOfStdNotClass);
+		String[] emailList = ListStudentOfClassDao.selectStdIDByEmail(emailSplit);
+		
+		boolean isvalid = ListStudentOfClassDao.addStdNotClassToClass(emailList, className);
+
+		if (isvalid) {
+			request.setAttribute("messageInfoInsertToClass", "Thêm học sinh vào lớp thành công.");
+		} else {
+			request.setAttribute("messageErrorInsertToClass",
+					"Thêm học sinh thất bại.");
+		}
+		List<HocSinh> DSHS = ListStudentOfClassDao.renderStudentOfClass(className);
+		int SiSo = ListStudentOfClassDao.selectSiSo(className);
+		List<HocSinh> DSHSNotClass = ListStudentOfClassDao.listStudenNotClass();
+		List<Lop> DSL = InfoClassDao.selectAllClass();
+		request.setAttribute("DSL", DSL);
+		request.setAttribute("DSHSNotClass", DSHSNotClass);
+		request.setAttribute("HS", DSHS);
+		request.setAttribute("siso", SiSo);
+		request.setAttribute("searchClass", className);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/listStudentOfClass.jsp");
+		dispatcher.forward(request, response);
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

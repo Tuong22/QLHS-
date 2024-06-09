@@ -105,8 +105,15 @@ public class InfoSubjectServlet extends HttpServlet {
 		}
 		
 		Mon m = new Mon(null, name, Integer.parseInt(heSo));
-		InfoSubjectDao.insertMon(m);
-		response.sendRedirect(request.getContextPath() + "/InfoSubjectServlet");
+		boolean isvalid = InfoSubjectDao.insertMon(m);
+		if (isvalid) {
+	        request.setAttribute("messageInfoAddSubject", "Thêm môn mới thành công.");
+	    } else {
+	        request.setAttribute("messageErrorAddSubject", "Tên môn bị trùng");
+	    }
+		List<Mon> DSMH = InfoSubjectDao.selectAllSubject();
+		request.setAttribute("DSMH", DSMH);
+		request.getRequestDispatcher("/subject.jsp").forward(request, response);
 	}
 	
 	private void updateSubject(HttpServletRequest request, HttpServletResponse response) 
@@ -115,15 +122,31 @@ public class InfoSubjectServlet extends HttpServlet {
 		String nameSubject = request.getParameter("name");
 		int numberSubject =Integer.parseInt(request.getParameter("number"));
 		Mon mon = new Mon(null, nameSubject,numberSubject);
-		InfoSubjectDao.updateSubject(mon, nameSubjectOld);
-		response.sendRedirect(request.getContextPath() + "/InfoSubjectServlet");
+		boolean isvalid = InfoSubjectDao.updateSubject(mon, nameSubjectOld);
+
+	    if (isvalid) {
+	        request.setAttribute("messageInfoUpdateSubject", "Sửa tên môn thành công.");
+	    } else {
+	        request.setAttribute("messageErrorUpdateSubject", "Tên môn đã tồn tại.");
+	    }
+	    List<Mon> DSMH = InfoSubjectDao.selectAllSubject();
+		request.setAttribute("DSMH", DSMH);
+	    request.getRequestDispatcher("/subject.jsp").forward(request, response);
 	}
 	
 	private void deleteSubject(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException {
 		String nameSubject = request.getParameter("nameRemove");
-		InfoSubjectDao.deleteSubject(nameSubject);
-		response.sendRedirect(request.getContextPath() + "/InfoSubjectServlet");
+		boolean isvalid = InfoSubjectDao.deleteSubject(nameSubject);
+
+	    if (isvalid) {
+	        request.setAttribute("messageInfoDeleteSubject", "Xoá môn không có dữ liệu thành công.");
+	    } else {
+	        request.setAttribute("messageErrorDeleteSubject", "Không thể xóa môn đang học.");
+	    }
+	    List<Mon> DSMH = InfoSubjectDao.selectAllSubject();
+		request.setAttribute("DSMH", DSMH);
+	    request.getRequestDispatcher("/subject.jsp").forward(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

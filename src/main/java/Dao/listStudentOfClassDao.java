@@ -86,5 +86,80 @@ public class listStudentOfClassDao {
 		}
 		return siso;
 	}
+	
+	public boolean addStdNotClassToClass(String[] listStdIdSelected, String nameClass) throws ClassNotFoundException {
+		String ADD_STUDENT_TO_CLASS = "INSERT INTO QUATRINH VALUES (?,?,?,?)";
+		String classID = selectClassIDbyName(nameClass);
+		System.out.println("classID: " + classID);
+		String hk1 = "HK1";
+		boolean isvalid = false;
+		try (Connection connection = datasource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(ADD_STUDENT_TO_CLASS)) {
+			int count = 0;
+			for (String part : listStdIdSelected) {			
+
+				statement.setString(1, part);
+				statement.setString(2, classID);
+				statement.setString(3, hk1);
+				statement.setString(4, null);
+				statement.executeUpdate();
+				count++;
+			}
+
+			if (count > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isvalid;
+	}
+
+	public String selectClassIDbyName(String name) throws ClassNotFoundException {
+		String SELECT_ID_BY_NAME = "SELECT MaLop FROM lop WHERE TenLop = ?";
+		String classID = "";
+		try (Connection connection = datasource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(SELECT_ID_BY_NAME)) {
+			statement.setString(1, name);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				classID = rs.getString(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return classID;
+	}  
+
+	public String[] selectStdIDByEmail(String[] input) throws ClassNotFoundException {
+		String SELECT_STUDENT_BY_EMAIL = "SELECT MaHS FROM hocsinh where Email = ?";
+		String students = "";
+		try (Connection connection = datasource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(SELECT_STUDENT_BY_EMAIL)) {
+			for (String part : input) {
+				statement.setString(1, part);
+				ResultSet rs = statement.executeQuery();
+				while (rs.next()) {
+					String maHS = rs.getString(1);
+					students += maHS + ",";
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return splitStringByComma(students);
+	}
+
+	public String[] splitStringByComma(String input) {
+		if (input == null || input.isEmpty()) {
+			return new String[0];
+		}
+		return input.split(",");
+	}
 
 }

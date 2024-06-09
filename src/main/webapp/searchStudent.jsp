@@ -31,8 +31,8 @@
 				<div
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
-						class="logo-img" src="./image/logo.jpg" alt="">
-						Quản lý học sinh
+						class="logo-img" src="./image/logo.jpg" alt=""> Quản lý học
+						sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -60,12 +60,14 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link active"
-								href="<%=request.getContextPath()%>/InfoSubjectServlet" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/searchStudentServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/InfoSubjectServlet" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/InfoSubjectServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
@@ -81,7 +83,7 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./changeRule.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/ChangeRule" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
@@ -153,25 +155,30 @@
 										<form
 											action="<%=request.getContextPath()%>/InfoStudentsServlet">
 											<input type="hidden" name="action" value="/searchByName">
-											<div class="datatable-search">
-												<input name="search-student-name" class="datatable-input"
+											<div class="datatable-search mb-4">
+												<input name="search-student-name" class="datatable-input me-4 p-1"
 													placeholder="Tên học sinh" type="text"
 													title="Search within table"
-													aria-controls="datatablesSimple" <c:if test="${not empty searchStudentName}">value="${searchStudentName}"</c:if>>
-												<input name="search-student-class" class="datatable-input"
-													placeholder="Lớp" type="text"
-													title="Search within table"
-													aria-controls="datatablesSimple" <c:if test="${not empty searchStudentClass}">value="${searchStudentClass}"</c:if>>
+													aria-controls="datatablesSimple"
+													<c:if test="${not empty searchStudentName}">value="${searchStudentName}"</c:if>>
+
+												<label for="search-student-class">Tên lớp: </label> <select
+													class="search-student-class p-1" name="search-student-class">
+													<c:forEach var="c" items="${DSL}">
+													<option name="search-student-class"
+														<c:if test="${searchStudentClass == c.tenLop}">selected</c:if>>${c.tenLop}</option>
+													</c:forEach>
+												</select>
 											</div>
 
 											<div class="search-student">
-												<button type="submit" class="btn btn-primary search-point-btn">Tìm
-													kiếm</button>
+												<button type="submit"
+													class="btn btn-primary search-point-btn">Tìm kiếm</button>
 											</div>
 										</form>
 
 									</div>
-									<div class="datatable-container">
+									<div class="datatable-container" style="margin-top: -10px">
 										<table id="datatablesSearchStudent" class="datatable-table">
 											<thead>
 												<tr>
@@ -205,7 +212,22 @@
 										</table>
 									</div>
 								</div>
-
+								<c:if test="${not empty requestScope.messageerror}">
+									<div id="toast">
+													<div class="toast toast--error">
+														<div class="toast__icon">
+															<i class="fa-solid fa-triangle-exclamation"></i>
+														</div>
+														<div class="toast__body">
+															<h3 class="toast__title">Cảnh báo</h3>
+															<p class="toast__msg">Không tìm thấy học sinh.</p>
+														</div>
+														<div class="toast__close">
+															<i class="fa-solid fa-xmark"></i>
+														</div>
+													</div>
+												</div>
+								</c:if>
 							</div>
 						</div>
 					</div>

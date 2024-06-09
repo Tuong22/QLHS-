@@ -49,12 +49,14 @@ public class InfoStudentsDao {
 	
 	public List<TraCuuHocSinh> selectStudent (String name, String nameClass) throws ClassNotFoundException, SQLException {
 		List<TraCuuHocSinh> tchsList = new ArrayList<>();
-		String SELECT_STUDENT_BY_NAME = "SELECT HocSinh.TenHS, Lop.TenLop, qthk1.DiemTBHK, qthk2.DiemTBHK"
-				+ " FROM HocSinh JOIN QuaTrinh qthk1 ON HocSinh.MaHS = qthk1.MaHS"
-				+ " JOIN HocKy hk1 ON qthk1.MaHK = hk1.MaHK AND hk1.TenHK = '1'"
-				+ " JOIN QuaTrinh qthk2 ON HocSinh.MaHS = qthk2.MaHS"
-				+ " JOIN HocKy hk2 ON qthk2.MaHK = hk2.MaHK AND hk2.TenHK = '2'"
-				+ " JOIN Lop ON qthk1.MaLop = Lop.MaLop WHERE HocSinh.TenHS = ? AND Lop.TenLop = ?;";
+		String SELECT_STUDENT_BY_NAME = "SELECT HocSinh.TenHS, Lop.TenLop, qthk1.DiemTBHK AS DiemTBHK1, qthk2.DiemTBHK AS DiemTBHK2\r\n"
+				+ "FROM HocSinh\r\n"
+				+ "LEFT JOIN QuaTrinh qthk1 ON HocSinh.MaHS = qthk1.MaHS\r\n"
+				+ "LEFT JOIN HocKy hk1 ON qthk1.MaHK = hk1.MaHK AND hk1.TenHK = '1'\r\n"
+				+ "LEFT JOIN QuaTrinh qthk2 ON HocSinh.MaHS = qthk2.MaHS\r\n"
+				+ "LEFT JOIN HocKy hk2 ON qthk2.MaHK = hk2.MaHK AND hk2.TenHK = '2'\r\n"
+				+ "LEFT JOIN Lop ON qthk1.MaLop = Lop.MaLop\r\n"
+				+ "WHERE HocSinh.TenHS = ? AND Lop.TenLop = ?;";
 		try (Connection connection = datasource.getConnection();
 				Statement stmt = connection.createStatement();
 				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_STUDENT_BY_NAME)){
@@ -76,9 +78,10 @@ public class InfoStudentsDao {
 		return tchsList;
 	}
 
-	public void insertStudent(HocSinh hs) throws ClassNotFoundException {
+	public boolean insertStudent(HocSinh hs) throws ClassNotFoundException {
 		String querySelectId = "SELECT MaHS FROM HocSinh order by length(MaHS), MaHS";
 		String INSERT_STUDENT = "INSERT INTO HocSinh VALUES (?,?,?,?,?,?)";
+		boolean isvalid = false;
 		try (Connection connection = datasource.getConnection();
 				Statement stmt = connection.createStatement();
 				PreparedStatement statement = connection.prepareStatement(INSERT_STUDENT);
@@ -106,7 +109,6 @@ public class InfoStudentsDao {
 				}
 			}
 			if(currentStudentId != "") {
-				//System.out.println(currentRoomBillId);
 				if(fillUnindexed == 1) {
 					nextStudentId = prefixStudentId + Integer.toString(traceUnindexed);
 				}
@@ -123,7 +125,12 @@ public class InfoStudentsDao {
 			statement.setString(5, hs.getDiaChi());
 			statement.setString(6, hs.getEmail());
 				
-			statement.execute();
+			int rowAffected = statement.executeUpdate();
+			if (rowAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
 			statement.close();
 			rs.close();
 			stmt.close();
@@ -131,6 +138,30 @@ public class InfoStudentsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return isvalid;
+	}
+	
+	public boolean checkEmail(HocSinh hs) throws ClassNotFoundException, SQLException {
+		String querySelectEmail = "SELECT COUNT(*) FROM HocSinh WHERE Email = ?";
+	    boolean isvalid = false;
+	    try (Connection connection = datasource.getConnection();
+	         PreparedStatement emailStatement = connection.prepareStatement(querySelectEmail)) {
+
+	        emailStatement.setString(1, hs.getEmail());
+	        ResultSet emailResultSet = emailStatement.executeQuery();
+	        emailResultSet.next();
+	        int emailCount = emailResultSet.getInt(1);
+	        emailResultSet.close();
+
+	        if (emailCount > 0) {
+	        	isvalid = false;
+	        }
+	        else {
+	        	isvalid = true;
+	        }
+	    }
+	    System.out.println(isvalid);
+		return isvalid;
 	}
 	
 	public boolean checkAge(HocSinh hs) throws ClassNotFoundException {
@@ -152,7 +183,6 @@ public class InfoStudentsDao {
 			} else {
 				isvalid = false;
 			}
-			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

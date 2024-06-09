@@ -15,6 +15,8 @@ import javax.sql.DataSource;
 
 import Dao.ReportDao;
 import Dao.infoClassDao;
+import Dao.infoSubjectDao;
+import Model.Mon;
 import Model.TraCuuBaoCao;
 
 
@@ -23,6 +25,7 @@ public class ReportServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	private ReportDao reportDao;
+	private infoSubjectDao InfoSubjectDao;
 
 	@Resource(name="jdbc/student_management")
 	private DataSource datasource;
@@ -31,6 +34,7 @@ public class ReportServlet extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 		reportDao = new ReportDao(datasource);
+		InfoSubjectDao = new infoSubjectDao(datasource);
 	}
 
 
@@ -50,12 +54,20 @@ public class ReportServlet extends HttpServlet {
 			break;
 		default:
 			try {
-				selectReport(request, response);
-			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+				renderSubject(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
 				e.printStackTrace();
 			}
 			break;
 		}
+	}
+	
+	private void renderSubject(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException {
+		List<Mon> DSMH = InfoSubjectDao.selectAllSubject();
+		request.setAttribute("DSMH", DSMH);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/report.jsp");
+		dispatcher.forward(request, response);
 	}
 	
 	
@@ -75,6 +87,8 @@ public class ReportServlet extends HttpServlet {
 			HK = tenHK2;
 		}
 		List<TraCuuBaoCao> DSTCBC = reportDao.selectReport(reportType, tenMon, HK);
+		List<Mon> DSMH = InfoSubjectDao.selectAllSubject();
+		request.setAttribute("DSMH", DSMH);
 		request.setAttribute("DSTCBC", DSTCBC);
 		request.setAttribute("typeReport", reportType);
 		request.setAttribute("nameMon", tenMon);

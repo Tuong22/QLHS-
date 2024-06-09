@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Quản lý học sinh</title>
 
 
 <link rel="stylesheet"
@@ -33,7 +33,7 @@
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
 						class="logo-img" src="./image/logo.jpg" alt="">
-						StudentManager
+						Quản lý học sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -60,7 +60,7 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/searchStudentServlet" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
@@ -83,7 +83,7 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./changeRule.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/ChangeRule" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
@@ -126,7 +126,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">VanA@gmail.com</a>
+							<a href="" target="_blank">Admin</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -153,10 +153,29 @@
 										<form action="<%=request.getContextPath()%>/tablePointServlet">
 											<input type="hidden" name="action" value="/pointStudent">
 											<div class="datatable-selection">
+												
 												<div class="">
-													<label>Lớp: </label> <input class="" placeholder="Tên lớp"
-														type="text" name="search-lop"
-														<c:if test="${not empty nameLop}">value="${nameLop}"</c:if>>
+													<label>Tên học sinh: </label> <input class="" placeholder="Tên học sinh"
+														type="text">
+												</div>
+												
+												<div class="">
+													<label>Lớp: </label> 
+													
+													<select
+														class="search-class" name="search-lop">
+														<option></option>
+														<option>10A1</option>
+														<option>10A2</option>
+														<option>10A3</option>
+				 										<option>10A4</option>
+														<option>11A1</option>
+														<option>11A2</option>
+														<option>11A3</option>
+														<option>12A1</option>
+														<option>12A2</option>
+														
+													</select> 
 												</div>
 
 												<div class="">
@@ -190,8 +209,11 @@
 
 
 											<div class="search-point">
-												<button type="submit"
-													class="btn btn-primary search-point-btn">Nhập</button>
+												<a href="./tablePoint.jsp"><button type="button"
+													class="btn btn-primary search-point-btn">Quay lại</button></a>
+													
+												<button type="button"
+													class="btn btn-primary search-point-btn">Lọc</button>
 											</div>
 										</form>
 
@@ -222,9 +244,17 @@
 											<tbody>
 												<tr>
 													<td>1</td>
+													<td>Trần Anh Tuấn</td>
+													<td>9</td>
+													<td>8</td>
+													<td>9</td>
+													<td>9</td>
+													<td>8.86</td>
 												</tr>
 											</tbody>
 										</table>
+										<button type="button"
+													class="btn btn-primary" style="margin-left: 745px">Xác nhận</button>
 									</div>
 								</div>
 							</div>
@@ -244,7 +274,7 @@
 
 	<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 	<script src="./js/app.js"></script>
-	<script src="./js/pagination.js"></script>
+	<!-- <script src="./js/pagination.js"></script> -->
 
 </body>
 </html>

@@ -31,8 +31,8 @@
 				<div
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
-						class="logo-img" src="./image/logo.jpg" alt="">
-						Quản lý học sinh
+						class="logo-img" src="./image/logo.jpg" alt=""> Quản lý học
+						sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -43,9 +43,9 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a
-								class="sidebar-link" href="#" aria-expanded="false">
-									<span> <i class="fa fa-solid fa-user"></i>
+							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
+								href="#" aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -61,7 +61,7 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/searchStudentServlet" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
@@ -85,8 +85,9 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./changeRule.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-gear"></i>
+								href="<%=request.getContextPath()%>/ChangeRule"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
@@ -161,10 +162,12 @@
 													<label for="report-type-selection">Loại: </label> <select
 														id="report-type-selection" name="report-type">
 														<option></option>
-														<option value="report-subject" <c:if test="${typeReport == 'Báo cáo tổng kết môn'}">selected</c:if>>Báo cáo tổng kết
-															môn</option>
-														<option value="report-semester" <c:if test="${typeReport == 'Báo cáo tổng kết học kỳ'}">selected</c:if>>Báo cáo tổng kết
-															học kỳ</option>
+														<option value="report-subject"
+															<c:if test="${typeReport == 'Báo cáo tổng kết môn'}">selected</c:if>>Báo
+															cáo tổng kết môn</option>
+														<option value="report-semester"
+															<c:if test="${typeReport == 'Báo cáo tổng kết học kỳ'}">selected</c:if>>Báo
+															cáo tổng kết học kỳ</option>
 													</select>
 												</div>
 
@@ -188,15 +191,10 @@
 													<div class="report-subject report-type">
 														<label>Môn: </label> <select name="search-subject">
 															<option></option>
-															<option <c:if test="${nameMon == 'Toán'}">selected</c:if>>Toán</option>
-															<option <c:if test="${nameMon == 'Văn'}">selected</c:if>>Văn</option>
-															<option <c:if test="${nameMon == 'Đạo đức'}">selected</c:if>>Đạo đức</option>
-															<option <c:if test="${nameMon == 'Sinh'}">selected</c:if>>Sinh</option>
-															<option <c:if test="${nameMon == 'Sử'}">selected</c:if>>Sử</option>
-															<option <c:if test="${nameMon == 'Địa'}">selected</c:if>>Địa</option>
-															<option <c:if test="${nameMon == 'Lý'}">selected</c:if>>Lý</option>
-															<option <c:if test="${nameMon == 'Hóa'}">selected</c:if>>Hóa</option>
-															<option <c:if test="${nameMon == 'Thể dục'}">selected</c:if>>Thể dục</option>
+															<c:forEach var="subject" items="${DSMH}">
+																<option
+																	<c:if test="${nameMon == subject.tenMH}">selected</c:if>>${subject.tenMH}</option>
+															</c:forEach>
 														</select>
 													</div>
 												</div>

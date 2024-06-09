@@ -11,7 +11,6 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import Model.ChangeRule;
-import Model.Mon;
 
 public class changeRuleDao {
 	
@@ -26,42 +25,84 @@ public class changeRuleDao {
 		if(stmt != null) stmt.close();
 		if(rs != null) rs.close();
 	}
+	
+	public ChangeRule renderThamSo() throws ClassNotFoundException {
+	    ChangeRule c = null;
+	    try (Connection connection = datasource.getConnection();
+	            Statement statement = connection.createStatement();
+	            ResultSet rs = statement.executeQuery("select * from thamso")) {
+	        if (rs.next()) {
+	        	int tuoiHSToiDa = rs.getInt("TuoiHSToiDa");
+	            int tuoiHSToiThieu = rs.getInt("TuoiHSToiThieu");
+	            int soLuongHSToiDa = rs.getInt("SoLuongHSToiDa");
+	            int diemToiDa = rs.getInt("DiemToiDa");
+	            int diemToiThieu = rs.getInt("DiemToiThieu");
+	            int diemDat = rs.getInt("DiemDat");
+	            c = new ChangeRule(tuoiHSToiDa, tuoiHSToiThieu, soLuongHSToiDa, diemToiDa, diemToiThieu, diemDat);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return c;
+	}
 
-    public void updateTuoiToiThieuToiDa(int tuoiThieu, int tuoiDa) throws SQLException {
+    public boolean updateTuoiToiThieuToiDa(int tuoiThieu, int tuoiDa) throws SQLException {
         String UPDATE_RULE = "UPDATE THAMSO SET TuoiHSToiThieu = ?, TuoiHSToiDa = ?";
+        boolean isvalid = false;
         try (Connection connection = datasource.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_RULE)) {
             statement.setInt(1, tuoiThieu);
             statement.setInt(2, tuoiDa);
-            statement.executeUpdate();
+            int rowAffected = statement.executeUpdate();
+            if (rowAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
         }
+        return isvalid;
     }
     
-    public void updateDiem(int diemToiThieu, int diemToiDa) throws SQLException {
+    public boolean updateDiem(int diemToiThieu, int diemToiDa) throws SQLException {
         String UPDATE_RULE = "UPDATE THAMSO SET DiemToiDa = ?, DiemToiThieu = ?";
+        boolean isvalid = false;
         try (Connection connection = datasource.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_RULE)) {
             statement.setInt(1, diemToiDa);
             statement.setInt(2, diemToiThieu);
-            statement.executeUpdate();
+            int rowAffected = statement.executeUpdate();
+            if (rowAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
         }
+        return isvalid;
     }
     
-    public void updateSiSoToiDa(int siSoToiDa) throws SQLException {
+    public boolean updateSiSoToiDa(int siSoToiDa) throws SQLException {
         String UPDATE_RULE = "UPDATE THAMSO SET SoLuongHSToiDa = ?";
+        boolean isvalid = false;
         try (Connection connection = datasource.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_RULE)) {
             statement.setInt(1, siSoToiDa);
-            statement.executeUpdate();
+            int rowAffected = statement.executeUpdate();
+            if (rowAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
         }
+        return isvalid;
     }
     
-    public void updateDiemDat(int diemDat) throws SQLException {
+    public boolean updateDiemDat(int diemDat) throws SQLException {
         String UPDATE_RULE = "UPDATE THAMSO SET DiemDat = ? ";
+        boolean isvalid = false;
         try (Connection connection = datasource.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_RULE)) {
             statement.setInt(1, diemDat);
-            statement.executeUpdate();
+            int rowAffected = statement.executeUpdate();
             
             try (Statement callStatement = connection.createStatement()) {
                 String[] calls = {
@@ -268,7 +309,14 @@ public class changeRuleDao {
                     callStatement.execute(call);
                 }
             }
+            if (rowAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
         }
-    }
+        return isvalid;
+     }
+    
     
 }

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +17,7 @@ import Dao.changeRuleDao;
 import Dao.infoSubjectDao;
 import Model.ChangeRule;
 import Model.Mon;
+import Model.TraCuuKhoi;
 
 @WebServlet("/ChangeRule")
 public class ChangeRuleServlet extends HttpServlet {
@@ -68,37 +70,88 @@ public class ChangeRuleServlet extends HttpServlet {
                 e.printStackTrace();
             }
             break;
+		default:
+			try {
+				renderThamSo(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+				e.printStackTrace();
+			}
+			break;
 		}
+	}
+	
+	private void renderThamSo(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException, ClassNotFoundException, SQLException {
+		ChangeRule cr = ChangeRuleDao.renderThamSo();
+		request.setAttribute("CR", cr);
+	    request.getRequestDispatcher("/changeRule.jsp").forward(request, response);
 	}
 		
 	private void updateTuoi(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		int tuoiToiDa = Integer.parseInt(request.getParameter("tuoiHSToiDa"));
         int tuoiToiThieu = Integer.parseInt(request.getParameter("tuoiHSToiThieu"));
-		ChangeRuleDao.updateTuoiToiThieuToiDa(tuoiToiThieu, tuoiToiDa);
-		response.sendRedirect(request.getContextPath() + "/changeRule.jsp");
+        boolean isvalid = ChangeRuleDao.updateTuoiToiThieuToiDa(tuoiToiThieu, tuoiToiDa);
+        
+		if (isvalid) {
+			request.setAttribute("messageInfoUpdateAge", "Thay đổi giới hạn tuổi thành công.");
+		} else {
+			request.setAttribute("messageErrorUpdateAge",
+					"Thay đổi thất bại.");
+		}
+		ChangeRule cr = ChangeRuleDao.renderThamSo();
+		request.setAttribute("CR", cr);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/changeRule.jsp");
+		dispatcher.forward(request, response);
 	}
 	
 	private void updateSiSo(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		int siSoToiDa = Integer.parseInt(request.getParameter("siSoToiDa"));
-		ChangeRuleDao.updateSiSoToiDa(siSoToiDa);
-		response.sendRedirect(request.getContextPath() + "/changeRule.jsp");
+		boolean isvalid = ChangeRuleDao.updateSiSoToiDa(siSoToiDa);
+		if (isvalid) {
+			request.setAttribute("messageInfoUpdateSiSo", "Thay đổi giới hạn sĩ số thành công.");
+		} else {
+			request.setAttribute("messageErrorUpdateSiSo",
+					"Thay đổi thất bại.");
+		}
+		ChangeRule cr = ChangeRuleDao.renderThamSo();
+		request.setAttribute("CR", cr);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/changeRule.jsp");
+		dispatcher.forward(request, response);
 	}
 	
 	private void updateDiemDat(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		int diemDat = Integer.parseInt(request.getParameter("pointPass"));
-		ChangeRuleDao.updateDiemDat(diemDat);
-		response.sendRedirect(request.getContextPath() + "/changeRule.jsp");
+		boolean isvalid = ChangeRuleDao.updateDiemDat(diemDat);
+		if (isvalid) {
+			request.setAttribute("messageInfoUpdateDiemDat", "Thay đổi giới hạn điểm đạt thành công.");
+		} else {
+			request.setAttribute("messageErrorUpdateDiemDat",
+					"Thay đổi thất bại.");
+		}
+		ChangeRule cr = ChangeRuleDao.renderThamSo();
+		request.setAttribute("CR", cr);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/changeRule.jsp");
+		dispatcher.forward(request, response);
 	}
 	
 	private void updateDiem(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		int diemToiDa = Integer.parseInt(request.getParameter("maxPoint"));
         int diemToiThieu = Integer.parseInt(request.getParameter("minPoint"));
-		ChangeRuleDao.updateDiem(diemToiThieu, diemToiDa);
-		response.sendRedirect(request.getContextPath() + "/changeRule.jsp");
+        boolean isvalid = ChangeRuleDao.updateDiem(diemToiThieu, diemToiDa);
+        if (isvalid) {
+			request.setAttribute("messageInfoUpdateDiem", "Thay đổi giới hạn điểm tối thiểu, tối đa thành công.");
+		} else {
+			request.setAttribute("messageErrorUpdateDiem",
+					"Thay đổi thất bại.");
+		}
+        ChangeRule cr = ChangeRuleDao.renderThamSo();
+		request.setAttribute("CR", cr);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/changeRule.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
