@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import Model.signIn;
+import Model.SignIn;
 
 public class signInDao {
 	public static Connection getConnection() throws ClassNotFoundException {
@@ -19,25 +19,37 @@ public class signInDao {
 		}
 		return connection;
 	}
-	
-	public boolean validate(signIn signInModel) throws ClassNotFoundException {
-		boolean status = false;
 
+	public SignIn Login(String username, String pass) throws SQLException, ClassNotFoundException {
+
+		String sql = "select * from signin where username = ? and password = ?";
 		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection
-						.prepareStatement("select * from signin where username = ? and password = ? ")) {
-			preparedStatement.setString(1, signInModel.getUsername());
-			preparedStatement.setString(2, signInModel.getPassword());
-
-			System.out.println(preparedStatement);
-			ResultSet rs = preparedStatement.executeQuery();
-			status = rs.next();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
+				PreparedStatement statement = connection.prepareStatement(sql)) {
+			statement.setString(1, username);
+			statement.setString(2, pass);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				return new SignIn(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+			}
+		} catch (Exception e) {
 		}
-		return status;
+		return null;
 	}
 
+	private void printSQLException(SQLException ex) {
+		for (Throwable e : ex) {
+			if (e instanceof SQLException) {
+				e.printStackTrace(System.err);
+				System.err.println("SQLState: " + ((SQLException) e).getSQLState());
+				System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
+				System.err.println("Message: " + e.getMessage());
+				Throwable t = ex.getCause();
+				while (t != null) {
+					System.out.println("Cause: " + t);
+					t = t.getCause();
+				}
+			}
+		}
+	}
 
 }

@@ -4529,9 +4529,9 @@ ul {
 
 
 .account-info {
-	width: 550px;
 	min-height: 450px;
 	justify-content: space-between;
+	
 }
 
 .account-info-group {
@@ -4545,15 +4545,6 @@ ul {
 	line-height: 48px;
 }
 
-.account-name,
-.account-pass {
-	flex: 1;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	display: flex;
-	justify-content: space-between;
-}
-
 .show-pass,
 .hide-pass,
 .edit-pass {
@@ -4563,13 +4554,20 @@ ul {
 	cursor: pointer;
 }
 
-.edit-pass:hover {
+.edit-pass:hover,
+.show-pass:hover,
+.edit-infoStudent:hover {
 	color: #40E9C0;
+	scale: 1.1;
 }
 
-.account-info-text {
-	padding: 12px;
+.account-name-text,
+.account-pass-text,
+.account-pass {
+	width: 100%;
 	margin:0;
+	border: 1px solid #ddd;
+	border-radius: 4px;
 }
 
 .account-info-footer {

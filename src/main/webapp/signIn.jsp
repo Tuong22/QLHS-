@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Quản lý học sinh</title>
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-	<link rel="stylesheet"
+<link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@v5.3.0/dist/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/registration.css">
@@ -17,6 +19,7 @@
 <body>
 	<div class="main">
 		<h1 class="app-name">QUẢN LÝ HỌC SINH</h1>
+
 		<img src="./image/bg.jpg" alt="" class="background-img">
 		<form action="<%=request.getContextPath()%>/SignIn" method="POST"
 			class="form" id="sign-in-form">
@@ -38,10 +41,13 @@
 					placeholder="Mật khẩu" class="form-control"> <span
 					class="form-message"></span>
 			</div>
+			<c:if test="${not empty requestScope.messageerror}">
+				<div class="alert alert-error" style="color: red;">${requestScope.messageerror}</div>
+			</c:if>
 
 			<input class="form-submit sign-in" type="submit" value="Đăng nhập" />
 			<a href="" class="forgot-password">Quên mật khẩu?</a>
-			
+
 		</form>
 
 	</div>

@@ -45,7 +45,7 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="./account.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/AccountServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>

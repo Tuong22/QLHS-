@@ -183,11 +183,13 @@
 												<c:forEach var="HocSinh" items="${DSHS}">
 													<tr>
 														<td><%=i++%></td>
-														<td><c:out value="${HocSinh.tenHS}" /></td>
-														<td><c:out value="${HocSinh.gioiTinh}" /></td>
-														<td><c:out value="${HocSinh.namSinh}" /></td>
-														<td><c:out value="${HocSinh.diaChi}" /></td>
-														<td><c:out value="${HocSinh.email}" /></td>
+														<td class="name"><c:out value="${HocSinh.tenHS}" /></td>
+														<td class="gender"><c:out value="${HocSinh.gioiTinh}" /></td>
+														<td class="year"><c:out value="${HocSinh.namSinh}" /></td>
+														<td class="address"><c:out value="${HocSinh.diaChi}" /></td>
+														<td class="email d-flex justify-content-between border-0"><c:out value="${HocSinh.email}" />
+															<i class="edit-infoStudent fa-solid fa-pen-to-square"></i>
+														</td>
 													</tr>
 												</c:forEach>
 
@@ -269,9 +271,77 @@
 
 				<footer class="modal-footer">
 					<button type="button"
-						class="btn btn-primary cancel-add-student-btn">Hủy</button>
+						class="btn btn-primary btn-cancel cancel-add-student-btn">Hủy</button>
 					<button type="submit"
 						class="btn btn-primary confirm-add-studen-btn">Xác nhận</button>
+				</footer>
+			</form>
+		</div>
+	</div>
+	
+	<!-- Modal update student -->
+	<div class="modal update-student-modal">
+		<div class="modal-container update-student-modal-container">
+
+			<div class="icon-close js-update-student-modal-close">
+				<i class="modal-icon-close fa-solid fa-xmark"></i>
+			</div>
+
+			<header class="modal-header">Sửa thông tin học sinh</header>
+
+			<form action="<%=request.getContextPath()%>/InfoStudentsServlet">
+				<input type="hidden" name="action" value="/update">
+				<div class="modal-body">
+					<div class="model-input-item">
+						<label for="student-name-new" class="modal-label">Tên:</label> <input
+							type="text" id="student-name-new" class="modal-input"
+							placeholder="Họ tên" name="studentNameNew">
+					</div>
+
+					<div class="model-input-item">
+						<label class="modal-label">Giới tính:</label>
+						<div class="student-gender">
+							<div class="student-gender-wrap">
+								<label for="student-male-new" class="modal-label">Nam</label> <input
+									type="radio" id="student-male-new" class="modal-input"
+									name="gender-group-new" value="Nam">
+							</div>
+
+							<div class="student-gender-wrap">
+								<label for="student-female-new" class="modal-label">Nữ</label> <input
+									type="radio" id="student-female-new" class="modal-input"
+									name="gender-group-new" value="Nữ">
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="model-input-item">
+						<label for="student-year-new" class="modal-label">Năm sinh:</label> <input
+							type="text" id="student-year-new" class="modal-input"
+							placeholder="Năm sinh" name="studentYearNew">
+					</div>
+
+					<div class="model-input-item">
+						<label for="student-address-new" class="modal-label">Địa chỉ:</label>
+						<input type="text" id="student-address-new" class="modal-input"
+							placeholder="Địa chỉ" name="studentAddressNew">
+					</div>
+
+					<div class="model-input-item">
+						<label for="student-email-new" class="modal-label">Email:</label> <input
+							type="email" id="student-email-new" class="modal-input"
+							placeholder="Email" name="studentEmailNew">
+					</div>
+
+				</div>
+
+				<footer class="modal-footer">
+					<button type="button"
+						class="btn btn-primary btn-cancel cancel-update-student-btn">Hủy</button>
+					<button type="submit"
+						class="btn btn-primary confirm-update-studen-btn">Xác nhận</button>
 				</footer>
 			</form>
 		</div>
@@ -282,6 +352,82 @@
 	<script src="./js/app.js"></script>
 	<script src="./js/pagination.js"></script>
 	<script src="./js/modalAddStudent.js"></script>
+	<script>
+	const updateStudentIcons = document.querySelectorAll('.edit-infoStudent')
+	const modalUpdateStudent = document.querySelector('.update-student-modal')
+	const modalUpdateStudentContainer = document.querySelector('.update-student-modal-container')
+	const modalUpdateStudentClose = document.querySelector('.js-update-student-modal-close')
+	const cancelUpdateStudentBtn = document.querySelector('.cancel-update-student-btn')
 
+	const studentNameNew = document.getElementById("student-name-new")
+	const studentGenderNew = document.querySelectorAll('input[name="gender-group-new"]');
+	const studentYearNew = document.getElementById("student-year-new")
+	const studentAddressNew = document.getElementById("student-address-new")
+	const studentEmailNew = document.getElementById("student-email-new")
+
+	var studentNameCurr
+	var studentGenderCurr
+	var studentYearCurr
+	var studentAddressCurr
+	var studentEmailCurr
+	
+	function getParent(element, selector) {
+		while (element.parentElement) {
+			if (element.parentElement.matches(selector)) {
+				return element.parentElement
+			}
+			element = element.parentElement
+		}
+	}
+	
+	function getSibling(element, className) {
+	    const parent = element.parentElement;
+	    if (!parent) return null; // Kiểm tra nếu không có phần tử cha
+	    
+	    const siblings = parent.children;
+	    for (let i = 0; i < siblings.length; i++) {
+	        if (siblings[i] !== element && siblings[i].classList.contains(className)) {
+	            return siblings[i];
+	        }
+	    }
+	    
+	    return null; // Trả về null nếu không tìm thấy phần tử ngang cấp với class truyền vào
+	}
+	
+
+	function Hide() {
+		modalUpdateStudent.classList.remove('open')
+	}
+
+	updateStudentIcons.forEach(function(updateStudentIcon){
+		updateStudentIcon.addEventListener('click', function () {
+			studentNameCurr = getSibling(getParent(updateStudentIcon, ".email"), 'name')
+			studentGenderCurr = getSibling(getParent(updateStudentIcon, ".email"), 'gender')
+			studentYearCurr = getSibling(getParent(updateStudentIcon, ".email"), 'year')
+			studentAddressCurr = getSibling(getParent(updateStudentIcon, ".email"), 'address')
+			studentEmailCurr = getParent(updateStudentIcon, ".email")
+			
+			studentNameNew.setAttribute("value", studentNameCurr.textContent)
+			studentGenderNew.forEach(function(item) {
+				item.removeAttribute("checked", "")
+			})
+			studentGenderNew.forEach(function(item) {
+				if(item.value == studentGenderCurr.textContent){
+					item.setAttribute("checked", "")
+				}
+			})
+			studentYearNew.setAttribute("value", studentYearCurr.textContent)
+			studentAddressNew.setAttribute("value", studentAddressCurr.textContent)
+			studentEmailNew.setAttribute("value", studentEmailCurr.textContent)
+			modalUpdateStudent.classList.add('open')
+		})
+	})
+
+
+	modalUpdateStudentClose.addEventListener('click', Hide)
+	cancelUpdateStudentBtn.addEventListener('click', Hide)
+	modalUpdateStudent.addEventListener('click', Hide)
+	modalUpdateStudentContainer.addEventListener('click', function(event) { event.stopPropagation() })
+	</script>
 </body>
 </html>

@@ -210,7 +210,7 @@
 										</form>
 									</div>
 									<div class="datatable-container">
-										<table id="datatablesReport" class="datatable-table">
+										<table id="datatablesReport" class="datatable-table  mb-4">
 											<thead>
 												<tr>
 													<th data-sortable="true" style="width: 10%;"><a
