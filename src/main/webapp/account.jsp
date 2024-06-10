@@ -46,8 +46,10 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a
-								class="sidebar-link active" href="<%=request.getContextPath()%>/changePasswordServlet" aria-expanded="false">
-									<span> <i class="fa fa-solid fa-user"></i>
+								class="sidebar-link active"
+								href="<%=request.getContextPath()%>/changePasswordServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
 
@@ -153,67 +155,83 @@
 							<h3 class="account-info-heading">Thông tin tài khoản</h3>
 
 							<div class="spacer"></div>
-							
+
 							<c:if test="${sessionScope.account.isAdmin == 1}">
 
-							<table id="datatablesChangeRule" class="datatable-table">
-								<thead>
-									<tr>
-										<th data-sortable="true" style="text-align: center;"><a
-											href="#" class="datatable-sorter">STT</a></th>
-										<th data-sortable="true" aria-sort="descending"
-											class="datatable-descending" style="text-align: center;"><a
-											href="#" class="datatable-sorter">Tên tài khoản</a></th>
-										<th data-sortable="true" style="text-align: center;"><a
-											href="#" class="datatable-sorter">Mật khẩu</a></th>
-									</tr>
-								</thead>
-								<tbody>
-								<c:forEach var="acc" items="${DSTK}">
-									<tr>
-										<td style="text-align: center;"><%=i++%></td>
-										<td class="changeRuleName-edit d-flex justify-content-between ps-4"> ${acc.username}
-											<i class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square"></i>
-										</td>
-										<td> ${acc.password}</td>
-									</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+								<table id="datatablesChangeRule" class="datatable-table">
+									<thead>
+										<tr>
+											<th data-sortable="true" style="text-align: center;"><a
+												href="#" class="datatable-sorter">STT</a></th>
+											<th data-sortable="true" aria-sort="descending"
+												class="datatable-descending" style="text-align: center;"><a
+												href="#" class="datatable-sorter">Tên tài khoản</a></th>
+											<th data-sortable="true" style="text-align: center;"><a
+												href="#" class="datatable-sorter">Mật khẩu</a></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="acc" items="${DSTK}">
+											<tr>
+												<td style="text-align: center;"><%=i++%></td>
+												<td
+													class="changeRuleName-edit d-flex justify-content-between ps-4">
+													${acc.username}</td>
+
+												<td>${acc.password}<i
+													class="edit-pass fa-solid fa-pen-to-square"></i>
+													<i class="removeClass-icon fa fa-solid fa-trash-can"></i>
+												</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
 							</c:if>
 							<c:if test="${sessionScope.account.isAdmin != 1}">
-							<div class="account-info-group">
-								<label><i class="account-icon fa-solid fa-user"></i>Tên
-									tài khoản: </label>
-								<div class="account-name">
-									<p class="account-info-text">${sessionScope.account.username}</p>
+								<div class="account-info-group">
+									<label><i class="account-icon fa-solid fa-user"></i>Tên
+										tài khoản: </label>
+									<div class="account-name">
+										<p class="account-info-text">${sessionScope.account.username}</p>
+									</div>
+
 								</div>
 
-							</div>
-
-							<div class="account-info-group">
-								<label><i class="account-icon fa-solid fa-key"></i>Mật
-									khẩu: </label>
-								<div class="account-pass">
-									<p class="account-info-text account-pass-text__hide">${sessionScope.account.password}</p>
-									<p class="account-info-text account-pass-text__show hidden">admin</p>
-									<div class="pass-selection">
-										<i class="show-pass fa-solid fa-eye"></i> <i
-											class="hide-pass fa-solid fa-eye-slash hidden"></i> <i
-											class="edit-pass fa-solid fa-pen-to-square"></i>
+								<div class="account-info-group">
+									<label><i class="account-icon fa-solid fa-key"></i>Mật
+										khẩu: </label>
+									<div class="account-pass">
+										<p class="account-info-text account-pass-text__hide">${sessionScope.account.password}</p>
+										<p class="account-info-text account-pass-text__show hidden">admin</p>
+										<div class="pass-selection">
+											<i class="show-pass fa-solid fa-eye"></i> <i
+												class="hide-pass fa-solid fa-eye-slash hidden"></i> <i
+												class="edit-pass fa-solid fa-pen-to-square"></i>
+												
+										</div>
 									</div>
 								</div>
-							</div>
 							</c:if>
-
-
 						</div>
+
+
 						<c:if test="${not empty requestScope.messageinfo}">
 							<div class="alert alert-success">${requestScope.messageinfo}</div>
 						</c:if>
 						<c:if test="${not empty requestScope.messageerror}">
 							<div class="alert alert-danger">${requestScope.messageerror}</div>
 						</c:if>
+
+						<c:if test="${not empty requestScope.messageInfoAddAccount}">
+							<div class="alert alert-success">${requestScope.messageInfoAddAccount}</div>
+						</c:if>
+
+						<c:if test="${not empty requestScope.messageErrorAddAccount}">
+							<div class="alert alert-danger">${requestScope.messageErrorAddAccount}</div>
+						</c:if>
+
+						<button type="button" class="btn btn-primary add-acc-btn">Tạo
+							tài khoản</button>
 
 
 						<footer class="account-info-footer">
@@ -232,6 +250,53 @@
 
 	</div>
 
+	<!-- Modal add account -->
+	<div class="modal add-account-modal">
+
+		<form action="<%=request.getContextPath()%>/changePasswordServlet">
+			<input type="hidden" name="action" value="/addAccount">
+			<div class="modal-container add-account-modal-container">
+
+				<div class="icon-close js-modal-add-account-close">
+					<i class="modal-icon-close fa-solid fa-xmark"></i>
+				</div>
+
+				<header class="modal-header"> Tạo tài khoản </header>
+
+				<div class="modal-body">
+					<div class="model-input-item">
+						<label for="new-username" class="modal-label">Tài khoản
+							mới:</label> <input type="text" id="new-username" class="modal-input"
+							placeholder="username" name="newUsername">
+					</div>
+
+					<div class="model-input-item">
+						<label for="new-password" class="modal-label">Mật khẩu
+							mới:</label> <input type="text" id="new-password" class="modal-input"
+							placeholder="password" name="newPassword">
+					</div>
+
+					<div class="model-input-item">
+						<label for="role-user" class="modal-label">Phân quyền:</label> <select
+							id="role-user" name="roleUser">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+						</select>
+					</div>
+
+				</div>
+
+				<footer class="modal-footer">
+					<button type="button"
+						class="btn btn-primary cancel-add-account-btn btn-cancel">Hủy</button>
+					<button type="submit"
+						class="btn btn-primary confirm-add-account-btn">Xác nhận</button>
+				</footer>
+			</div>
+		</form>
+	</div>
+
 
 
 	<!-- Modal edit password -->
@@ -246,7 +311,6 @@
 				</div>
 
 				<header class="modal-header"> Đổi mật khẩu </header>
-
 
 				<div class="modal-body">
 					<div class="model-input-item">
@@ -282,6 +346,33 @@
 	<script src="./js/app.js"></script>
 	<script src="./js/pagination.js"></script>
 	<script src="./js/modalEditPass.js"></script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded',
+				function() {
+					const addAccountModal = document
+							.querySelector('.add-account-modal');
+					const btnAddAcc = document.querySelector('.add-acc-btn');
+					const closeIcon = document
+							.querySelector('.js-modal-add-account-close');
+					const cancelBtn = document
+							.querySelector('.cancel-add-account-btn');
+					btnAddAcc.addEventListener('click', function() {
+						addAccountModal.style.display = 'block';
+					});
+					closeIcon.addEventListener('click', function() {
+						addAccountModal.style.display = 'none';
+					});
+					cancelBtn.addEventListener('click', function() {
+						addAccountModal.style.display = 'none';
+					});
+					window.addEventListener('click', function(event) {
+						if (event.target == addAccountModal) {
+							addAccountModal.style.display = 'none';
+						}
+					});
+				});
+	</script>
 
 
 </body>

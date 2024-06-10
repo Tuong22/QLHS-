@@ -17,6 +17,7 @@ import Dao.changePasswordDao;
 import Dao.changeRuleDao;
 import Dao.signInDao;
 import Model.HocSinh;
+import Model.Mon;
 import Model.signIn;
 
 @WebServlet("/changePasswordServlet")
@@ -41,6 +42,13 @@ public class changePasswordServlet extends HttpServlet {
 			action = "list";
 		}
 		switch (action) {
+		case "/addAccount":
+			try {
+				addAccount(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+				e.printStackTrace();
+			} 
+			break;
 		case "/updatePass":
             try {
             	updatePassword(request, response);
@@ -56,6 +64,24 @@ public class changePasswordServlet extends HttpServlet {
             }
             break;
 		}
+	}
+	
+	private void addAccount(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		String name = request.getParameter("newUsername");
+		String pass = request.getParameter("newPassword");
+		String role = request.getParameter("roleUser");
+		
+		signIn s = new signIn(0, name, pass, Integer.parseInt(role));
+		boolean isvalid = ChangePasswordDao.addAccount(s);
+		if (isvalid) {
+	        request.setAttribute("messageInfoAddAccount", "Thêm tài khoản mới thành công.");
+	    } else {
+	        request.setAttribute("messageErrorAddAccount", "Tên tài khoản bị trùng");
+	    }
+		List<signIn> DSTK = ChangePasswordDao.renderAccountRoleAdmin();
+		request.setAttribute("DSTK", DSTK);
+		request.getRequestDispatcher("/account.jsp").forward(request, response);
 	}
 	
 	private void renderAccountRoleAdmin(HttpServletRequest request, HttpServletResponse response) 
