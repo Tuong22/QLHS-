@@ -7,20 +7,12 @@ public class signIn implements Serializable {
 	private String username;
 	private String password;
 	private int isAdmin;
-	private int isBanGiamHieu;
-	private int isGiaoVien;
-	public signIn(int iD, String username, String password, int isAdmin, int isBanGiamHieu, int isGiaoVien) {
+	public signIn(int iD, String username, String password, int isAdmin) {
 		super();
 		this.iD = iD;
 		this.username = username;
 		this.password = password;
 		this.isAdmin = isAdmin;
-		this.isBanGiamHieu = isBanGiamHieu;
-		this.isGiaoVien = isGiaoVien;
-	}
-	
-	public signIn() {
-		
 	}
 	public int getiD() {
 		return iD;
@@ -45,18 +37,6 @@ public class signIn implements Serializable {
 	}
 	public void setIsAdmin(int isAdmin) {
 		this.isAdmin = isAdmin;
-	}
-	public int getIsBanGiamHieu() {
-		return isBanGiamHieu;
-	}
-	public void setIsBanGiamHieu(int isBanGiamHieu) {
-		this.isBanGiamHieu = isBanGiamHieu;
-	}
-	public int getIsGiaoVien() {
-		return isGiaoVien;
-	}
-	public void setIsGiaoVien(int isGiaoVien) {
-		this.isGiaoVien = isGiaoVien;
 	}
 	
 

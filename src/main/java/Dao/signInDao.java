@@ -26,7 +26,7 @@ public class signInDao {
 			statement.setString(2, pass);
 			ResultSet rs = statement.executeQuery();
 			while(rs.next()) {
-				return new signIn(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
+				return new signIn(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
 			}
 		} catch (Exception e) {
 		}

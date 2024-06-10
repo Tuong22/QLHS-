@@ -35,8 +35,9 @@ public class changePasswordDao {
 				int id = rs.getInt(1);
 				String username = rs.getString(2);
 				String password = rs.getString(3);
+				int role = rs.getInt(4);
 
-				signIn acc = new signIn(id, username, password, 0, 0, 0);
+				signIn acc = new signIn(id, username, password, role);
 				DSTK.add(acc);
 			} 
 		}catch (SQLException e) {

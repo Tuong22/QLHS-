@@ -191,7 +191,7 @@
 												<button type="submit"
 													class="btn btn-primary search-point-btn">Tìm kiếm</button>
 
-												<a href="./insertPoint.jsp" <c:if test="${sessionScope.account.isBanGiamHieu == 1}">
+												<a href="./insertPoint.jsp" <c:if test="${sessionScope.account.isAdmin == 2}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>><button type="button"
 														class="btn btn-primary search-point-btn" >Nhập
