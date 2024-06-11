@@ -105,14 +105,73 @@ public class changePasswordDao {
         return isvalid;
     }
 	
-	public void updatePassword(String newPass) throws SQLException, ClassNotFoundException {
-        String UPDATE_PASS = "UPDATE signin SET password=?";
+	public boolean updatePassword(String newPass, String username) throws SQLException, ClassNotFoundException {
+		String SELECT_PASS = "SELECT * FROM signin;";
+        String UPDATE_PASS = "UPDATE signin SET pass=? where maid=?";
+        boolean isvalid = false;
         try (Connection connection = datasource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(UPDATE_PASS)) {
-            statement.setString(1, newPass);
+        	 Statement stmt = connection.createStatement();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_PASS);
+        	 ResultSet rs = stmt.executeQuery(SELECT_PASS)) {
+            
+        	String currentUserName = "";
+        	String currentId = "";
+        	while(rs.next()) {
+        		currentUserName = rs.getString(2);
+				if (currentUserName.equalsIgnoreCase(username.trim())) {
+					currentId = rs.getString(1);
+				}
+			}
+        	
+        	int rowsAffected = statement.executeUpdate();
+
+			if (rowsAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
+        	
+        	statement.setString(1, newPass);
+        	statement.setString(2, username);
             statement.executeUpdate();
         } catch (SQLException e) {
 			e.printStackTrace();
 		}
+        return isvalid;
+    }
+	
+	public boolean updateRole(int newRole) throws SQLException, ClassNotFoundException {
+		String SELECT_ROLE = "SELECT * FROM signin;";
+        String UPDATE_ROLE = "UPDATE signin SET isAdmin=? where maid=?";
+        boolean isvalid = false;
+        try (Connection connection = datasource.getConnection();
+        	 Statement stmt = connection.createStatement();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_ROLE);
+        	 ResultSet rs = stmt.executeQuery(SELECT_ROLE)) {
+            
+//        	String currentUserName = "";
+//        	String currentId = "";
+//        	while(rs.next()) {
+//        		currentUserName = rs.getString(2);
+//				if (currentUserName.equalsIgnoreCase(username.trim())) {
+//					currentId = rs.getString(1);
+//				}
+//			}
+        	
+        	int rowsAffected = statement.executeUpdate();
+
+			if (rowsAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
+//        	
+//        	statement.setString(1, newPass);
+//        	statement.setString(2, username);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+			e.printStackTrace();
+		}
+        return isvalid;
     }
 }

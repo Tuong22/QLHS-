@@ -88,9 +88,8 @@ public class listStudentOfClassDao {
 	}
 	
 	public boolean addStdNotClassToClass(String[] listStdIdSelected, String nameClass) throws ClassNotFoundException {
-		String ADD_STUDENT_TO_CLASS = "INSERT INTO QUATRINH VALUES (?,?,?,?)";
+		String ADD_STUDENT_TO_CLASS = "INSERT INTO QUATRINH VALUES (?,?,?,?);";
 		String classID = selectClassIDbyName(nameClass);
-		System.out.println("classID: " + classID);
 		String hk1 = "HK1";
 		boolean isvalid = false;
 		try (Connection connection = datasource.getConnection();

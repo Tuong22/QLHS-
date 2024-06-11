@@ -150,97 +150,169 @@
 			<div id="account" class="container-fluid account">
 
 				<div class="row">
-					<div class="card account-info">
-						<div class="account-info-content">
-							<h3 class="account-info-heading">Thông tin tài khoản</h3>
+					<!-- Account admin -->
+					<c:if test="${sessionScope.account.isAdmin == 1}">
+						<div class="card account-info">
+							<div class="account-info-content">
+								<h3 class="account-info-heading">Thông tin tài khoản</h3>
 
-							<div class="spacer"></div>
+								<div class="spacer"></div>
+								<c:if test="${not empty requestScope.messageinfo}">
+									<div id="toast">
+										<div class="toast toast--success">
+											<div class="toast__icon">
+												<i class="fa-solid fa-circle-check"></i>
+											</div>
+											<div class="toast__body">
+												<h3 class="toast__title">Thành công</h3>
+												<p class="toast__msg">${requestScope.messageinfo}</p>
+											</div>
+											<div class="toast__close">
+												<i class="fa-solid fa-xmark"></i>
+											</div>
+										</div>
+									</div>
+								</c:if>
+								<c:if test="${not empty requestScope.messageerror}">
+									<div id="toast">
+										<div class="toast toast--error">
+											<div class="toast__icon">
+												<i class="fa-solid  fa-triangle-exclamation"></i>
+											</div>
+											<div class="toast__body">
+												<h3 class="toast__title">Thất bại</h3>
+												<p class="toast__msg">${requestScope.messageerror}</p>
+											</div>
+											<div class="toast__close">
+												<i class="fa-solid fa-xmark"></i>
+											</div>
+										</div>
+									</div>
+								</c:if>
 
-							<c:if test="${sessionScope.account.isAdmin == 1}">
+								<c:if test="${not empty requestScope.messageInfoAddAccount}">
+									<div id="toast">
+										<div class="toast toast--success">
+											<div class="toast__icon">
+												<i class="fa-solid fa-circle-check"></i>
+											</div>
+											<div class="toast__body">
+												<h3 class="toast__title">Thành công</h3>
+												<p class="toast__msg">${requestScope.messageInfoAddAccount}</p>
+											</div>
+											<div class="toast__close">
+												<i class="fa-solid fa-xmark"></i>
+											</div>
+										</div>
+									</div>
+								</c:if>
+
+								<c:if test="${not empty requestScope.messageErrorAddAccount}">
+									<div id="toast">
+										<div class="toast toast--error">
+											<div class="toast__icon">
+												<i class="fa-solid  fa-triangle-exclamation"></i>
+											</div>
+											<div class="toast__body">
+												<h3 class="toast__title">Thất bại</h3>
+												<p class="toast__msg">${requestScope.messageErrorAddAccount}</p>
+											</div>
+											<div class="toast__close">
+												<i class="fa-solid fa-xmark"></i>
+											</div>
+										</div>
+									</div>
+								</c:if>
+
+
 
 								<table id="datatablesChangeRule" class="datatable-table">
 									<thead>
 										<tr>
-											<th data-sortable="true" style="text-align: center;"><a
-												href="#" class="datatable-sorter">STT</a></th>
+											<th data-sortable="true"
+												style="text-align: center; width: 10%"><a href="#"
+												class="datatable-sorter">STT</a></th>
 											<th data-sortable="true" aria-sort="descending"
-												class="datatable-descending" style="text-align: center;"><a
-												href="#" class="datatable-sorter">Tên tài khoản</a></th>
-											<th data-sortable="true" style="text-align: center;"><a
-												href="#" class="datatable-sorter">Mật khẩu</a></th>
+												class="datatable-descending"
+												style="text-align: center; width: 35%"><a href="#"
+												class="datatable-sorter">Tên tài khoản</a></th>
+											<th data-sortable="true"
+												style="text-align: center; width: 35%"><a href="#"
+												class="datatable-sorter">Mật khẩu</a></th>
+											<th data-sortable="true"
+												style="text-align: center; width: 20%"><a href="#"
+												class="datatable-sorter">Thao tác</a></th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach var="acc" items="${DSTK}">
 											<tr>
 												<td style="text-align: center;"><%=i++%></td>
-												<td
-													class="changeRuleName-edit d-flex justify-content-between ps-4">
-													${acc.username}</td>
+												<td class="ps-4 name">${acc.username}</td>
 
-												<td>${acc.password}<i
-													class="edit-pass fa-solid fa-pen-to-square"></i>
-													<i class="removeClass-icon fa fa-solid fa-trash-can"></i>
-												</td>
+												<td class="d-flex justify-content-between border-0 ps-4">${acc.password}</td>
+												<td class="action" style="text-align: center;"><i
+													class="role-user-icon fas fa-users"></i> <i
+													class="edit-pass fa-solid fa-pen-to-square"></i> <i
+													class="removeClass-icon fa fa-solid fa-trash-can"></i></td>
 											</tr>
 										</c:forEach>
 									</tbody>
 								</table>
-							</c:if>
-							<c:if test="${sessionScope.account.isAdmin != 1}">
+
+							</div>
+
+							<button type="button" class="btn btn-primary add-acc-btn">Tạo
+								tài khoản</button>
+
+							<footer class="account-info-footer">
+								<span>Last update: </span>
+								<p class="account-last-update"></p>
+							</footer>
+						</div>
+					</c:if>
+
+					<!-- Account not admin -->
+					<c:if test="${sessionScope.account.isAdmin != 1}">
+						<div class="card account-info col-7">
+							<div class="account-info-content">
+								<h3 class="account-info-heading">Thông tin tài khoản</h3>
+
+								<div class="spacer"></div>
+
+
 								<div class="account-info-group">
 									<label><i class="account-icon fa-solid fa-user"></i>Tên
-										tài khoản: </label>
-									<div class="account-name">
-										<p class="account-info-text">${sessionScope.account.username}</p>
-									</div>
+										tài khoản: </label> <input class="account-name-text ps-2"
+										value="${sessionScope.account.username}" readonly>
+
 
 								</div>
 
 								<div class="account-info-group">
 									<label><i class="account-icon fa-solid fa-key"></i>Mật
 										khẩu: </label>
-									<div class="account-pass">
-										<p class="account-info-text account-pass-text__hide">${sessionScope.account.password}</p>
-										<p class="account-info-text account-pass-text__show hidden">admin</p>
-										<div class="pass-selection">
+									<div class="account-pass d-flex">
+										<input class="account-pass-text ps-2 border-0" type="password"
+											id="password" value="${sessionScope.account.password}"
+											readonly>
+										<div class="pass-selection d-flex">
 											<i class="show-pass fa-solid fa-eye"></i> <i
 												class="hide-pass fa-solid fa-eye-slash hidden"></i> <i
 												class="edit-pass fa-solid fa-pen-to-square"></i>
-												
 										</div>
 									</div>
 								</div>
-							</c:if>
+
+
+							</div>
+
+							<footer class="account-info-footer">
+								<span>Last update: </span>
+								<p class="account-last-update"></p>
+							</footer>
 						</div>
-
-
-						<c:if test="${not empty requestScope.messageinfo}">
-							<div class="alert alert-success">${requestScope.messageinfo}</div>
-						</c:if>
-						<c:if test="${not empty requestScope.messageerror}">
-							<div class="alert alert-danger">${requestScope.messageerror}</div>
-						</c:if>
-
-						<c:if test="${not empty requestScope.messageInfoAddAccount}">
-							<div class="alert alert-success">${requestScope.messageInfoAddAccount}</div>
-						</c:if>
-
-						<c:if test="${not empty requestScope.messageErrorAddAccount}">
-							<div class="alert alert-danger">${requestScope.messageErrorAddAccount}</div>
-						</c:if>
-
-						<button type="button" class="btn btn-primary add-acc-btn">Tạo
-							tài khoản</button>
-
-
-						<footer class="account-info-footer">
-							<span>Last update: </span>
-							<p class="account-last-update">28/05/2024</p>
-						</footer>
-
-					</div>
-
+					</c:if>
 				</div>
 			</div>
 			<!-- Account end -->
@@ -249,6 +321,79 @@
 		<!--  Main wrapper -->
 
 	</div>
+
+	<!-- Modal role account -->
+	<div class="modal role-account-modal">
+
+		<form action="<%=request.getContextPath()%>/changePasswordServlet">
+			<input type="hidden" name="action" value="/roleAccount">
+			<div class="modal-container role-account-modal-container">
+
+				<div class="icon-close js-modal-role-account-close">
+					<i class="modal-icon-close fa-solid fa-xmark"></i>
+				</div>
+
+				<header class="modal-header"> Phân quyền người dùng</header>
+
+				<div class="modal-body">
+					<div class="model-input-item">
+						<label for="userNameRole" class="modal-label">Tên tài
+							khoản:</label> <input type="text" id="userNameRole" class="modal-input"
+							name="userNameRole" readonly>
+					</div>
+					<div class="model-input-item">
+						<label for="role-user" class="modal-label">Phân quyền:</label> <select
+							id="role-account" name="roleAccount">
+							<option value="1">Admin</option>
+							<option value="2">Headmaster</option>
+							<option value="3">Teacher</option>
+							<option value="4">Office</option>
+						</select>
+					</div>
+				</div>
+
+				<footer class="modal-footer">
+					<button type="button"
+						class="btn btn-primary cancel-role-account-btn btn-cancel">Hủy</button>
+					<button type="submit"
+						class="btn btn-primary confirm-role-account-btn">Xác nhận</button>
+				</footer>
+			</div>
+		</form>
+	</div>
+
+
+	<!-- Modal delete account -->
+	<div class="modal delete-account-modal">
+
+		<form action="<%=request.getContextPath()%>/changePasswordServlet">
+			<input type="hidden" name="action" value="/deleteAccount">
+			<div class="modal-container delete-account-modal-container">
+
+				<div class="icon-close js-modal-delete-account-close">
+					<i class="modal-icon-close fa-solid fa-xmark"></i>
+				</div>
+
+				<header class="modal-header">Xóa tài khoản</header>
+
+				<div class="modal-body">
+					<div class="model-input-item">
+						<label for="userNameRoleDelete" class="modal-label">Tên tài
+							khoản:</label> <input type="text" id="userNameRoleDelete" class="modal-input"
+							name="userNameRoleDelete" readonly>
+					</div>
+				</div>
+
+				<footer class="modal-footer">
+					<button type="button"
+						class="btn btn-primary cancel-role-account-btn btn-cancel">Hủy</button>
+					<button type="submit"
+						class="btn btn-primary confirm-role-account-btn">Xác nhận</button>
+				</footer>
+			</div>
+		</form>
+	</div>
+
 
 	<!-- Modal add account -->
 	<div class="modal add-account-modal">
@@ -279,9 +424,10 @@
 					<div class="model-input-item">
 						<label for="role-user" class="modal-label">Phân quyền:</label> <select
 							id="role-user" name="roleUser">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
+							<option value="1">Admin</option>
+							<option value="2">Headmaster</option>
+							<option value="3">Teacher</option>
+							<option value="4">Office</option>
 						</select>
 					</div>
 
@@ -314,6 +460,11 @@
 
 				<div class="modal-body">
 					<div class="model-input-item">
+						<label for="new-password" class="modal-label">UserName:</label> <input
+							type="text" id="username" class="modal-input" name="username"
+							readonly>
+					</div>
+					<div class="model-input-item">
 						<label for="new-password" class="modal-label">Mật khẩu
 							mới:</label> <input type="text" id="new-password" class="modal-input"
 							placeholder="Mật khẩu mới" name="newPass">
@@ -345,33 +496,142 @@
 
 	<script src="./js/app.js"></script>
 	<script src="./js/pagination.js"></script>
-	<script src="./js/modalEditPass.js"></script>
+	<script>
+		const currentDate = new Date();
+		const day = currentDate.getDate();
+		const month = currentDate.getMonth() + 1;
+		const year = currentDate.getFullYear();
+		const formattedDate = day + "/" + month + "/" + year;
+		document.querySelectorAll('.account-last-update').forEach(
+				function(item) {
+					item.textContent = formattedDate;
+				});
+	</script>
 
 	<script>
-		document.addEventListener('DOMContentLoaded',
-				function() {
-					const addAccountModal = document
-							.querySelector('.add-account-modal');
-					const btnAddAcc = document.querySelector('.add-acc-btn');
-					const closeIcon = document
-							.querySelector('.js-modal-add-account-close');
-					const cancelBtn = document
-							.querySelector('.cancel-add-account-btn');
-					btnAddAcc.addEventListener('click', function() {
-						addAccountModal.style.display = 'block';
-					});
-					closeIcon.addEventListener('click', function() {
-						addAccountModal.style.display = 'none';
-					});
-					cancelBtn.addEventListener('click', function() {
-						addAccountModal.style.display = 'none';
-					});
-					window.addEventListener('click', function(event) {
-						if (event.target == addAccountModal) {
-							addAccountModal.style.display = 'none';
-						}
-					});
-				});
+		const roleAcc = document.querySelectorAll('.role-user-icon')
+		console.log(roleAcc)
+		const modalRoleAcc = document.querySelector('.role-account-modal')
+		const modalRoleAccContainer = document
+				.querySelector('.role-account-modal-container')
+		const closeRoleAccBtn = document
+				.querySelector('.js-modal-role-account-close')
+		const CanceRoleAcclBtn = document
+				.querySelector('.cancel-role-account-btn')
+
+
+		function HideModal() {
+			modalRoleAcc.classList.remove('open')
+		}
+		
+		function getParent(element, selector) {
+			while (element.parentElement) {
+				if (element.parentElement.matches(selector)) {
+					return element.parentElement
+				}
+				element = element.parentElement
+			}
+		}
+		
+		function getSibling(element, className) {
+		    const parent = element.parentElement;
+		    if (!parent) return null; // Kiểm tra nếu không có phần tử cha
+		    
+		    const siblings = parent.children;
+		    for (let i = 0; i < siblings.length; i++) {
+		        if (siblings[i] !== element && siblings[i].classList.contains(className)) {
+		            return siblings[i];
+		        }
+		    }
+		    
+		    return null; // Trả về null nếu không tìm thấy phần tử ngang cấp với class truyền vào
+		}
+		
+		roleAcc.forEach(function(item){
+			item.addEventListener('click', fuction(){
+				var getUserNameRole = document.getElementById('userNameRole')
+				getUserNameRole.setAttribute('value',getSibling(getParent(item, '.action'),'name'))	
+				modalRoleAcc.classList.add('open')
+			})
+		})
+
+		closeRoleAccBtn.addEventListener('click', HideModal)
+		CanceRoleAcclBtn.addEventListener('click', HideModal)
+		modalRoleAcc.addEventListener('click', HideModal)
+		modalRoleAccContainer.addEventListener('click', function(event) {
+			event.stopPropagation()
+		})
+	</script>
+	
+
+	<script>
+		const editPass = document.querySelector('.edit-pass')
+		const modalEditPass = document.querySelector('.edit-pass-modal')
+		const modalEditPassContainer = document
+				.querySelector('.edit-pass-modal-container')
+		const closeBtn = document.querySelector('.js-modal-edit-pass-close')
+		const CancelBtn = document.querySelector('.cancel-edit-pass-btn')
+
+		function Open() {
+			modalEditPass.classList.add('open')
+		}
+
+		function Hide() {
+			modalEditPass.classList.remove('open')
+		}
+
+		editPass.addEventListener('click', Open)
+
+		closeBtn.addEventListener('click', Hide)
+		CancelBtn.addEventListener('click', Hide)
+		modalEditPass.addEventListener('click', Hide)
+		modalEditPassContainer.addEventListener('click', function(event) {
+			event.stopPropagation()
+		})
+
+		const showPassIcon = document.querySelector('.show-pass')
+		const hidePassIcon = document.querySelector('.hide-pass')
+		const passwordField = document.querySelector('.account-pass-text')
+
+		showPassIcon.addEventListener('click', function() {
+			passwordField.type = 'text';
+			showPassIcon.classList.add("hidden")
+			hidePassIcon.classList.remove("hidden")
+		})
+
+		hidePassIcon.addEventListener('click', function() {
+			passwordField.type = 'password';
+			showPassIcon.classList.remove("hidden")
+			hidePassIcon.classList.add("hidden")
+		})
+	</script>
+
+	<script>
+		const addAcc = document.querySelector('.add-acc-btn')
+		const modalAddAcc = document.querySelector('.add-account-modal')
+		const modalAddAccContainer = document
+				.querySelector('.add-account-modal-container')
+		const closeAddAccBtn = document
+				.querySelector('.js-modal-add-account-close')
+		const CanceAddAcclBtn = document
+				.querySelector('.cancel-add-account-btn')
+
+		function OpenModal() {
+			modalAddAcc.classList.add('open')
+		}
+
+		function HideModal() {
+			modalAddAcc.classList.remove('open')
+		}
+
+		addAcc.addEventListener('click', OpenModal)
+
+		closeAddAccBtn.addEventListener('click', HideModal)
+		CanceAddAcclBtn.addEventListener('click', HideModal)
+		modalAddAcc.addEventListener('click', HideModal)
+		modalAddAccContainer.addEventListener('click', function(event) {
+			event.stopPropagation()
+		})
 	</script>
 
 

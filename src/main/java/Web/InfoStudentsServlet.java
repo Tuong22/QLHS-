@@ -24,6 +24,7 @@ import Dao.InfoStudentsDao;
 import Dao.infoClassDao;
 import Model.HocSinh;
 import Model.Lop;
+import Model.Mon;
 import Model.TraCuuHocSinh;
 
 @WebServlet("/InfoStudentsServlet")
@@ -60,6 +61,13 @@ public class InfoStudentsServlet extends HttpServlet {
 			try {
 				selectStudentByName(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		case "/update":
+			try {
+				updateInfoStudent(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
 				e.printStackTrace();
 			}
 			break;
@@ -135,5 +143,26 @@ public class InfoStudentsServlet extends HttpServlet {
 		request.setAttribute("DSHS", DSHS);
 		request.setAttribute("messageerror", "");
 		request.getRequestDispatcher("/infoStudent.jsp").forward(request, response);
+	}
+	
+	private void updateInfoStudent(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException {
+		String nameStudent = request.getParameter("studentName");
+		String nameGender = request.getParameter("gender-group-new");
+		String nameYear = request.getParameter("studentYearNew");
+		String nameAddress = request.getParameter("studentAddressNew");
+		String nameEmail = request.getParameter("studentEmailNew");
+
+		HocSinh hs = new HocSinh(null, nameStudent, nameGender, Integer.parseInt(nameYear), nameAddress, nameEmail);
+		boolean isvalid = infoStudentsDao.updateInfoStudent(hs,nameStudent, nameAddress, nameEmail);
+		
+	    if (isvalid) {
+	        request.setAttribute("messageInfoUpdateStudent", "Sửa thông tin thành công.");
+	    } else {
+	        request.setAttribute("messageErrorUpdateStudent", "Địa chỉ email đã tồn tại.");
+	    }
+	    List<HocSinh> DSHS = infoStudentsDao.selectAllStudent();
+		request.setAttribute("DSHS", DSHS);
+	    request.getRequestDispatcher("/infoStudent.jsp").forward(request, response);
 	}
 }

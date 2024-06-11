@@ -121,7 +121,6 @@ public class infoSubjectDao {
 				if (currentSubjectName.equalsIgnoreCase(nameSubjectOld.trim())) {
 					currentSubjectId = rs.getString(1);
 				}
-				
 			}
 
 			statement.setString(1, mon.getTenMH());

@@ -56,6 +56,13 @@ public class changePasswordServlet extends HttpServlet {
                 e.printStackTrace();
             }
             break;
+		case "/updateRole":
+            try {
+            	updateRole(request, response);
+            } catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            break;
         default:
         	try {
             	renderAccountRoleAdmin(request, response);
@@ -120,23 +127,36 @@ public class changePasswordServlet extends HttpServlet {
 	
 	private void updatePassword(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		String username = request.getParameter("username");
         String newPass = request.getParameter("newPass");
         String cNewPass = request.getParameter("cNewPass");
-        if (newPass == "" || newPass.length()<5) {
-        	request.setAttribute("messageerror", "Thay đổi mật khẩu không thành công. Mật khẩu có độ dài phải lớn hơn 5");
-            request.getRequestDispatcher("/account.jsp").forward(request, response);
-        } else if (newPass.length()!=cNewPass.length()) {
-        	request.setAttribute("messageerror", "Xác nhận mật khẩu không đúng.");
-            request.getRequestDispatcher("/account.jsp").forward(request, response);
-        } else {
-        	ChangePasswordDao.updatePassword(newPass);
+        boolean isvalid = ChangePasswordDao.updatePassword(newPass, username);
+        
+        if (isvalid) {
         	request.setAttribute("messageinfo", "Thay đổi mật khẩu thành công.");
-        	request.getRequestDispatcher("/account.jsp").forward(request, response);
         }
+        else {
+        	if (newPass == "" || newPass.length()<5) {
+            	request.setAttribute("messageerror", "Thay đổi mật khẩu không thành công. Mật khẩu có độ dài phải lớn hơn 5");
+            } else if (newPass.length()!=cNewPass.length()) {
+            	request.setAttribute("messageerror", "Xác nhận mật khẩu không đúng.");
+            }
+        }
+        List<signIn> DSTK = ChangePasswordDao.renderAccountRoleAdmin();
+		request.setAttribute("DSTK", DSTK);
+		request.getRequestDispatcher("/account.jsp").forward(request, response);
 	}
+	
+	private void updateRole(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		
+        List<signIn> DSTK = ChangePasswordDao.renderAccountRoleAdmin();
+		request.setAttribute("DSTK", DSTK);
+		request.getRequestDispatcher("/account.jsp").forward(request, response);
+	}
+	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }

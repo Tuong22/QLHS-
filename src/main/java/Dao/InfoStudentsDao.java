@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 
 import Model.HocSinh;
 import Model.Lop;
+import Model.Mon;
 import Model.TraCuuHocSinh;
 
 public class InfoStudentsDao {
@@ -136,6 +137,42 @@ public class InfoStudentsDao {
 			stmt.close();
 			connection.close();
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isvalid;
+	}
+	
+	public boolean updateInfoStudent(HocSinh hs, String nameStudent, String address, String email) throws ClassNotFoundException {
+		String SELECT_STUDENT = "select * from hocsinh";
+		String UPDATE_STUDENT = "update hocsinh set DiaChi = ?, Email = ? where MaHS = ?";
+		boolean isvalid = false;
+		try (Connection connection = datasource.getConnection();
+				Statement stmt = connection.createStatement();
+				PreparedStatement statement = connection.prepareStatement(UPDATE_STUDENT);
+				ResultSet rs = stmt.executeQuery(SELECT_STUDENT))
+		{
+			String currentNameStudent = "";
+			String currentStudentId = "";
+			while(rs.next()) {
+				currentNameStudent = rs.getString(2);
+				if (currentNameStudent.equalsIgnoreCase(nameStudent.trim())) {
+					currentStudentId = rs.getString(1);
+				}
+			}
+
+			statement.setString(1, hs.getDiaChi());
+			statement.setString(2, hs.getEmail());	
+			statement.setString(3, currentStudentId);	
+			int rowsAffected = statement.executeUpdate();
+			if (rowsAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
+
+			statement.close();
+			connection.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return isvalid;
