@@ -4556,9 +4556,13 @@ ul {
 
 .edit-pass:hover,
 .show-pass:hover,
-.edit-infoStudent:hover {
+.edit-infoStudent:hover,
+.role-user-icon:hover,
+.edit-pass-icon:hover,
+.remove-acc-icon:hover {
 	color: #40E9C0;
 	scale: 1.1;
+	transition: 0.2s
 }
 
 .account-name-text,
