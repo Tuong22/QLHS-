@@ -200,7 +200,7 @@
 												<div class="add-class" style="margin-top: 16px">
 													
 														<button type="button"
-															class="btn btn-primary add-class-btn mt-4 me-4" <c:if test="${sessionScope.account.isAdmin != 1}">
+															class="btn btn-primary add-class-btn mt-4 me-4" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>>Thêm
 															lớp</button>
@@ -236,11 +236,11 @@
 														<tr data-index="0">
 															<td style="text-align: center;"><%=i++%></td>
 															<td class="className-edit" style="margin-left: 30px;">${Lop.tenKhoi}<span>
-																	<i <c:if test="${sessionScope.account.isAdmin != 1}">
+																	<i <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>
 																	class="className-edit-icon fa fa-solid fa-pen-to-square"></i>
-																	<i class="removeClass-icon fa fa-solid fa-trash-can" <c:if test="${sessionScope.account.isAdmin != 1}">
+																	<i class="removeClass-icon fa fa-solid fa-trash-can" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 																	</td>

@@ -50,7 +50,7 @@ public class InfoStudentsServlet extends HttpServlet {
 			action = "list";
 		}
 		switch (action) {
-		case "/insert":
+		case "/insertListStudents":
 			try {
 				insertStudent(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
@@ -111,39 +111,74 @@ public class InfoStudentsServlet extends HttpServlet {
 	
 	private void insertStudent(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
-		String name = request.getParameter("studentName");
-		String gender = request.getParameter("gender-group");
-		String year = request.getParameter("studentYear");
-		String address = request.getParameter("studentAddress");
-		String email = request.getParameter("studentEmail");
-		
-		HocSinh hs = new HocSinh(null, name, gender, year, address, email);
-		
-		boolean isvalid = infoStudentsDao.checkAge(hs);
-		boolean isvalidEmail = infoStudentsDao.checkEmail(hs);
-		if (isvalid && isvalidEmail) {
-			if (name.equals("")) {
-				request.setAttribute("messagEerrorName", "Thêm học sinh không thành công. Chưa nhập tên học sinh.");
-			} else if (gender == null) {
-				request.setAttribute("messageErrorGender", "Thêm học sinh không thành công. Chưa nhập giới tính.");
-			} else if (address.equals("")) {
-				request.setAttribute("messageErrorAddress", "Thêm học sinh không thành công. Chưa nhập địa chỉ.");
-			} else if (email.equals("")) {
-				request.setAttribute("messageErrorEmail", "Thêm học sinh không thành công. Chưa nhập email.");
-			} else {
-				infoStudentsDao.insertStudent(hs);
-				request.setAttribute("messageInfo", "Thêm học sinh thành công.");
-			}
-		} else if (!isvalid){
-			request.setAttribute("messageErrorAge", "Thêm học sinh không thành công. Tuổi không hợp lệ.");
-		} else if (!isvalidEmail) {
-			request.setAttribute("messageErrorEmailExist", "Thêm học sinh không thành công. Email đã tồn tại.");
-		}
-		List<HocSinh> DSHS = infoStudentsDao.selectAllStudent();
+		String[] tenHSArray = request.getParameterValues("tenHS");
+        String[] gioiTinhArray = request.getParameterValues("gioiTinh");
+        String[] namSinhArray = request.getParameterValues("namSinh");
+        String[] diaChiArray = request.getParameterValues("diaChi");
+        String[] emailArray = request.getParameterValues("email");
+
+        List<HocSinh> students = new ArrayList<>();
+        for (int i = 0; i < tenHSArray.length; i++) {
+            HocSinh hs = new HocSinh();
+            hs.setTenHS(tenHSArray[i]);
+            hs.setGioiTinh(gioiTinhArray[i]);
+            hs.setNamSinh(namSinhArray[i]);
+            hs.setDiaChi(diaChiArray[i]);
+            hs.setEmail(emailArray[i]);
+            students.add(hs);
+        }
+
+        if (infoStudentsDao.checkEmailList(students) && infoStudentsDao.checkAgeList(students)) {
+        	infoStudentsDao.insertListStudents(students);
+			request.setAttribute("messageInfo", "Thêm học sinh thành công.");
+        } else if (!infoStudentsDao.checkAgeList(students)) {
+        	request.setAttribute("messageErrorAge", "Thêm học sinh không thành công. Tuổi không hợp lệ.");
+        	request.getRequestDispatcher("/addListStudents.jsp").forward(request, response);
+        } else if (!infoStudentsDao.checkEmailList(students)) {
+        	request.setAttribute("messageErrorEmailExist", "Thêm học sinh không thành công. Email đã tồn tại.");
+        	request.getRequestDispatcher("/addListStudents.jsp").forward(request, response);
+        }
+        List<HocSinh> DSHS = infoStudentsDao.selectAllStudent();
 		request.setAttribute("DSHS", DSHS);
 		request.setAttribute("messageerror", "");
 		request.getRequestDispatcher("/infoStudent.jsp").forward(request, response);
 	}
+	
+//	private void insertStudent(HttpServletRequest request, HttpServletResponse response) 
+//			throws ServletException, IOException, ClassNotFoundException, SQLException {
+//		String name = request.getParameter("studentName");
+//		String gender = request.getParameter("gender-group");
+//		String year = request.getParameter("studentYear");
+//		String address = request.getParameter("studentAddress");
+//		String email = request.getParameter("studentEmail");
+//		
+//		HocSinh hs = new HocSinh(null, name, gender, year, address, email);
+//		
+//		boolean isvalid = infoStudentsDao.checkAge(hs);
+//		boolean isvalidEmail = infoStudentsDao.checkEmail(hs);
+//		if (isvalid && isvalidEmail) {
+//			if (name.equals("")) {
+//				request.setAttribute("messagEerrorName", "Thêm học sinh không thành công. Chưa nhập tên học sinh.");
+//			} else if (gender == null) {
+//				request.setAttribute("messageErrorGender", "Thêm học sinh không thành công. Chưa nhập giới tính.");
+//			} else if (address.equals("")) {
+//				request.setAttribute("messageErrorAddress", "Thêm học sinh không thành công. Chưa nhập địa chỉ.");
+//			} else if (email.equals("")) {
+//				request.setAttribute("messageErrorEmail", "Thêm học sinh không thành công. Chưa nhập email.");
+//			} else {
+//				infoStudentsDao.insertStudent(hs);
+//				request.setAttribute("messageInfo", "Thêm học sinh thành công.");
+//			}
+//		} else if (!isvalid){
+//			request.setAttribute("messageErrorAge", "Thêm học sinh không thành công. Tuổi không hợp lệ.");
+//		} else if (!isvalidEmail) {
+//			request.setAttribute("messageErrorEmailExist", "Thêm học sinh không thành công. Email đã tồn tại.");
+//		}
+//		List<HocSinh> DSHS = infoStudentsDao.selectAllStudent();
+//		request.setAttribute("DSHS", DSHS);
+//		request.setAttribute("messageerror", "");
+//		request.getRequestDispatcher("/infoStudent.jsp").forward(request, response);
+//	}
 	
 	private void updateInfoStudent(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException {

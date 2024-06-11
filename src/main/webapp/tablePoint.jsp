@@ -45,7 +45,7 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="./account.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/changePasswordServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
@@ -191,7 +191,7 @@
 												<button type="submit"
 													class="btn btn-primary search-point-btn">Tìm kiếm</button>
 
-												<a href="./insertPoint.jsp" <c:if test="${sessionScope.account.isAdmin == 2}">
+												<a href="./insertPoint.jsp" <c:if test="${sessionScope.account.isAdmin != 3 && sessionScope.account.isAdmin != 1}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>><button type="button"
 														class="btn btn-primary search-point-btn" >Nhập
@@ -204,29 +204,29 @@
 										<table id="datatablesPoint" class="datatable-table">
 											<thead>
 												<tr>
-													<th data-sortable="true" style="width: 5%;"><a
+													<th data-sortable="true" style="width: 5%; text-align: center;"><a
 														href="#" class="datatable-sorter">STT</a></th>
 													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 25%;"><a
+														class="datatable-descending" style="width: 25%; text-align: center;"><a
 														href="#" class="datatable-sorter">Tên</a></th>
 													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 10%;"><a
+														class="datatable-descending" style="width: 10%; text-align: center;"><a
 														href="#" class="datatable-sorter">Miệng</a></th>
-													<th data-sortable="true" style="width: 10%;"><a
+													<th data-sortable="true" style="width: 10%; text-align: center;"><a
 														href="#" class="datatable-sorter">15'</a></th>
-													<th data-sortable="true" style="width: 10%;"><a
+													<th data-sortable="true" style="width: 10%; text-align: center;"><a
 														href="#" class="datatable-sorter">1T</a></th>
 													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 10%;"><a
+														class="datatable-descending" style="width: 10%; text-align: center;"><a
 														href="#" class="datatable-sorter">HK</a></th>
-													<th data-sortable="true" style="width: 20%;"><a
+													<th data-sortable="true" style="width: 20%; text-align: center;"><a
 														href="#" class="datatable-sorter">TB môn</a></th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach var="point" items="${DSD}">
 													<tr data-index="0">
-														<td><%=i++%></td>
+														<td style="text-align: center;"><%=i++%></td>
 														<td>${point.tenHS}</td>
 														<td>${point.mieng}</td>
 														<td>${point.muoiLamPhut}</td>

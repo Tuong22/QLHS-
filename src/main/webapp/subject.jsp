@@ -45,7 +45,7 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="#" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/changePasswordServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
@@ -258,7 +258,7 @@
 										</c:if>
 
 										<div class="add-subject">
-											<button class="btn btn-primary add-subject-btn" <c:if test="${sessionScope.account.isAdmin != 1}">
+											<button class="btn btn-primary add-subject-btn" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>>Thêm
 												môn</button>
@@ -283,10 +283,10 @@
 															<td style="text-align: center;"><%=i++%></td>
 															<td class="subjectName-edit" style="margin-left: 30px"><c:out
 																	value="${Mon.tenMH}" /><span><i
-																	class="subjectName-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
+																	class="subjectName-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
-																	<i class="removeSubject-icon fa fa-solid fa-trash-can" <c:if test="${sessionScope.account.isAdmin != 1}">
+																	<i class="removeSubject-icon fa fa-solid fa-trash-can" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 															</span></td>

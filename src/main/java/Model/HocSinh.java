@@ -16,6 +16,9 @@ public class HocSinh {
 		this.diaChi = diaChi;
 		this.email = email;
 	}
+	public HocSinh() {
+		
+	}
 	public String getMaHS() {
 		return maHS;
 	}

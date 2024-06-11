@@ -50,12 +50,12 @@
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./class.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/infoClassServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./infoStudent.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/InfoStudentsServlet" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
@@ -173,7 +173,7 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Tuổi
 														tối đa <span> <i
-															class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
+															class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 													</td>
@@ -184,7 +184,7 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Tuổi
 														tối thiểu<span> <i
-															class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
+															class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 													</td>
@@ -195,7 +195,7 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Sĩ
 														số tối đa<span> <i
-															class="changeRule2 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
+															class="changeRule2 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 													</td>
@@ -206,7 +206,7 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Điểm
 														tối đa<span> <i
-															class="changeRule3 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
+															class="changeRule3 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 													</td>
@@ -217,7 +217,7 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Điểm
 														tối thiểu<span> <i
-															class="changeRule3 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
+															class="changeRule3 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 													</td>
@@ -228,7 +228,7 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Điểm
 														đạt<span> 
-														<i class="changeRule4 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
+														<i class="changeRule4 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 													</td>

@@ -46,7 +46,7 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="account.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/changePasswordServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
@@ -193,25 +193,25 @@
 											<table id="datatablesListStudent" class="datatable-table">
 												<thead>
 													<tr>
-														<th data-sortable="true" style="width: 10%;"><a
+														<th data-sortable="true" style="width: 6%; text-align: center;"><a
 															href="#" class="datatable-sorter">STT</a></th>
 														<th data-sortable="true" aria-sort="descending"
-															class="datatable-descending" style="width: 20%;"><a
+															class="datatable-descending" style="width: 20%; text-align: center;"><a
 															href="#" class="datatable-sorter">Tên</a></th>
-														<th data-sortable="true" style="width: 15%;"><a
+														<th data-sortable="true" style="width: 12%; text-align: center;"><a
 															href="#" class="datatable-sorter">Giới Tính</a></th>
-														<th data-sortable="true" style="width: 15%;"><a
-															href="#" class="datatable-sorter">Năm sinh</a></th>
-														<th data-sortable="true" style="width: 20%;"><a
+														<th data-sortable="true" style="width: 14%; text-align: center;"><a
+															href="#" class="datatable-sorter">Ngày sinh</a></th>
+														<th data-sortable="true" style="width: 20%; text-align: center;"><a
 															href="#" class="datatable-sorter">Địa chỉ</a></th>
-														<th data-sortable="true" style="width: 20%;"><a
+														<th data-sortable="true" style="width: 28%; text-align: center;"><a
 															href="#" class="datatable-sorter">Email</a></th>
 													</tr>
 												</thead>
 												<tbody>
 													<c:forEach var="HocSinh" items="${HS}">
 														<tr>
-															<td><%=i++%></td>
+															<td style="text-align: center;"><%=i++%></td>
 															<td><c:out value="${HocSinh.tenHS}" /></td>
 															<td><c:out value="${HocSinh.gioiTinh}" /></td>
 															<td><c:out value="${HocSinh.namSinh}" /></td>
@@ -231,7 +231,7 @@
 												<a href="./class.jsp">Quay lại</a>
 											</button>
 											<button
-												class="btn btn-primary list-student-of-class-confirm-btn" <c:if test="${sessionScope.account.isAdmin != 1}">
+												class="btn btn-primary list-student-of-class-confirm-btn" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>>
 												<a>Thêm học sinh</a>
@@ -289,18 +289,18 @@
 										<table id="datatablesListStudent" class="datatable-table">
 											<thead>
 												<tr>
-													<th data-sortable="true" style="width: 8%;"><a
+													<th data-sortable="true" style="width: 6%; text-align: center;"><a
 														href="#" class="datatable-sorter">STT</a></th>
 													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 20%;"><a
+														class="datatable-descending" style="width: 20%; text-align: center;"><a
 														href="#" class="datatable-sorter">Tên</a></th>
-													<th data-sortable="true" style="width: 15%;"><a
+													<th data-sortable="true" style="width: 14%; text-align: center;"><a
 														href="#" class="datatable-sorter">Giới Tính</a></th>
-													<th data-sortable="true" style="width: 10%;"><a
-														href="#" class="datatable-sorter">Năm sinh</a></th>
-													<th data-sortable="true" style="width: 22%;"><a
+													<th data-sortable="true" style="width: 15%; text-align: center;"><a
+														href="#" class="datatable-sorter">Ngày sinh</a></th>
+													<th data-sortable="true" style="width: 20%; text-align: center;"><a
 														href="#" class="datatable-sorter">Địa chỉ</a></th>
-													<th data-sortable="true" style="width: 25%;"><a
+													<th data-sortable="true" style="width: 27%; text-align: center;"><a
 														href="#" class="datatable-sorter">Email</a></th>
 													<th data-sortable="true"><input
 														class="listStudentNotClass-input" type="hidden"

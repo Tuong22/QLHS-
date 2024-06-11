@@ -8,8 +8,11 @@ import java.time.Year;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -78,69 +81,158 @@ public class InfoStudentsDao {
 		}
 		return tchsList;
 	}
+	
+	public boolean insertListStudents(List<HocSinh> students) throws ClassNotFoundException {
+        String querySelectId = "SELECT MaHS FROM HocSinh ORDER BY LENGTH(MaHS), MaHS";
+        String INSERT_STUDENT = "INSERT INTO HocSinh VALUES (?,?,?,?,?,?)";
+        boolean isSuccess = false;
+        Connection connection = null;
+        Statement stmt = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
 
-	public boolean insertStudent(HocSinh hs) throws ClassNotFoundException {
-		String querySelectId = "SELECT MaHS FROM HocSinh order by length(MaHS), MaHS";
-		String INSERT_STUDENT = "INSERT INTO HocSinh VALUES (?,?,?,?,?,?)";
-		boolean isvalid = false;
-		try (Connection connection = datasource.getConnection();
-				Statement stmt = connection.createStatement();
-				PreparedStatement statement = connection.prepareStatement(INSERT_STUDENT);
-				ResultSet rs = stmt.executeQuery(querySelectId)) {
-			String currentStudentId = "";
-			String nextStudentId = "";
-			String prefixStudentId = "HS";
-			int max = 1;
-			int traceUnindexed = 1;
-			int fillUnindexed = 0;
-			while (rs.next()) {
-				currentStudentId = rs.getString(1);
-				
-				if(currentStudentId != "") {
-					if(traceUnindexed != Integer.valueOf(currentStudentId.substring(2))) {
-						fillUnindexed = 1;
-						break;
-					}
-					else {
-						traceUnindexed++;
-					}
-					if(Integer.parseInt(currentStudentId.substring(2)) > max){
-						max = Integer.parseInt(currentStudentId.substring(2));
-					}
-				}
-			}
-			if(currentStudentId != "") {
-				if(fillUnindexed == 1) {
-					nextStudentId = prefixStudentId + Integer.toString(traceUnindexed);
-				}
-				else {
-					nextStudentId = prefixStudentId + Integer.toString(max + 1);
-				}
-			} else
-				nextStudentId = prefixStudentId + "1";	
-				
-			statement.setString(1, nextStudentId);
-			statement.setString(2, hs.getTenHS());
-			statement.setString(3, hs.getGioiTinh());
-			statement.setString(4, hs.getNamSinh());
-			statement.setString(5, hs.getDiaChi());
-			statement.setString(6, hs.getEmail());
-				
-			int rowAffected = statement.executeUpdate();
-			if (rowAffected > 0) {
-				isvalid = true;
-			} else {
-				isvalid = false;
-			}
-			statement.close();
-			rs.close();
-			stmt.close();
-			connection.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return isvalid;
-	}
+        try {
+            connection = datasource.getConnection();
+            connection.setAutoCommit(false); 
+            stmt = connection.createStatement();
+            statement = connection.prepareStatement(INSERT_STUDENT);
+            rs = stmt.executeQuery(querySelectId);
+
+            String currentStudentId = "";
+            String nextStudentId = "";
+            String prefixStudentId = "HS";
+            int max = 1;
+            int traceUnindexed = 1;
+            int fillUnindexed = 0;
+
+            while (rs.next()) {
+                currentStudentId = rs.getString(1);
+
+                if (!currentStudentId.isEmpty()) {
+                    if (traceUnindexed != Integer.valueOf(currentStudentId.substring(2))) {
+                        fillUnindexed = 1;
+                        break;
+                    } else {
+                        traceUnindexed++;
+                    }
+                    if (Integer.parseInt(currentStudentId.substring(2)) > max) {
+                        max = Integer.parseInt(currentStudentId.substring(2));
+                    }
+                }
+            }
+
+            for (HocSinh hs : students) {
+                if (!currentStudentId.isEmpty()) {
+                    if (fillUnindexed == 1) {
+                        nextStudentId = prefixStudentId + Integer.toString(traceUnindexed);
+                        fillUnindexed = 0; 
+                    } else {
+                        nextStudentId = prefixStudentId + Integer.toString(max + 1);
+                    }
+                } else {
+                    nextStudentId = prefixStudentId + "1";
+                }
+
+                statement.setString(1, nextStudentId);
+                statement.setString(2, hs.getTenHS());
+                statement.setString(3, hs.getGioiTinh());
+                statement.setString(4, hs.getNamSinh());
+                statement.setString(5, hs.getDiaChi());
+                statement.setString(6, hs.getEmail());
+
+                statement.addBatch(); 
+                max++; 
+            }
+
+            int[] rowsAffected = statement.executeBatch(); 
+
+            isSuccess = Arrays.stream(rowsAffected).allMatch(row -> row > 0);
+
+            connection.commit(); 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (connection != null) {
+                try {
+                    connection.rollback(); 
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return isSuccess;
+    }
+
+//	public boolean insertStudent(HocSinh hs) throws ClassNotFoundException {
+//		String querySelectId = "SELECT MaHS FROM HocSinh order by length(MaHS), MaHS";
+//		String INSERT_STUDENT = "INSERT INTO HocSinh VALUES (?,?,?,?,?,?)";
+//		boolean isvalid = false;
+//		try (Connection connection = datasource.getConnection();
+//				Statement stmt = connection.createStatement();
+//				PreparedStatement statement = connection.prepareStatement(INSERT_STUDENT);
+//				ResultSet rs = stmt.executeQuery(querySelectId)) {
+//			String currentStudentId = "";
+//			String nextStudentId = "";
+//			String prefixStudentId = "HS";
+//			int max = 1;
+//			int traceUnindexed = 1;
+//			int fillUnindexed = 0;
+//			while (rs.next()) {
+//				currentStudentId = rs.getString(1);
+//				
+//				if(currentStudentId != "") {
+//					if(traceUnindexed != Integer.valueOf(currentStudentId.substring(2))) {
+//						fillUnindexed = 1;
+//						break;
+//					}
+//					else {
+//						traceUnindexed++;
+//					}
+//					if(Integer.parseInt(currentStudentId.substring(2)) > max){
+//						max = Integer.parseInt(currentStudentId.substring(2));
+//					}
+//				}
+//			}
+//			if(currentStudentId != "") {
+//				if(fillUnindexed == 1) {
+//					nextStudentId = prefixStudentId + Integer.toString(traceUnindexed);
+//				}
+//				else {
+//					nextStudentId = prefixStudentId + Integer.toString(max + 1);
+//				}
+//			} else
+//				nextStudentId = prefixStudentId + "1";	
+//				
+//			statement.setString(1, nextStudentId);
+//			statement.setString(2, hs.getTenHS());
+//			statement.setString(3, hs.getGioiTinh());
+//			statement.setString(4, hs.getNamSinh());
+//			statement.setString(5, hs.getDiaChi());
+//			statement.setString(6, hs.getEmail());
+//				
+//			int rowAffected = statement.executeUpdate();
+//			if (rowAffected > 0) {
+//				isvalid = true;
+//			} else {
+//				isvalid = false;
+//			}
+//			statement.close();
+//			rs.close();
+//			stmt.close();
+//			connection.close();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return isvalid;
+//	}
 	
 	public boolean updateInfoStudent(HocSinh hs, String nameStudent, String address, String email, String bd) throws ClassNotFoundException {
 		String SELECT_STUDENT = "select * from hocsinh";
@@ -225,5 +317,73 @@ public class InfoStudentsDao {
 			e.printStackTrace();
 		}
 		return isvalid;
+	}
+	
+	public boolean checkEmailList(List<HocSinh> students) throws ClassNotFoundException, SQLException {
+	    String querySelectEmail = "SELECT Email FROM HocSinh WHERE Email IN (";
+	    StringBuilder queryBuilder = new StringBuilder(querySelectEmail);
+
+	    for (int i = 0; i < students.size(); i++) {
+	        queryBuilder.append("?");
+	        if (i < students.size() - 1) {
+	            queryBuilder.append(", ");
+	        }
+	    }
+	    queryBuilder.append(")");
+
+	    try (Connection connection = datasource.getConnection();
+	         PreparedStatement emailStatement = connection.prepareStatement(queryBuilder.toString())) {
+
+	        for (int i = 0; i < students.size(); i++) {
+	            emailStatement.setString(i + 1, students.get(i).getEmail());
+	        }
+
+	        ResultSet emailResultSet = emailStatement.executeQuery();
+
+	        Set<String> existingEmails = new HashSet<>();
+	        while (emailResultSet.next()) {
+	            existingEmails.add(emailResultSet.getString(1));
+	        }
+	        emailResultSet.close();
+
+	        for (HocSinh hs : students) {
+	            if (existingEmails.contains(hs.getEmail())) {
+	                return false; // Có email trùng lặp
+	            }
+	        }
+	    }
+	    return true; // Không có email trùng lặp
+	}
+	
+	public boolean checkAgeList(List<HocSinh> students) throws ClassNotFoundException {
+	    String querySelectId = "SELECT TuoiHSToiThieu, TuoiHSToiDa FROM ThamSo";
+	    boolean isvalid = true;
+
+	    try (Connection connection = datasource.getConnection();
+	         Statement stmt = connection.createStatement();
+	         ResultSet rs = stmt.executeQuery(querySelectId)) {
+
+	        int toiThieu = -1;
+	        int toiDa = -1;
+	        if (rs.next()) {
+	            toiThieu = rs.getInt(1);
+	            toiDa = rs.getInt(2);
+	        }
+
+	        int currentYear = Year.now().getValue();
+	        for (HocSinh hs : students) {
+	            int birthYear = Integer.parseInt(hs.getNamSinh().substring(0, 4));
+	            int age = currentYear - birthYear;
+
+	            if (age < toiThieu || age > toiDa) {
+	                isvalid = false;
+	                break;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        isvalid = false;
+	    }
+	    return isvalid;
 	}
 }

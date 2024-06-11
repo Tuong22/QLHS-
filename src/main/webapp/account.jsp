@@ -54,13 +54,13 @@
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./class.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/infoClassServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./infoStudent.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/InfoStudentsServlet" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
@@ -71,18 +71,18 @@
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./subject.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/InfoSubjectServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./tablePoint.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/tablePointServlet" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./report.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/ReportServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
@@ -262,6 +262,9 @@
 								                </c:if>
 								                <c:if test="${acc.isAdmin == 3}">
 								                    teacher
+								                </c:if>
+								                <c:if test="${acc.isAdmin == 4}">
+								                    office
 								                </c:if></td>
 												<td class="action" style="text-align: center;"><i
 													class="role-user-icon fas fa-users"
@@ -374,9 +377,10 @@
 					<div class="model-input-item">
 						<label for="role-user" class="modal-label">Phân quyền:</label> <select
 							id="role-user" name="roleUser">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
+							<option value="1">Admin</option>
+							<option value="2">Headmaster</option>
+							<option value="3">Teacher</option>
+							<option value="4">Office</option>
 						</select>
 					</div>
 
