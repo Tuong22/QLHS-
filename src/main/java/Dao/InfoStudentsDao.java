@@ -35,7 +35,7 @@ public class InfoStudentsDao {
 				String id = rs.getString(1);
 				String name = rs.getString(2);
 				String gender = rs.getString(3);
-				int namsinh = rs.getInt(4);
+				String namsinh = rs.getString(4).substring(0,10);
 				String address = rs.getString(5);
 				String email = rs.getString(6);
 
@@ -122,7 +122,7 @@ public class InfoStudentsDao {
 			statement.setString(1, nextStudentId);
 			statement.setString(2, hs.getTenHS());
 			statement.setString(3, hs.getGioiTinh());
-			statement.setInt(4, hs.getNamSinh());
+			statement.setString(4, hs.getNamSinh());
 			statement.setString(5, hs.getDiaChi());
 			statement.setString(6, hs.getEmail());
 				
@@ -142,9 +142,9 @@ public class InfoStudentsDao {
 		return isvalid;
 	}
 	
-	public boolean updateInfoStudent(HocSinh hs, String nameStudent, String address, String email) throws ClassNotFoundException {
+	public boolean updateInfoStudent(HocSinh hs, String nameStudent, String address, String email, String bd) throws ClassNotFoundException {
 		String SELECT_STUDENT = "select * from hocsinh";
-		String UPDATE_STUDENT = "update hocsinh set DiaChi = ?, Email = ? where MaHS = ?";
+		String UPDATE_STUDENT = "update hocsinh set NamSinh = ?, DiaChi = ?, Email = ? where MaHS = ?";
 		boolean isvalid = false;
 		try (Connection connection = datasource.getConnection();
 				Statement stmt = connection.createStatement();
@@ -159,10 +159,10 @@ public class InfoStudentsDao {
 					currentStudentId = rs.getString(1);
 				}
 			}
-
-			statement.setString(1, hs.getDiaChi());
-			statement.setString(2, hs.getEmail());	
-			statement.setString(3, currentStudentId);	
+			statement.setString(1, hs.getNamSinh());	
+			statement.setString(2, hs.getDiaChi());
+			statement.setString(3, hs.getEmail());	
+			statement.setString(4, currentStudentId);	
 			int rowsAffected = statement.executeUpdate();
 			if (rowsAffected > 0) {
 				isvalid = true;
@@ -215,7 +215,7 @@ public class InfoStudentsDao {
 			}
 			
 			int year = Year.now().getValue();
-			if (year - hs.getNamSinh() >= toiThieu && year - hs.getNamSinh() <= toiDa) {
+			if (year - Integer.parseInt(hs.getNamSinh().substring(0,4)) >= toiThieu && year - Integer.parseInt(hs.getNamSinh().substring(0,4)) <= toiDa) {
 				isvalid = true;
 			} else {
 				isvalid = false;

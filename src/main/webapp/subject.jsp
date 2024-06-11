@@ -268,20 +268,20 @@
 											<table id="datatablesSubject" class="datatable-table">
 												<thead>
 													<tr>
-														<th data-sortable="true" style="width: 20%;"><a
+														<th data-sortable="true" style="width: 20%; text-align: center;"><a
 															href="#" class="datatable-sorter">STT</a></th>
 														<th data-sortable="true" aria-sort="descending"
-															class="datatable-descending" style="width: 60%;"><a
+															class="datatable-descending" style="width: 60%; text-align: center;"><a
 															href="#" class="datatable-sorter">Tên môn</a></th>
-														<th data-sortable="true" style="width: 20%;"><a
+														<th data-sortable="true" style="width: 20%; text-align: center;"><a
 															href="#" class="datatable-sorter">Hệ số</a></th>
 													</tr>
 												</thead>
 												<tbody>
 													<c:forEach var="Mon" items="${DSMH}">
 														<tr>
-															<td><%=i++%></td>
-															<td class="subjectName-edit"><c:out
+															<td style="text-align: center;"><%=i++%></td>
+															<td class="subjectName-edit" style="margin-left: 30px"><c:out
 																	value="${Mon.tenMH}" /><span><i
 																	class="subjectName-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
@@ -290,7 +290,7 @@
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 															</span></td>
-															<td><c:out value="${Mon.heSo}" /></td>
+															<td style="text-align: center;"><c:out value="${Mon.heSo}" /></td>
 														</tr>
 													</c:forEach>
 												</tbody>

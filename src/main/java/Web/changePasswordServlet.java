@@ -63,6 +63,14 @@ public class changePasswordServlet extends HttpServlet {
                 e.printStackTrace();
             }
             break;
+            
+		case "/deleteAccount":
+            try {
+            	deleteAccount(request, response);
+            } catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            break;
         default:
         	try {
             	renderAccountRoleAdmin(request, response);
@@ -127,11 +135,10 @@ public class changePasswordServlet extends HttpServlet {
 	
 	private void updatePassword(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
-		String username = request.getParameter("username");
+		String username = request.getParameter("usernameUpdate");
         String newPass = request.getParameter("newPass");
         String cNewPass = request.getParameter("cNewPass");
         boolean isvalid = ChangePasswordDao.updatePassword(newPass, username);
-        
         if (isvalid) {
         	request.setAttribute("messageinfo", "Thay đổi mật khẩu thành công.");
         }
@@ -149,7 +156,35 @@ public class changePasswordServlet extends HttpServlet {
 	
 	private void updateRole(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
-		
+		String username = request.getParameter("userNameRole");
+        String newRole = request.getParameter("roleAccount");
+        if(Integer.parseInt(newRole) == 1) {
+        	request.setAttribute("messageerror", "Không thể thay đổi người dùng thành admin.");
+        }
+        else {
+        	boolean isvalid = ChangePasswordDao.updateRole(Integer.parseInt(newRole), username);
+        	if (isvalid && Integer.parseInt(newRole) != 1) {
+            	request.setAttribute("messageinfo", "Thiết lập phân quyền thành công");
+            }
+            else {
+                request.setAttribute("messageerror", "Không thể thay đổi người dùng thành admin.");
+            }
+        }
+        List<signIn> DSTK = ChangePasswordDao.renderAccountRoleAdmin();
+		request.setAttribute("DSTK", DSTK);
+		request.getRequestDispatcher("/account.jsp").forward(request, response);
+	}
+	
+	private void deleteAccount(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		String userNameRoleDelete = request.getParameter("userNameRoleDelete");
+		boolean isvalid = ChangePasswordDao.deleteAccount(userNameRoleDelete);
+        if(isvalid) {
+        	request.setAttribute("messageinfo", "Xoá tài khoản thành công.");
+        }
+        else {
+        	request.setAttribute("messageerror", "Xoá tài khoản không thành công.");
+        }
         List<signIn> DSTK = ChangePasswordDao.renderAccountRoleAdmin();
 		request.setAttribute("DSTK", DSTK);
 		request.getRequestDispatcher("/account.jsp").forward(request, response);

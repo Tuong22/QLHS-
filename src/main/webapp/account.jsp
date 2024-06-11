@@ -145,6 +145,73 @@
 			</header>
 			<!--  Header End -->
 
+			<c:if test="${not empty requestScope.messageinfo}">
+				<div id="toast">
+					<div class="toast toast--success">
+						<div class="toast__icon">
+							<i class="fa-solid fa-circle-check"></i>
+						</div>
+						<div class="toast__body">
+							<h3 class="toast__title">Thành công</h3>
+							<p class="toast__msg">${requestScope.messageinfo}</p>
+						</div>
+						<div class="toast__close">
+							<i class="fa-solid fa-xmark"></i>
+						</div>
+					</div>
+				</div>
+			</c:if>
+			<c:if test="${not empty requestScope.messageerror}">
+				<div id="toast">
+					<div class="toast toast--error">
+						<div class="toast__icon">
+							<i class="fa-solid  fa-triangle-exclamation"></i>
+						</div>
+						<div class="toast__body">
+							<h3 class="toast__title">Thất bại</h3>
+							<p class="toast__msg">${requestScope.messageerror}</p>
+						</div>
+						<div class="toast__close">
+							<i class="fa-solid fa-xmark"></i>
+						</div>
+					</div>
+				</div>
+			</c:if>
+
+			<c:if test="${not empty requestScope.messageInfoAddAccount}">
+				<div id="toast">
+					<div class="toast toast--success">
+						<div class="toast__icon">
+							<i class="fa-solid fa-circle-check"></i>
+						</div>
+						<div class="toast__body">
+							<h3 class="toast__title">Thành công</h3>
+							<p class="toast__msg">${requestScope.messageInfoAddAccount}</p>
+						</div>
+						<div class="toast__close">
+							<i class="fa-solid fa-xmark"></i>
+						</div>
+					</div>
+				</div>
+			</c:if>
+
+			<c:if test="${not empty requestScope.messageErrorAddAccount}">
+				<div id="toast">
+					<div class="toast toast--error">
+						<div class="toast__icon">
+							<i class="fa-solid  fa-triangle-exclamation"></i>
+						</div>
+						<div class="toast__body">
+							<h3 class="toast__title">Thất bại</h3>
+							<p class="toast__msg">${requestScope.messageErrorAddAccount}</p>
+						</div>
+						<div class="toast__close">
+							<i class="fa-solid fa-xmark"></i>
+						</div>
+					</div>
+				</div>
+			</c:if>
+
 
 			<!-- Account start -->
 			<div id="account" class="container-fluid account">
@@ -157,72 +224,6 @@
 								<h3 class="account-info-heading">Thông tin tài khoản</h3>
 
 								<div class="spacer"></div>
-								<c:if test="${not empty requestScope.messageinfo}">
-									<div id="toast">
-										<div class="toast toast--success">
-											<div class="toast__icon">
-												<i class="fa-solid fa-circle-check"></i>
-											</div>
-											<div class="toast__body">
-												<h3 class="toast__title">Thành công</h3>
-												<p class="toast__msg">${requestScope.messageinfo}</p>
-											</div>
-											<div class="toast__close">
-												<i class="fa-solid fa-xmark"></i>
-											</div>
-										</div>
-									</div>
-								</c:if>
-								<c:if test="${not empty requestScope.messageerror}">
-									<div id="toast">
-										<div class="toast toast--error">
-											<div class="toast__icon">
-												<i class="fa-solid  fa-triangle-exclamation"></i>
-											</div>
-											<div class="toast__body">
-												<h3 class="toast__title">Thất bại</h3>
-												<p class="toast__msg">${requestScope.messageerror}</p>
-											</div>
-											<div class="toast__close">
-												<i class="fa-solid fa-xmark"></i>
-											</div>
-										</div>
-									</div>
-								</c:if>
-
-								<c:if test="${not empty requestScope.messageInfoAddAccount}">
-									<div id="toast">
-										<div class="toast toast--success">
-											<div class="toast__icon">
-												<i class="fa-solid fa-circle-check"></i>
-											</div>
-											<div class="toast__body">
-												<h3 class="toast__title">Thành công</h3>
-												<p class="toast__msg">${requestScope.messageInfoAddAccount}</p>
-											</div>
-											<div class="toast__close">
-												<i class="fa-solid fa-xmark"></i>
-											</div>
-										</div>
-									</div>
-								</c:if>
-
-								<c:if test="${not empty requestScope.messageErrorAddAccount}">
-									<div id="toast">
-										<div class="toast toast--error">
-											<div class="toast__icon">
-												<i class="fa-solid  fa-triangle-exclamation"></i>
-											</div>
-											<div class="toast__body">
-												<h3 class="toast__title">Thất bại</h3>
-												<p class="toast__msg">${requestScope.messageErrorAddAccount}</p>
-											</div>
-											<div class="toast__close">
-												<i class="fa-solid fa-xmark"></i>
-											</div>
-										</div>
-									</div>
-								</c:if>
 
 
 
@@ -234,11 +235,14 @@
 												class="datatable-sorter">STT</a></th>
 											<th data-sortable="true" aria-sort="descending"
 												class="datatable-descending"
-												style="text-align: center; width: 35%"><a href="#"
+												style="text-align: center; width: 30%"><a href="#"
 												class="datatable-sorter">Tên tài khoản</a></th>
 											<th data-sortable="true"
-												style="text-align: center; width: 35%"><a href="#"
+												style="text-align: center; width: 30%"><a href="#"
 												class="datatable-sorter">Mật khẩu</a></th>
+											<th data-sortable="true"
+												style="text-align: center; width: 10%"><a href="#"
+												class="datatable-sorter">Quyền</a></th>
 											<th data-sortable="true"
 												style="text-align: center; width: 20%"><a href="#"
 												class="datatable-sorter">Thao tác</a></th>
@@ -251,10 +255,25 @@
 												<td class="ps-4 name">${acc.username}</td>
 
 												<td class="d-flex justify-content-between border-0 ps-4">${acc.password}</td>
+												<td><c:if test="${acc.isAdmin == 1}">
+								                    admin
+								                </c:if> <c:if test="${acc.isAdmin == 2}">
+								                    headmaster
+								                </c:if>
+								                <c:if test="${acc.isAdmin == 3}">
+								                    teacher
+								                </c:if></td>
 												<td class="action" style="text-align: center;"><i
-													class="role-user-icon fas fa-users"></i> <i
-													class="edit-pass fa-solid fa-pen-to-square"></i> <i
-													class="removeClass-icon fa fa-solid fa-trash-can"></i></td>
+													class="role-user-icon fas fa-users"
+													<c:if test="${acc.isAdmin == 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
+													<i class="edit-pass-icon fa-solid fa-pen-to-square mx-2"></i>
+													<i class="remove-acc-icon fa fa-solid fa-trash-can"
+													<c:if test="${acc.isAdmin == 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i></td>
+
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -284,7 +303,7 @@
 								<div class="account-info-group">
 									<label><i class="account-icon fa-solid fa-user"></i>Tên
 										tài khoản: </label> <input class="account-name-text ps-2"
-										value="${sessionScope.account.username}" readonly>
+										value="${sessionScope.account.username}">
 
 
 								</div>
@@ -294,12 +313,12 @@
 										khẩu: </label>
 									<div class="account-pass d-flex">
 										<input class="account-pass-text ps-2 border-0" type="password"
-											id="password" value="${sessionScope.account.password}"
-											readonly>
+											id="password" value="${sessionScope.account.password}">
 										<div class="pass-selection d-flex">
 											<i class="show-pass fa-solid fa-eye"></i> <i
 												class="hide-pass fa-solid fa-eye-slash hidden"></i> <i
 												class="edit-pass fa-solid fa-pen-to-square"></i>
+
 										</div>
 									</div>
 								</div>
@@ -313,6 +332,8 @@
 							</footer>
 						</div>
 					</c:if>
+
+
 				</div>
 			</div>
 			<!-- Account end -->
@@ -322,11 +343,60 @@
 
 	</div>
 
+
+
+	<!-- Modal add account -->
+	<div class="modal add-account-modal">
+
+		<form action="<%=request.getContextPath()%>/changePasswordServlet">
+			<input type="hidden" name="action" value="/addAccount">
+			<div class="modal-container add-account-modal-container">
+
+				<div class="icon-close js-modal-add-account-close">
+					<i class="modal-icon-close fa-solid fa-xmark"></i>
+				</div>
+
+				<header class="modal-header"> Tạo tài khoản </header>
+
+				<div class="modal-body">
+					<div class="model-input-item">
+						<label for="new-username" class="modal-label">Tài khoản
+							mới:</label> <input type="text" id="new-username" class="modal-input"
+							placeholder="username" name="newUsername">
+					</div>
+
+					<div class="model-input-item">
+						<label for="new-password" class="modal-label">Mật khẩu
+							mới:</label> <input type="text" id="new-password" class="modal-input"
+							placeholder="password" name="newPassword">
+					</div>
+
+					<div class="model-input-item">
+						<label for="role-user" class="modal-label">Phân quyền:</label> <select
+							id="role-user" name="roleUser">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+						</select>
+					</div>
+
+				</div>
+
+				<footer class="modal-footer">
+					<button type="button"
+						class="btn btn-primary cancel-add-account-btn btn-cancel">Hủy</button>
+					<button type="submit"
+						class="btn btn-primary confirm-add-account-btn">Xác nhận</button>
+				</footer>
+			</div>
+		</form>
+	</div>
+
 	<!-- Modal role account -->
 	<div class="modal role-account-modal">
 
 		<form action="<%=request.getContextPath()%>/changePasswordServlet">
-			<input type="hidden" name="action" value="/roleAccount">
+			<input type="hidden" name="action" value="/updateRole">
 			<div class="modal-container role-account-modal-container">
 
 				<div class="icon-close js-modal-role-account-close">
@@ -362,89 +432,6 @@
 		</form>
 	</div>
 
-
-	<!-- Modal delete account -->
-	<div class="modal delete-account-modal">
-
-		<form action="<%=request.getContextPath()%>/changePasswordServlet">
-			<input type="hidden" name="action" value="/deleteAccount">
-			<div class="modal-container delete-account-modal-container">
-
-				<div class="icon-close js-modal-delete-account-close">
-					<i class="modal-icon-close fa-solid fa-xmark"></i>
-				</div>
-
-				<header class="modal-header">Xóa tài khoản</header>
-
-				<div class="modal-body">
-					<div class="model-input-item">
-						<label for="userNameRoleDelete" class="modal-label">Tên tài
-							khoản:</label> <input type="text" id="userNameRoleDelete" class="modal-input"
-							name="userNameRoleDelete" readonly>
-					</div>
-				</div>
-
-				<footer class="modal-footer">
-					<button type="button"
-						class="btn btn-primary cancel-role-account-btn btn-cancel">Hủy</button>
-					<button type="submit"
-						class="btn btn-primary confirm-role-account-btn">Xác nhận</button>
-				</footer>
-			</div>
-		</form>
-	</div>
-
-
-	<!-- Modal add account -->
-	<div class="modal add-account-modal">
-
-		<form action="<%=request.getContextPath()%>/changePasswordServlet">
-			<input type="hidden" name="action" value="/addAccount">
-			<div class="modal-container add-account-modal-container">
-
-				<div class="icon-close js-modal-add-account-close">
-					<i class="modal-icon-close fa-solid fa-xmark"></i>
-				</div>
-
-				<header class="modal-header"> Tạo tài khoản </header>
-
-				<div class="modal-body">
-					<div class="model-input-item">
-						<label for="new-username" class="modal-label">Tài khoản
-							mới:</label> <input type="text" id="new-username" class="modal-input"
-							placeholder="username" name="newUsername">
-					</div>
-
-					<div class="model-input-item">
-						<label for="new-password" class="modal-label">Mật khẩu
-							mới:</label> <input type="text" id="new-password" class="modal-input"
-							placeholder="password" name="newPassword">
-					</div>
-
-					<div class="model-input-item">
-						<label for="role-user" class="modal-label">Phân quyền:</label> <select
-							id="role-user" name="roleUser">
-							<option value="1">Admin</option>
-							<option value="2">Headmaster</option>
-							<option value="3">Teacher</option>
-							<option value="4">Office</option>
-						</select>
-					</div>
-
-				</div>
-
-				<footer class="modal-footer">
-					<button type="button"
-						class="btn btn-primary cancel-add-account-btn btn-cancel">Hủy</button>
-					<button type="submit"
-						class="btn btn-primary confirm-add-account-btn">Xác nhận</button>
-				</footer>
-			</div>
-		</form>
-	</div>
-
-
-
 	<!-- Modal edit password -->
 	<div class="modal edit-pass-modal">
 
@@ -461,8 +448,8 @@
 				<div class="modal-body">
 					<div class="model-input-item">
 						<label for="new-password" class="modal-label">UserName:</label> <input
-							type="text" id="username" class="modal-input" name="username"
-							readonly>
+							type="text" id="username" class="modal-input"
+							name="usernameUpdate" readonly>
 					</div>
 					<div class="model-input-item">
 						<label for="new-password" class="modal-label">Mật khẩu
@@ -489,6 +476,38 @@
 		</form>
 	</div>
 
+	<!-- Modal delete account -->
+	<div class="modal delete-account-modal">
+
+		<form action="<%=request.getContextPath()%>/changePasswordServlet">
+			<input type="hidden" name="action" value="/deleteAccount">
+			<div class="modal-container delete-account-modal-container">
+
+				<div class="icon-close js-modal-delete-account-close">
+					<i class="modal-icon-close fa-solid fa-xmark"></i>
+				</div>
+
+				<header class="modal-header">Xóa tài khoản</header>
+
+				<div class="modal-body">
+					<div class="model-input-item">
+						<label for="userNameRoleDelete" class="modal-label">Tên
+							tài khoản:</label> <input type="text" id="userNameRoleDelete"
+							class="modal-input" name="userNameRoleDelete" readonly>
+					</div>
+				</div>
+
+				<footer class="modal-footer">
+					<button type="button"
+						class="btn btn-primary cancel-delete-account-btn btn-cancel">Hủy</button>
+					<button type="submit"
+						class="btn btn-primary confirm-delete-account-btn">Xác
+						nhận</button>
+				</footer>
+			</div>
+		</form>
+	</div>
+
 
 
 	<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
@@ -496,6 +515,8 @@
 
 	<script src="./js/app.js"></script>
 	<script src="./js/pagination.js"></script>
+
+	<!-- Get Date -->
 	<script>
 		const currentDate = new Date();
 		const day = currentDate.getDate();
@@ -508,22 +529,8 @@
 				});
 	</script>
 
+	<!-- getParentElement & getSiblingElement func -->
 	<script>
-		const roleAcc = document.querySelectorAll('.role-user-icon')
-		console.log(roleAcc)
-		const modalRoleAcc = document.querySelector('.role-account-modal')
-		const modalRoleAccContainer = document
-				.querySelector('.role-account-modal-container')
-		const closeRoleAccBtn = document
-				.querySelector('.js-modal-role-account-close')
-		const CanceRoleAcclBtn = document
-				.querySelector('.cancel-role-account-btn')
-
-
-		function HideModal() {
-			modalRoleAcc.classList.remove('open')
-		}
-		
 		function getParent(element, selector) {
 			while (element.parentElement) {
 				if (element.parentElement.matches(selector)) {
@@ -532,61 +539,94 @@
 				element = element.parentElement
 			}
 		}
-		
+
 		function getSibling(element, className) {
-		    const parent = element.parentElement;
-		    if (!parent) return null; // Kiểm tra nếu không có phần tử cha
-		    
-		    const siblings = parent.children;
-		    for (let i = 0; i < siblings.length; i++) {
-		        if (siblings[i] !== element && siblings[i].classList.contains(className)) {
-		            return siblings[i];
-		        }
-		    }
-		    
-		    return null; // Trả về null nếu không tìm thấy phần tử ngang cấp với class truyền vào
+			const parent = element.parentElement;
+			if (!parent)
+				return null;
+
+			const siblings = parent.children;
+			for (let i = 0; i < siblings.length; i++) {
+				if (siblings[i] !== element
+						&& siblings[i].classList.contains(className)) {
+					return siblings[i];
+				}
+			}
+
+			return null;
 		}
-		
-		roleAcc.forEach(function(item){
-			item.addEventListener('click', fuction(){
-				var getUserNameRole = document.getElementById('userNameRole')
-				getUserNameRole.setAttribute('value',getSibling(getParent(item, '.action'),'name'))	
-				modalRoleAcc.classList.add('open')
+	</script>
+
+	<!-- editRoleModal handle -->
+	<script>
+		const editRoleIcons = document.querySelectorAll('.role-user-icon')
+		const modalEditRole = document.querySelector('.role-account-modal')
+		const modalEditRoleContainer = document
+				.querySelector('.role-account-modal-container')
+		const closeModalEditRoleBtn = document
+				.querySelector('.js-modal-role-account-close')
+		const CancelModalEditRoleBtn = document
+				.querySelector('.cancel-role-account-btn')
+
+		function HideModalEditRole() {
+			modalEditRole.classList.remove('open')
+		}
+
+		editRoleIcons.forEach(function(editRoleIcon) {
+			editRoleIcon.addEventListener('click', function() {
+				var accNameInput = document.getElementById("userNameRole")
+				accNameInput.setAttribute("value", getSibling(getParent(
+						editRoleIcon, ".action"), "name").textContent)
+				modalEditRole.classList.add('open')
 			})
 		})
 
-		closeRoleAccBtn.addEventListener('click', HideModal)
-		CanceRoleAcclBtn.addEventListener('click', HideModal)
-		modalRoleAcc.addEventListener('click', HideModal)
-		modalRoleAccContainer.addEventListener('click', function(event) {
+		closeModalEditRoleBtn.addEventListener('click', HideModalEditRole)
+		CancelModalEditRoleBtn.addEventListener('click', HideModalEditRole)
+		modalEditRole.addEventListener('click', HideModalEditRole)
+		modalEditRoleContainer.addEventListener('click', function(event) {
 			event.stopPropagation()
 		})
 	</script>
-	
 
+	<!-- editPassModal handle -->
 	<script>
-		const editPass = document.querySelector('.edit-pass')
+		const editPassIcons = document.querySelectorAll('.edit-pass-icon')
+		const editPassIcon = document.querySelector('.edit-pass')
 		const modalEditPass = document.querySelector('.edit-pass-modal')
 		const modalEditPassContainer = document
 				.querySelector('.edit-pass-modal-container')
-		const closeBtn = document.querySelector('.js-modal-edit-pass-close')
-		const CancelBtn = document.querySelector('.cancel-edit-pass-btn')
+		const closeModalEditPassBtn = document
+				.querySelector('.js-modal-edit-pass-close')
+		const CancelModalEditPassBtn = document
+				.querySelector('.cancel-edit-pass-btn')
 
-		function Open() {
-			modalEditPass.classList.add('open')
-		}
-
-		function Hide() {
+		function HideModalEditPass() {
 			modalEditPass.classList.remove('open')
 		}
 
-		editPass.addEventListener('click', Open)
+		editPassIcons.forEach(function(editPassIcon) {
+			editPassIcon.addEventListener('click', function() {
+				var accNameInput = document.getElementById("username")
+				accNameInput.setAttribute("value", getSibling(getParent(
+						editPassIcon, ".action"), "name").textContent)
+				modalEditPass.classList.add('open')
+			})
+		})
 
-		closeBtn.addEventListener('click', Hide)
-		CancelBtn.addEventListener('click', Hide)
-		modalEditPass.addEventListener('click', Hide)
+		closeModalEditPassBtn.addEventListener('click', HideModalEditPass)
+		CancelModalEditPassBtn.addEventListener('click', HideModalEditPass)
+		modalEditPass.addEventListener('click', HideModalEditPass)
 		modalEditPassContainer.addEventListener('click', function(event) {
 			event.stopPropagation()
+		})
+
+		editPassIcon.addEventListener('click', function() {
+			var accNameInput = document.getElementById("username")
+			accNameInput.setAttribute("value",
+					getSibling(getParent(editPassIcon, ".pass-selection"),
+							"account-pass-text").value)
+			modalEditPass.classList.add('open')
 		})
 
 		const showPassIcon = document.querySelector('.show-pass')
@@ -606,6 +646,39 @@
 		})
 	</script>
 
+	<!-- deleteAccModal handle -->
+	<script>
+		const deleteAccIcons = document.querySelectorAll('.remove-acc-icon')
+		const modalDeleteAcc = document.querySelector('.delete-account-modal')
+		const modalDeleteAccContainer = document
+				.querySelector('.delete-account-modal-container')
+		const closeModalDeleteAccBtn = document
+				.querySelector('.js-modal-delete-account-close')
+		const CancelModalDeleteAccBtn = document
+				.querySelector('.cancel-delete-account-btn')
+
+		function HideModalDeleteAcc() {
+			modalDeleteAcc.classList.remove('open')
+		}
+
+		deleteAccIcons.forEach(function(deleteAccIcon) {
+			deleteAccIcon.addEventListener('click', function() {
+				var accNameInput = document
+						.getElementById("userNameRoleDelete")
+				accNameInput.setAttribute("value", getSibling(getParent(
+						deleteAccIcon, ".action"), "name").textContent)
+				modalDeleteAcc.classList.add('open')
+			})
+		})
+
+		closeModalDeleteAccBtn.addEventListener('click', HideModalDeleteAcc)
+		CancelModalDeleteAccBtn.addEventListener('click', HideModalDeleteAcc)
+		modalDeleteAcc.addEventListener('click', HideModalDeleteAcc)
+		modalDeleteAccContainer.addEventListener('click', function(event) {
+			event.stopPropagation()
+		})
+	</script>
+
 	<script>
 		const addAcc = document.querySelector('.add-acc-btn')
 		const modalAddAcc = document.querySelector('.add-account-modal')
@@ -616,19 +689,19 @@
 		const CanceAddAcclBtn = document
 				.querySelector('.cancel-add-account-btn')
 
-		function OpenModal() {
+		function OpenAddAccModal() {
 			modalAddAcc.classList.add('open')
 		}
 
-		function HideModal() {
+		function HideAddAccModal() {
 			modalAddAcc.classList.remove('open')
 		}
 
-		addAcc.addEventListener('click', OpenModal)
+		addAcc.addEventListener('click', OpenAddAccModal)
 
-		closeAddAccBtn.addEventListener('click', HideModal)
-		CanceAddAcclBtn.addEventListener('click', HideModal)
-		modalAddAcc.addEventListener('click', HideModal)
+		closeAddAccBtn.addEventListener('click', HideAddAccModal)
+		CanceAddAcclBtn.addEventListener('click', HidHideAddAccModaleModal)
+		modalAddAcc.addEventListener('click', HideAddAccModal)
 		modalAddAccContainer.addEventListener('click', function(event) {
 			event.stopPropagation()
 		})

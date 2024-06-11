@@ -4,10 +4,10 @@ public class HocSinh {
 	private String maHS;
 	private String tenHS;
 	private String gioiTinh;
-	private int namSinh;
+	private String namSinh;
 	private String diaChi;
 	private String email;
-	public HocSinh(String maHS, String tenHS, String gioiTinh, int namSinh, String diaChi, String email) {
+	public HocSinh(String maHS, String tenHS, String gioiTinh, String namSinh, String diaChi, String email) {
 		super();
 		this.maHS = maHS;
 		this.tenHS = tenHS;
@@ -34,10 +34,10 @@ public class HocSinh {
 	public void setGioiTinh(String gioiTinh) {
 		this.gioiTinh = gioiTinh;
 	}
-	public int getNamSinh() {
+	public String getNamSinh() {
 		return namSinh;
 	}
-	public void setNamSinh(int namSinh) {
+	public void setNamSinh(String namSinh) {
 		this.namSinh = namSinh;
 	}
 	public String getDiaChi() {
@@ -52,6 +52,4 @@ public class HocSinh {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 }

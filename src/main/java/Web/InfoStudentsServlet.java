@@ -117,7 +117,7 @@ public class InfoStudentsServlet extends HttpServlet {
 		String address = request.getParameter("studentAddress");
 		String email = request.getParameter("studentEmail");
 		
-		HocSinh hs = new HocSinh(null, name, gender, Integer.parseInt(year), address, email);
+		HocSinh hs = new HocSinh(null, name, gender, year, address, email);
 		
 		boolean isvalid = infoStudentsDao.checkAge(hs);
 		boolean isvalidEmail = infoStudentsDao.checkEmail(hs);
@@ -153,13 +153,15 @@ public class InfoStudentsServlet extends HttpServlet {
 		String nameAddress = request.getParameter("studentAddressNew");
 		String nameEmail = request.getParameter("studentEmailNew");
 
-		HocSinh hs = new HocSinh(null, nameStudent, nameGender, Integer.parseInt(nameYear), nameAddress, nameEmail);
-		boolean isvalid = infoStudentsDao.updateInfoStudent(hs,nameStudent, nameAddress, nameEmail);
 		
-	    if (isvalid) {
+		HocSinh hs = new HocSinh(null, nameStudent, nameGender, nameYear, nameAddress, nameEmail);
+		
+		boolean isvalidAge = infoStudentsDao.checkAge(hs);
+	    if (isvalidAge) {
 	        request.setAttribute("messageInfoUpdateStudent", "Sửa thông tin thành công.");
+	        infoStudentsDao.updateInfoStudent(hs,nameStudent, nameAddress, nameEmail, nameYear);
 	    } else {
-	        request.setAttribute("messageErrorUpdateStudent", "Địa chỉ email đã tồn tại.");
+	        request.setAttribute("messageErrorUpdateStudent", "Sửa thông tin không thành công.");
 	    }
 	    List<HocSinh> DSHS = infoStudentsDao.selectAllStudent();
 		request.setAttribute("DSHS", DSHS);

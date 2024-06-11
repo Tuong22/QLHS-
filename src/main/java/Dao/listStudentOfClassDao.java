@@ -30,7 +30,7 @@ public class listStudentOfClassDao {
 				String id = rs.getString(1);
 				String name = rs.getString(2);
 				String gender = rs.getString(3);
-				int namsinh = rs.getInt(4);
+				String namsinh = rs.getString(4).substring(0,10);
 				String address = rs.getString(5);
 				String email = rs.getString(6);
 
@@ -56,7 +56,7 @@ public class listStudentOfClassDao {
 					String maHS = rs.getString(1);
 					String tenHS = rs.getString(2);
 					String gioiTinh = rs.getString(3);
-					int namSinh = rs.getInt(4);
+					String namSinh = rs.getString(4).substring(0,10);
 					String diaChi = rs.getString(5);
 					String email = rs.getString(6);
 

@@ -269,14 +269,29 @@
 													</div>
 												</div>
 									</c:if>
+									
+									<c:if test="${not empty requestScope.messageErrorUpdateStudent}">
+										<div id="toast">
+													<div class="toast toast--error">
+														<div class="toast__icon">
+															<i class="fa-solid fa-circle-check"></i>
+														</div>
+														<div class="toast__body">
+															<h3 class="toast__title">Thất bại</h3>
+															<p class="toast__msg">Sửa thông tin không thành công.</p>
+														</div>
+														<div class="toast__close">
+															<i class="fa-solid fa-xmark"></i>
+														</div>
+													</div>
+												</div>
+									</c:if>
 									<div class="add-student">
-
 										<button class="btn btn-primary add-student-btn" <c:if test="${sessionScope.account.isAdmin != 1}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>>Thêm
 											học sinh</button>
 									</div>
-
 
 									<div class="datatable-container">
 										<table id="datatablesInfoStudent" class="datatable-table">
@@ -285,15 +300,15 @@
 													<th data-sortable="true" style="width: 6%; margin-left: 20px; text-align: center;"><a
 														href="#" class="datatable-sorter">STT</a></th>
 													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 24%; text-align: center;"><a
+														class="datatable-descending" style="width: 20%; text-align: center;"><a
 														href="#" class="datatable-sorter">Tên</a></th>
 													<th data-sortable="true" style="width: 12%; text-align: center;"><a
 														href="#" class="datatable-sorter">Giới Tính</a></th>
-													<th data-sortable="true" style="width: 5%; text-align: center;"><a
+													<th data-sortable="true" style="width: 14%; text-align: center;"><a
 														href="#" class="datatable-sorter">Năm</a></th>
 													<th data-sortable="true" style="width: 20%; text-align: center;"><a
 														href="#" class="datatable-sorter">Địa chỉ</a></th>
-													<th data-sortable="true" style="width: 33%; text-align: center;"><a
+													<th data-sortable="true" style="width: 28%; text-align: center;"><a
 														href="#" class="datatable-sorter">Email</a></th>
 												</tr>
 											</thead>
@@ -372,7 +387,7 @@
 
 					<div class="model-input-item">
 						<label for="student-year" class="modal-label">Năm sinh:</label> <input
-							type="text" id="student-year" class="modal-input"
+							type="date" id="student-year" class="modal-input"
 							placeholder="Năm sinh" name="studentYear">
 					</div>
 
@@ -440,8 +455,8 @@
 
 					<div class="model-input-item">
 						<label for="student-year-new" class="modal-label">Năm sinh:</label> <input
-							type="text" id="student-year-new" class="modal-input"
-							placeholder="Năm sinh" name="studentYearNew" readonly>
+							type="date" id="student-year-new" class="modal-input"
+							placeholder="Năm sinh" name="studentYearNew">
 					</div>
 
 					<div class="model-input-item">

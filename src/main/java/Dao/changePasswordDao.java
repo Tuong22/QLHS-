@@ -122,7 +122,8 @@ public class changePasswordDao {
 					currentId = rs.getString(1);
 				}
 			}
-        	
+        	statement.setString(1, newPass);
+        	statement.setString(2, currentId);
         	int rowsAffected = statement.executeUpdate();
 
 			if (rowsAffected > 0) {
@@ -130,17 +131,15 @@ public class changePasswordDao {
 			} else {
 				isvalid = false;
 			}
-        	
-        	statement.setString(1, newPass);
-        	statement.setString(2, username);
-            statement.executeUpdate();
+			statement.close();
+			connection.close();
         } catch (SQLException e) {
 			e.printStackTrace();
 		}
         return isvalid;
     }
 	
-	public boolean updateRole(int newRole) throws SQLException, ClassNotFoundException {
+	public boolean updateRole(int newRole, String usernameRole) throws SQLException, ClassNotFoundException {
 		String SELECT_ROLE = "SELECT * FROM signin;";
         String UPDATE_ROLE = "UPDATE signin SET isAdmin=? where maid=?";
         boolean isvalid = false;
@@ -149,14 +148,17 @@ public class changePasswordDao {
              PreparedStatement statement = connection.prepareStatement(UPDATE_ROLE);
         	 ResultSet rs = stmt.executeQuery(SELECT_ROLE)) {
             
-//        	String currentUserName = "";
-//        	String currentId = "";
-//        	while(rs.next()) {
-//        		currentUserName = rs.getString(2);
-//				if (currentUserName.equalsIgnoreCase(username.trim())) {
-//					currentId = rs.getString(1);
-//				}
-//			}
+        	String currentUserName = "";
+        	String currentId = "";
+        	while(rs.next()) {
+        		currentUserName = rs.getString(2);
+				if (currentUserName.equalsIgnoreCase(usernameRole.trim())) {
+					currentId = rs.getString(1);
+				}
+			}
+        
+        	statement.setInt(1, newRole);
+        	statement.setString(2, currentId);
         	
         	int rowsAffected = statement.executeUpdate();
 
@@ -165,9 +167,42 @@ public class changePasswordDao {
 			} else {
 				isvalid = false;
 			}
-//        	
-//        	statement.setString(1, newPass);
-//        	statement.setString(2, username);
+        	
+            statement.executeUpdate();
+        } catch (SQLException e) {
+			e.printStackTrace();
+		}
+        return isvalid;
+    }
+	
+	public boolean deleteAccount(String userNameRoleDelete) throws SQLException, ClassNotFoundException {
+		String SELECT_ROLE = "SELECT * FROM signin;";
+        String DELETE_ROLE = "DELETE FROM SIGNIN WHERE MaID = ?";
+        boolean isvalid = false;
+        try (Connection connection = datasource.getConnection();
+        	 Statement stmt = connection.createStatement();
+             PreparedStatement statement = connection.prepareStatement(DELETE_ROLE);
+        	 ResultSet rs = stmt.executeQuery(SELECT_ROLE)) {
+            
+        	String currentUserName = "";
+        	String currentId = "";
+        	while(rs.next()) {
+        		currentUserName = rs.getString(2);
+				if (currentUserName.equalsIgnoreCase(userNameRoleDelete.trim())) {
+					currentId = rs.getString(1);
+				}
+			}
+        
+        	statement.setString(1, currentId);
+        	
+        	int rowsAffected = statement.executeUpdate();
+
+			if (rowsAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
+        	
             statement.executeUpdate();
         } catch (SQLException e) {
 			e.printStackTrace();

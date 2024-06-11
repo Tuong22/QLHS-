@@ -4550,7 +4550,11 @@ ul {
 
 .show-pass,
 .hide-pass,
-.edit-pass {
+.edit-pass,
+.edit-infoStudent,
+.role-user-icon,
+.edit-pass-icon,
+.remove-acc-icon {
 	font-size: 14px;
 	line-height: 48px;
 	padding: 0 8px;
@@ -4559,7 +4563,11 @@ ul {
 
 .edit-pass:hover,
 .show-pass:hover,
-.edit-infoStudent:hover {
+.edit-infoStudent:hover,
+.edit-infoStudent:hover,
+.role-user-icon:hover,
+.edit-pass-icon:hover,
+.remove-acc-icon:hover {
 	color: #40E9C0;
 	scale: 1.1;
 }
