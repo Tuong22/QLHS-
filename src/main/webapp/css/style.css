@@ -4806,3 +4806,20 @@ ul {
     font-size: 16px;
 
 }
+
+.studentInfo-wrap {
+	height: 26px;
+}
+
+.studentInfo-wrap .student-gender {
+	width: 180px;
+}
+
+.studentInfo-wrap .student-gender label {
+	margin-right: 10px;
+}
+
+.studentInfo-wrap span {
+	flex: 1;
+	text-align: end;
+}

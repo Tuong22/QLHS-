@@ -50,7 +50,7 @@ public class InfoStudentsServlet extends HttpServlet {
 			action = "list";
 		}
 		switch (action) {
-		case "/insertListStudents":
+		case "/insert":
 			try {
 				insertStudent(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
@@ -112,7 +112,7 @@ public class InfoStudentsServlet extends HttpServlet {
 	private void insertStudent(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String[] tenHSArray = request.getParameterValues("tenHS");
-        String[] gioiTinhArray = request.getParameterValues("gioiTinh");
+        String[] gioiTinhArray = request.getParameterValues("gender-group");
         String[] namSinhArray = request.getParameterValues("namSinh");
         String[] diaChiArray = request.getParameterValues("diaChi");
         String[] emailArray = request.getParameterValues("email");
@@ -133,10 +133,8 @@ public class InfoStudentsServlet extends HttpServlet {
 			request.setAttribute("messageInfo", "Thêm học sinh thành công.");
         } else if (!infoStudentsDao.checkAgeList(students)) {
         	request.setAttribute("messageErrorAge", "Thêm học sinh không thành công. Tuổi không hợp lệ.");
-        	request.getRequestDispatcher("/addListStudents.jsp").forward(request, response);
         } else if (!infoStudentsDao.checkEmailList(students)) {
         	request.setAttribute("messageErrorEmailExist", "Thêm học sinh không thành công. Email đã tồn tại.");
-        	request.getRequestDispatcher("/addListStudents.jsp").forward(request, response);
         }
         List<HocSinh> DSHS = infoStudentsDao.selectAllStudent();
 		request.setAttribute("DSHS", DSHS);

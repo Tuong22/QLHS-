@@ -229,11 +229,11 @@
 										</div>
 									</c:if>
 									<div class="add-student">
-										<a href="./addListStudents.jsp"><button class="btn btn-primary add-student-btn"
+										<button class="btn btn-primary add-student-btn"
 											<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>>Thêm
-											học sinh</button></a>
+											học sinh</button>
 									</div>
 
 									<div class="datatable-container">
@@ -298,10 +298,8 @@
 	</div>
 
 
-	<!-- Modal add student -->
-	<!--  
 	<div class="modal add-student-modal">
-		<div class="modal-container add-student-modal-container">
+		<div class="modal-container add-student-modal-container w-100">
 
 			<div class="icon-close js-modal-close">
 				<i class="modal-icon-close fa-solid fa-xmark"></i>
@@ -311,62 +309,51 @@
 
 			<form action="<%=request.getContextPath()%>/InfoStudentsServlet">
 				<input type="hidden" name="action" value="/insert">
-				<div class="modal-body">
-					<div class="model-input-item">
-						<label for="student-name" class="modal-label">Tên:</label> <input
-							type="text" id="student-name" class="modal-input"
-							placeholder="Họ tên" name="studentName">
-					</div>
-
-					<div class="model-input-item">
-						<label class="modal-label">Giới tính:</label>
-						<div class="student-gender">
-							<div class="student-gender-wrap">
-								<label for="student-male" class="modal-label">Nam</label> <input
-									type="radio" id="student-male" class="modal-input"
-									name="gender-group" value="Nam">
+				<div class="modal-body"
+					style="overflow: scroll; overflow-x: unset; overflow-y: auto; max-height: 380px">
+					<div id="studentsContainer">
+						<div class="student card p-4 mb-4">
+							<div class="studentInfo-wrap d-flex justify-content-between mb-4">
+								<label>Tên học sinh:</label> <input type="text" name="tenHS"
+									required /> <label>Năm sinh:</label> <input type="date"
+									name="namSinh" required /> <label>Địa chỉ:</label> <input
+									type="text" name="diaChi" required /> <label>Email:</label> <input
+									type="email" name="email" required /> <br> <br>
 							</div>
 
-							<div class="student-gender-wrap">
-								<label for="student-female" class="modal-label">Nữ</label> <input
-									type="radio" id="student-female" class="modal-input"
-									name="gender-group" value="Nữ">
-							</div>
+							<div class="studentInfo-wrap d-flex">
+								<label class="modal-label">Giới tính:</label>
+								<div class="student-gender">
+									<div class="student-gender-wrap">
+										<label for="student-male">Nam</label> <input type="radio"
+											id="student-male" class="modal-input" name="gender-group"
+											value="Nam">
+									</div>
 
+									<div class="student-gender-wrap">
+										<label for="student-female">Nữ</label> <input type="radio"
+											id="student-female" class="modal-input" name="gender-group"
+											value="Nữ">
+									</div>
+
+								</div>
+							</div>
 						</div>
 
-					</div>
 
-					<div class="model-input-item">
-						<label for="student-year" class="modal-label">Năm sinh:</label> <input
-							type="date" id="student-year" class="modal-input"
-							placeholder="Năm sinh" name="studentYear">
-					</div>
-
-					<div class="model-input-item">
-						<label for="student-address" class="modal-label">Địa chỉ:</label>
-						<input type="text" id="student-address" class="modal-input"
-							placeholder="Địa chỉ" name="studentAddress">
-					</div>
-
-					<div class="model-input-item">
-						<label for="student-email" class="modal-label">Email:</label> <input
-							type="email" id="student-email" class="modal-input"
-							placeholder="Email" name="studentEmail">
 					</div>
 
 				</div>
 
 				<footer class="modal-footer">
-					<button type="button"
-						class="btn btn-primary cancel-add-student-btn btn-cancel">Hủy</button>
+					<button type="button" class="btn btn-primary"
+						onclick="addStudent()">Thêm học sinh</button>
 					<button type="submit"
 						class="btn btn-primary confirm-add-studen-btn">Xác nhận</button>
 				</footer>
 			</form>
 		</div>
 	</div>
-	-->
 
 	<!-- Modal update student -->
 	<div class="modal update-student-modal">
@@ -442,7 +429,28 @@
 	<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 	<script src="./js/app.js"></script>
 	<script src="./js/pagination.js"></script>
-	<script src="./js/modalAddStudent.js"></script>
+	<script>
+	const addStudentBtn = document.querySelector('.add-student-btn')
+	const modalAddStudent = document.querySelector('.add-student-modal')
+	const modalAddStudentContainer = document.querySelector('.add-student-modal-container')
+	const modalClose = document.querySelector('.js-modal-close')
+
+	function OpenModalAddStudent() {
+		modalAddStudent.classList.add('open')
+	}
+
+	function HideModalAddStudent() {
+		modalAddStudent.classList.remove('open')
+	}
+
+	addStudentBtn.addEventListener('click', OpenModalAddStudent)
+
+
+	modalClose.addEventListener('click', HideModalAddStudent)
+	modalAddStudent.addEventListener('click', HideModalAddStudent)
+	modalAddStudentContainer.addEventListener('click', function(event) { event.stopPropagation() })
+	</script>
+	
 	<script>
 		const updateStudentIcons = document
 				.querySelectorAll('.edit-infoStudent')
@@ -537,6 +545,51 @@
 			event.stopPropagation()
 		})
 	</script>
+
+	<script>
+        function addStudent() {
+            var container = document.getElementById("studentsContainer");
+            var studentDiv = document.createElement("div");
+            studentDiv.className = "student card p-4 mb-4";
+
+            studentDiv.innerHTML = `
+            	<div class="studentInfo-wrap d-flex justify-content-between mb-4">
+					<label>Tên học sinh:</label> <input type="text" name="tenHS"
+					required /> <label>Năm sinh:</label> <input type="date"
+					name="namSinh" required /> <label>Địa chỉ:</label> <input
+					type="text" name="diaChi" required /> <label>Email:</label> <input
+					type="email" name="email" required /> <br> <br>
+				</div>
+
+				<div class="studentInfo-wrap d-flex">
+					<label class="modal-label">Giới tính:</label>
+					<div class="student-gender">
+						<div class="student-gender-wrap">
+							<label for="student-male">Nam</label> <input
+								type="radio" id="student-male" class="modal-input"
+								name="gender-group" value="Nam">
+						</div>
+	
+						<div class="student-gender-wrap">
+							<label for="student-female">Nữ</label> <input
+								type="radio" id="student-female" class="modal-input"
+								name="gender-group" value="Nữ">
+						</div>
+					</div>
+					
+					<span>
+						<button class="btn btn-primary btn-cancel" type="button" onclick="removeStudent(this)">Xóa</button>
+					</span>
+				</div>
+            `;
+            container.appendChild(studentDiv);
+        }
+
+        function removeStudent(button) {
+            var container = document.getElementById("studentsContainer");
+            container.removeChild(getParent(button, ".student"));
+        }
+    </script>
 
 </body>
 </html>
