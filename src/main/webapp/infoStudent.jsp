@@ -43,9 +43,9 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a
-								class="sidebar-link" href="#" aria-expanded="false">
-									<span> <i class="fa fa-solid fa-user"></i>
+							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
+								href="#" aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -187,9 +187,9 @@
 														<td class="gender"><c:out value="${HocSinh.gioiTinh}" /></td>
 														<td class="year"><c:out value="${HocSinh.namSinh}" /></td>
 														<td class="address"><c:out value="${HocSinh.diaChi}" /></td>
-														<td class="email d-flex justify-content-between border-0"><c:out value="${HocSinh.email}" />
-															<i class="edit-infoStudent fa-solid fa-pen-to-square"></i>
-														</td>
+														<td class="email d-flex justify-content-between border-0"><c:out
+																value="${HocSinh.email}" /> <i
+															class="edit-infoStudent fa-solid fa-pen-to-square"></i></td>
 													</tr>
 												</c:forEach>
 
@@ -213,7 +213,7 @@
 
 	<!-- Modal add student -->
 	<div class="modal add-student-modal">
-		<div class="modal-container add-student-modal-container">
+		<div class="modal-container add-student-modal-container w-100">
 
 			<div class="icon-close js-modal-close">
 				<i class="modal-icon-close fa-solid fa-xmark"></i>
@@ -223,62 +223,52 @@
 
 			<form action="<%=request.getContextPath()%>/InfoStudentsServlet">
 				<input type="hidden" name="action" value="/insert">
-				<div class="modal-body">
-					<div class="model-input-item">
-						<label for="student-name" class="modal-label">Tên:</label> <input
-							type="text" id="student-name" class="modal-input"
-							placeholder="Họ tên" name="studentName">
-					</div>
-
-					<div class="model-input-item">
-						<label class="modal-label">Giới tính:</label>
-						<div class="student-gender">
-							<div class="student-gender-wrap">
-								<label for="student-male" class="modal-label">Nam</label> <input
-									type="radio" id="student-male" class="modal-input"
-									name="gender-group" value="Nam">
+				<div class="modal-body"
+					style="overflow: scroll; overflow-x: unset; overflow-y: auto; max-height: 380px">
+					<div id="studentsContainer">
+						<div class="student card p-4 mb-4">
+							<div class="studentInfo-wrap d-flex justify-content-between mb-4">
+								<label>Tên học sinh:</label> <input type="text" name="tenHS"
+									required /> <label>Năm sinh:</label> <input type="date"
+									name="namSinh" required /> <label>Địa chỉ:</label> <input
+									type="text" name="diaChi" required /> <label>Email:</label> <input
+									type="email" name="email" required /> <br> <br>
 							</div>
 
-							<div class="student-gender-wrap">
-								<label for="student-female" class="modal-label">Nữ</label> <input
-									type="radio" id="student-female" class="modal-input"
-									name="gender-group" value="Nữ">
-							</div>
+							<div class="studentInfo-wrap d-flex">
+								<label class="modal-label">Giới tính:</label>
+								<div class="student-gender">
+									<div class="student-gender-wrap">
+										<label for="student-male">Nam</label> <input type="radio"
+											id="student-male" class="modal-input" name="gender-group"
+											value="Nam">
+									</div>
 
+									<div class="student-gender-wrap">
+										<label for="student-female">Nữ</label> <input type="radio"
+											id="student-female" class="modal-input" name="gender-group"
+											value="Nữ">
+									</div>
+
+								</div>
+							</div>
 						</div>
 
-					</div>
 
-					<div class="model-input-item">
-						<label for="student-year" class="modal-label">Năm sinh:</label> <input
-							type="text" id="student-year" class="modal-input"
-							placeholder="Năm sinh" name="studentYear">
-					</div>
-
-					<div class="model-input-item">
-						<label for="student-address" class="modal-label">Địa chỉ:</label>
-						<input type="text" id="student-address" class="modal-input"
-							placeholder="Địa chỉ" name="studentAddress">
-					</div>
-
-					<div class="model-input-item">
-						<label for="student-email" class="modal-label">Email:</label> <input
-							type="email" id="student-email" class="modal-input"
-							placeholder="Email" name="studentEmail">
 					</div>
 
 				</div>
 
 				<footer class="modal-footer">
-					<button type="button"
-						class="btn btn-primary btn-cancel cancel-add-student-btn">Hủy</button>
+					<button type="button" class="btn btn-primary"
+						onclick="addStudent()">Thêm học sinh</button>
 					<button type="submit"
 						class="btn btn-primary confirm-add-studen-btn">Xác nhận</button>
 				</footer>
 			</form>
 		</div>
 	</div>
-	
+
 	<!-- Modal update student -->
 	<div class="modal update-student-modal">
 		<div class="modal-container update-student-modal-container">
@@ -318,20 +308,21 @@
 					</div>
 
 					<div class="model-input-item">
-						<label for="student-year-new" class="modal-label">Năm sinh:</label> <input
-							type="text" id="student-year-new" class="modal-input"
-							placeholder="Năm sinh" name="studentYearNew">
+						<label for="student-year-new" class="modal-label">Năm
+							sinh:</label> <input type="text" id="student-year-new"
+							class="modal-input" placeholder="Năm sinh" name="studentYearNew">
 					</div>
 
 					<div class="model-input-item">
-						<label for="student-address-new" class="modal-label">Địa chỉ:</label>
-						<input type="text" id="student-address-new" class="modal-input"
-							placeholder="Địa chỉ" name="studentAddressNew">
+						<label for="student-address-new" class="modal-label">Địa
+							chỉ:</label> <input type="text" id="student-address-new"
+							class="modal-input" placeholder="Địa chỉ"
+							name="studentAddressNew">
 					</div>
 
 					<div class="model-input-item">
-						<label for="student-email-new" class="modal-label">Email:</label> <input
-							type="email" id="student-email-new" class="modal-input"
+						<label for="student-email-new" class="modal-label">Email:</label>
+						<input type="email" id="student-email-new" class="modal-input"
 							placeholder="Email" name="studentEmailNew">
 					</div>
 
@@ -341,7 +332,8 @@
 					<button type="button"
 						class="btn btn-primary btn-cancel cancel-update-student-btn">Hủy</button>
 					<button type="submit"
-						class="btn btn-primary confirm-update-studen-btn">Xác nhận</button>
+						class="btn btn-primary confirm-update-studen-btn">Xác
+						nhận</button>
 				</footer>
 			</form>
 		</div>
@@ -351,83 +343,166 @@
 	<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 	<script src="./js/app.js"></script>
 	<script src="./js/pagination.js"></script>
-	<script src="./js/modalAddStudent.js"></script>
 	<script>
-	const updateStudentIcons = document.querySelectorAll('.edit-infoStudent')
-	const modalUpdateStudent = document.querySelector('.update-student-modal')
-	const modalUpdateStudentContainer = document.querySelector('.update-student-modal-container')
-	const modalUpdateStudentClose = document.querySelector('.js-update-student-modal-close')
-	const cancelUpdateStudentBtn = document.querySelector('.cancel-update-student-btn')
+	const addStudentBtn = document.querySelector('.add-student-btn')
+	const modalAddStudent = document.querySelector('.add-student-modal')
+	const modalAddStudentContainer = document.querySelector('.add-student-modal-container')
+	const modalClose = document.querySelector('.js-modal-close')
 
-	const studentNameNew = document.getElementById("student-name-new")
-	const studentGenderNew = document.querySelectorAll('input[name="gender-group-new"]');
-	const studentYearNew = document.getElementById("student-year-new")
-	const studentAddressNew = document.getElementById("student-address-new")
-	const studentEmailNew = document.getElementById("student-email-new")
-
-	var studentNameCurr
-	var studentGenderCurr
-	var studentYearCurr
-	var studentAddressCurr
-	var studentEmailCurr
-	
-	function getParent(element, selector) {
-		while (element.parentElement) {
-			if (element.parentElement.matches(selector)) {
-				return element.parentElement
-			}
-			element = element.parentElement
-		}
-	}
-	
-	function getSibling(element, className) {
-	    const parent = element.parentElement;
-	    if (!parent) return null; // Kiểm tra nếu không có phần tử cha
-	    
-	    const siblings = parent.children;
-	    for (let i = 0; i < siblings.length; i++) {
-	        if (siblings[i] !== element && siblings[i].classList.contains(className)) {
-	            return siblings[i];
-	        }
-	    }
-	    
-	    return null; // Trả về null nếu không tìm thấy phần tử ngang cấp với class truyền vào
-	}
-	
-
-	function Hide() {
-		modalUpdateStudent.classList.remove('open')
+	function OpenModalAddStudent() {
+		modalAddStudent.classList.add('open')
 	}
 
-	updateStudentIcons.forEach(function(updateStudentIcon){
-		updateStudentIcon.addEventListener('click', function () {
-			studentNameCurr = getSibling(getParent(updateStudentIcon, ".email"), 'name')
-			studentGenderCurr = getSibling(getParent(updateStudentIcon, ".email"), 'gender')
-			studentYearCurr = getSibling(getParent(updateStudentIcon, ".email"), 'year')
-			studentAddressCurr = getSibling(getParent(updateStudentIcon, ".email"), 'address')
-			studentEmailCurr = getParent(updateStudentIcon, ".email")
-			
-			studentNameNew.setAttribute("value", studentNameCurr.textContent)
-			studentGenderNew.forEach(function(item) {
-				item.removeAttribute("checked", "")
-			})
-			studentGenderNew.forEach(function(item) {
-				if(item.value == studentGenderCurr.textContent){
-					item.setAttribute("checked", "")
-				}
-			})
-			studentYearNew.setAttribute("value", studentYearCurr.textContent)
-			studentAddressNew.setAttribute("value", studentAddressCurr.textContent)
-			studentEmailNew.setAttribute("value", studentEmailCurr.textContent)
-			modalUpdateStudent.classList.add('open')
-		})
-	})
+	function HideModalAddStudent() {
+		modalAddStudent.classList.remove('open')
+	}
+
+	addStudentBtn.addEventListener('click', OpenModalAddStudent)
 
 
-	modalUpdateStudentClose.addEventListener('click', Hide)
-	cancelUpdateStudentBtn.addEventListener('click', Hide)
-	modalUpdateStudent.addEventListener('click', Hide)
-	modalUpdateStudentContainer.addEventListener('click', function(event) { event.stopPropagation() })
+	modalClose.addEventListener('click', HideModalAddStudent)
+	modalAddStudent.addEventListener('click', HideModalAddStudent)
+	modalAddStudentContainer.addEventListener('click', function(event) { event.stopPropagation() })
 	</script>
+	
+	<script>
+		const updateStudentIcons = document
+				.querySelectorAll('.edit-infoStudent')
+		const modalUpdateStudent = document
+				.querySelector('.update-student-modal')
+		const modalUpdateStudentContainer = document
+				.querySelector('.update-student-modal-container')
+		const modalUpdateStudentClose = document
+				.querySelector('.js-update-student-modal-close')
+		const cancelUpdateStudentBtn = document
+				.querySelector('.cancel-update-student-btn')
+
+		const studentNameNew = document.getElementById("student-name-new")
+		const studentGenderNew = document
+				.querySelectorAll('input[name="gender-group-new"]');
+		const studentYearNew = document.getElementById("student-year-new")
+		const studentAddressNew = document
+				.getElementById("student-address-new")
+		const studentEmailNew = document.getElementById("student-email-new")
+
+		var studentNameCurr
+		var studentGenderCurr
+		var studentYearCurr
+		var studentAddressCurr
+		var studentEmailCurr
+
+		function getParent(element, selector) {
+			while (element.parentElement) {
+				if (element.parentElement.matches(selector)) {
+					return element.parentElement
+				}
+				element = element.parentElement
+			}
+		}
+
+		function getSibling(element, className) {
+			const parent = element.parentElement;
+			if (!parent)
+				return null; // Kiểm tra nếu không có phần tử cha
+
+			const siblings = parent.children;
+			for (let i = 0; i < siblings.length; i++) {
+				if (siblings[i] !== element
+						&& siblings[i].classList.contains(className)) {
+					return siblings[i];
+				}
+			}
+
+			return null; // Trả về null nếu không tìm thấy phần tử ngang cấp với class truyền vào
+		}
+
+		function Hide() {
+			modalUpdateStudent.classList.remove('open')
+		}
+
+		updateStudentIcons.forEach(function(updateStudentIcon) {
+			updateStudentIcon.addEventListener('click', function() {
+				studentNameCurr = getSibling(getParent(updateStudentIcon,
+						".email"), 'name')
+				studentGenderCurr = getSibling(getParent(updateStudentIcon,
+						".email"), 'gender')
+				studentYearCurr = getSibling(getParent(updateStudentIcon,
+						".email"), 'year')
+				studentAddressCurr = getSibling(getParent(updateStudentIcon,
+						".email"), 'address')
+				studentEmailCurr = getParent(updateStudentIcon, ".email")
+
+				studentNameNew.setAttribute("value",
+						studentNameCurr.textContent)
+				studentGenderNew.forEach(function(item) {
+					item.removeAttribute("checked", "")
+				})
+				studentGenderNew.forEach(function(item) {
+					if (item.value == studentGenderCurr.textContent) {
+						item.setAttribute("checked", "")
+					}
+				})
+				studentYearNew.setAttribute("value",
+						studentYearCurr.textContent)
+				studentAddressNew.setAttribute("value",
+						studentAddressCurr.textContent)
+				studentEmailNew.setAttribute("value",
+						studentEmailCurr.textContent)
+				modalUpdateStudent.classList.add('open')
+			})
+		})
+
+		modalUpdateStudentClose.addEventListener('click', Hide)
+		cancelUpdateStudentBtn.addEventListener('click', Hide)
+		modalUpdateStudent.addEventListener('click', Hide)
+		modalUpdateStudentContainer.addEventListener('click', function(event) {
+			event.stopPropagation()
+		})
+	</script>
+
+	<script>
+        function addStudent() {
+            var container = document.getElementById("studentsContainer");
+            var studentDiv = document.createElement("div");
+            studentDiv.className = "student card p-4 mb-4";
+
+            studentDiv.innerHTML = `
+            	<div class="studentInfo-wrap d-flex justify-content-between mb-4">
+					<label>Tên học sinh:</label> <input type="text" name="tenHS"
+					required /> <label>Năm sinh:</label> <input type="date"
+					name="namSinh" required /> <label>Địa chỉ:</label> <input
+					type="text" name="diaChi" required /> <label>Email:</label> <input
+					type="email" name="email" required /> <br> <br>
+				</div>
+
+				<div class="studentInfo-wrap d-flex">
+					<label class="modal-label">Giới tính:</label>
+					<div class="student-gender">
+						<div class="student-gender-wrap">
+							<label for="student-male">Nam</label> <input
+								type="radio" id="student-male" class="modal-input"
+								name="gender-group" value="Nam">
+						</div>
+	
+						<div class="student-gender-wrap">
+							<label for="student-female">Nữ</label> <input
+								type="radio" id="student-female" class="modal-input"
+								name="gender-group" value="Nữ">
+						</div>
+					</div>
+					
+					<span>
+						<button class="btn btn-primary btn-cancel" type="button" onclick="removeStudent(this)">Xóa</button>
+					</span>
+				</div>
+            `;
+            container.appendChild(studentDiv);
+        }
+
+        function removeStudent(button) {
+            var container = document.getElementById("studentsContainer");
+            container.removeChild(getParent(button, ".student"));
+        }
+    </script>
 </body>
 </html>

@@ -43,7 +43,7 @@
 				<!-- Sidebar navigation-->
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
-						<div class="sidebarnav-top scroll-sidebar p-0">
+						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
 								href="#" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
