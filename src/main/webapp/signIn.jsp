@@ -14,11 +14,15 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@v5.3.0/dist/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/registration.css">
+	
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
 </head>
 <body>
 	<div class="main">
-		<h1 class="app-name">QUẢN LÝ HỌC SINH</h1>
+		<h1 class="app-name" style="font-family: 'Playfair Display', serif;">QUẢN LÝ HỌC SINH</h1>
 
 		<img src="./image/bg.jpg" alt="" class="background-img">
 		<form action="<%=request.getContextPath()%>/SignIn" method="POST"

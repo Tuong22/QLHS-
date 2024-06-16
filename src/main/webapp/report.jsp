@@ -43,17 +43,23 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/changePasswordServlet" aria-expanded="false"> <span> <i
+							<li class="sidebar-item mg-l-4"><a
+								class="sidebar-link active"
+								href="<%=request.getContextPath()%>/changePasswordServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/infoClassServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-chalkboard-user"></i>
-								</span> <span class="hide-menu">Lớp</span>
-							</a></li>
+							<c:if test="${sessionScope.account.isAdmin != 5}">
+								<li class="sidebar-item">
+								<a class="sidebar-link" href="<%=request.getContextPath()%>/infoClassServlet" aria-expanded="false"> 
+									<span> 
+										<i class="fa fa-solid fa-chalkboard-user"></i>
+									</span> 
+									<span class="hide-menu">Lớp</span>
+								</a></li>
+							</c:if>
+
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/InfoStudentsServlet"
 								aria-expanded="false"> <span> <i
@@ -61,8 +67,9 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/searchStudentServlet" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-magnifying-glass"></i>
+								href="<%=request.getContextPath()%>/searchStudentServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -78,7 +85,7 @@
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
-							<li class="sidebar-item"><a class="sidebar-link active"
+							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/ReportServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
@@ -91,6 +98,7 @@
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
+
 						<div class="sidebarnav-bottom">
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="./signIn.jsp" aria-expanded="false"> <span> <i
@@ -203,7 +211,7 @@
 
 											<div class="search-report">
 												<button type="submit"
-													class="btn btn-primary search-point-btn">Tìm kiếm</button>
+													class="btn btn-primary search-point-btn">Xem</button>
 											</div>
 										</form>
 									</div>
@@ -262,5 +270,22 @@
 	<script src="./js/handleReportType.js"></script>
 	<script src="./js/pagination.js"></script>
 
+	<script type="text/javascript">
+		(function(d, m) {
+			var kommunicateSettings = {
+				"appId" : "1f738c914043ebc4eff88a22ec4875001",
+				"popupWidget" : true,
+				"automaticChatOpenOnNavigation" : true
+			};
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.async = true;
+			s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+			var h = document.getElementsByTagName("head")[0];
+			h.appendChild(s);
+			window.kommunicate = m;
+			m._globals = kommunicateSettings;
+		})(document, window.kommunicate || {});
+	</script>
 </body>
 </html>

@@ -52,16 +52,20 @@
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
+							<c:if test="${sessionScope.account.isAdmin != 5}">
+								<li class="sidebar-item">
+								<a class="sidebar-link" href="<%=request.getContextPath()%>/infoClassServlet" aria-expanded="false"> 
+									<span> 
+										<i class="fa fa-solid fa-chalkboard-user"></i>
+									</span> 
+									<span class="hide-menu">Lớp</span>
+								</a></li>
+							</c:if>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/infoClassServlet" aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-chalkboard-user"></i>
-								</span> <span class="hide-menu">Lớp</span>
-							</a></li>
-
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/InfoStudentsServlet" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-graduation-cap"></i>
+								href="<%=request.getContextPath()%>/InfoStudentsServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -71,18 +75,21 @@
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/InfoSubjectServlet" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/InfoSubjectServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/tablePointServlet" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-table"></i>
+								href="<%=request.getContextPath()%>/tablePointServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/ReportServlet" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/ReportServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
@@ -235,16 +242,16 @@
 												class="datatable-sorter">STT</a></th>
 											<th data-sortable="true" aria-sort="descending"
 												class="datatable-descending"
-												style="text-align: center; width: 30%"><a href="#"
+												style="text-align: center; width: 20%"><a href="#"
 												class="datatable-sorter">Tên tài khoản</a></th>
 											<th data-sortable="true"
-												style="text-align: center; width: 30%"><a href="#"
+												style="text-align: center; width: 20%"><a href="#"
 												class="datatable-sorter">Mật khẩu</a></th>
 											<th data-sortable="true"
-												style="text-align: center; width: 10%"><a href="#"
+												style="text-align: center; width: 20%"><a href="#"
 												class="datatable-sorter">Quyền</a></th>
 											<th data-sortable="true"
-												style="text-align: center; width: 20%"><a href="#"
+												style="text-align: center; width: 30%;"><a href="#"
 												class="datatable-sorter">Thao tác</a></th>
 										</tr>
 									</thead>
@@ -259,12 +266,12 @@
 								                    admin
 								                </c:if> <c:if test="${acc.isAdmin == 2}">
 								                    headmaster
-								                </c:if>
-								                <c:if test="${acc.isAdmin == 3}">
+								                </c:if> <c:if test="${acc.isAdmin == 3}">
 								                    teacher
-								                </c:if>
-								                <c:if test="${acc.isAdmin == 4}">
+								                </c:if> <c:if test="${acc.isAdmin == 4}">
 								                    office
+								                </c:if> <c:if test="${acc.isAdmin == 5}">
+								                    student
 								                </c:if></td>
 												<td class="action" style="text-align: center;"><i
 													class="role-user-icon fas fa-users"
@@ -381,6 +388,7 @@
 							<option value="2">Headmaster</option>
 							<option value="3">Teacher</option>
 							<option value="4">Office</option>
+							<option value="5">Student</option>
 						</select>
 					</div>
 
@@ -709,6 +717,24 @@
 		modalAddAccContainer.addEventListener('click', function(event) {
 			event.stopPropagation()
 		})
+	</script>
+
+	<script type="text/javascript">
+		(function(d, m) {
+			var kommunicateSettings = {
+				"appId" : "1f738c914043ebc4eff88a22ec4875001",
+				"popupWidget" : true,
+				"automaticChatOpenOnNavigation" : true
+			};
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.async = true;
+			s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+			var h = document.getElementsByTagName("head")[0];
+			h.appendChild(s);
+			window.kommunicate = m;
+			m._globals = kommunicateSettings;
+		})(document, window.kommunicate || {});
 	</script>
 
 

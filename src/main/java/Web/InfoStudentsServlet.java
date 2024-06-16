@@ -67,7 +67,7 @@ public class InfoStudentsServlet extends HttpServlet {
 		case "/update":
 			try {
 				updateInfoStudent(request, response);
-			} catch (ClassNotFoundException | ServletException | IOException e) {
+			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
 				e.printStackTrace();
 			}
 			break;
@@ -179,7 +179,7 @@ public class InfoStudentsServlet extends HttpServlet {
 //	}
 	
 	private void updateInfoStudent(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, IOException, ClassNotFoundException {
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String nameStudent = request.getParameter("studentName");
 		String nameGender = request.getParameter("gender-group-new");
 		String nameYear = request.getParameter("studentYearNew");
@@ -190,7 +190,8 @@ public class InfoStudentsServlet extends HttpServlet {
 		HocSinh hs = new HocSinh(null, nameStudent, nameGender, nameYear, nameAddress, nameEmail);
 		
 		boolean isvalidAge = infoStudentsDao.checkAge(hs);
-	    if (isvalidAge) {
+		boolean isvalidEmail = infoStudentsDao.checkEmail(hs);
+	    if (isvalidAge && isvalidEmail) {
 	        request.setAttribute("messageInfoUpdateStudent", "Sửa thông tin thành công.");
 	        infoStudentsDao.updateInfoStudent(hs,nameStudent, nameAddress, nameEmail, nameYear);
 	    } else {

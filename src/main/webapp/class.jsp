@@ -14,7 +14,11 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@v5.3.0/dist/css/bootstrap.min.css">
 <style <%@ include file="./css/style.css" %>></style>
-
+<style>
+         .kommunicate-custom-iframe .mck-header {
+            background-color: #ff5733 !important; /* Thay thế bằng màu bạn muốn */
+        }
+    </style>
 </head>
 <body style="background-color: #484848">
 	<%
@@ -45,7 +49,8 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/changePasswordServlet" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/changePasswordServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
@@ -91,12 +96,6 @@
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
-							</a></li>
-
-							<li class="sidebar-item"><a class="sidebar-link" href="#"
-								aria-expanded="false"> <span> <i
-										class="fas fa-pen-nib"></i>
-								</span> <span class="hide-menu">Chấm điểm</span>
 							</a></li>
 
 						</div>
@@ -198,17 +197,19 @@
 
 
 												<div class="add-class" style="margin-top: 16px">
-													
-														<button type="button"
-															class="btn btn-primary add-class-btn mt-4 me-4" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+
+													<button type="button"
+														class="btn btn-primary add-class-btn mt-4 me-4"
+														<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>>Thêm
-															lớp</button>
-													
+														lớp</button>
+
 
 													<button type="button"
 														class="btn btn-primary list-of-class-btn mt-4">
-														<a href="<%=request.getContextPath()%>/listStudentOfClassServlet">
+														<a
+															href="<%=request.getContextPath()%>/listStudentOfClassServlet">
 															Xem danh sách học sinh</a>
 													</button>
 												</div>
@@ -236,14 +237,15 @@
 														<tr data-index="0">
 															<td style="text-align: center;"><%=i++%></td>
 															<td class="className-edit" style="margin-left: 30px;">${Lop.tenKhoi}<span>
-																	<i <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+																	<i
+																	<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>
 																	class="className-edit-icon fa fa-solid fa-pen-to-square"></i>
-																	<i class="removeClass-icon fa fa-solid fa-trash-can" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+																	<i class="removeClass-icon fa fa-solid fa-trash-can"
+																	<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
-													               </c:if>></i>
-																	</td>
+													               </c:if>></i></td>
 															</span>
 															<td style="text-align: center;">${Lop.siSo}</td>
 														</tr>
@@ -690,6 +692,24 @@
 				break;
 			}
 		}
+	</script>
+
+	<script type="text/javascript">
+		(function(d, m) {
+			var kommunicateSettings = {
+				"appId" : "1f738c914043ebc4eff88a22ec4875001",
+				"popupWidget" : true,
+				"automaticChatOpenOnNavigation" : true
+			};
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.async = true;
+			s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+			var h = document.getElementsByTagName("head")[0];
+			h.appendChild(s);
+			window.kommunicate = m;
+			m._globals = kommunicateSettings;
+		})(document, window.kommunicate || {});
 	</script>
 
 </body>

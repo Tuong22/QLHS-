@@ -265,17 +265,17 @@
 
 												<c:forEach var="HocSinh" items="${DSHS}">
 													<tr>
-														<td><%=i++%></td>
+														<td style="text-align: center"><%=i++%></td>
 														<td class="name"><c:out value="${HocSinh.tenHS}" /></td>
 														<td class="gender"><c:out value="${HocSinh.gioiTinh}" /></td>
 														<td class="year"><c:out value="${HocSinh.namSinh}" /></td>
 														<td class="address"><c:out value="${HocSinh.diaChi}" /></td>
 														<td class="email d-flex justify-content-between border-0"><c:out
 																value="${HocSinh.email}" /> <i
-															class="edit-infoStudent fa-solid fa-pen-to-square"
+															class="edit-infoStudent fa-solid fa-pen-to-square" 
 															<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
-													               </c:if>></i>
+													               </c:if> style="line-height: 2"></i>
 														</td>
 													</tr>
 												</c:forEach>
@@ -590,6 +590,23 @@
             container.removeChild(getParent(button, ".student"));
         }
     </script>
-
+	
+	<script type="text/javascript">
+		(function(d, m) {
+			var kommunicateSettings = {
+				"appId" : "1f738c914043ebc4eff88a22ec4875001",
+				"popupWidget" : true,
+				"automaticChatOpenOnNavigation" : true
+			};
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.async = true;
+			s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+			var h = document.getElementsByTagName("head")[0];
+			h.appendChild(s);
+			window.kommunicate = m;
+			m._globals = kommunicateSettings;
+		})(document, window.kommunicate || {});
+	</script>
 </body>
 </html>

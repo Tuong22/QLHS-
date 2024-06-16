@@ -293,6 +293,7 @@ tbody, td, tfoot, th, thead, tr {
 .role-user-icon:hover {
 	color: #40E9C0;
 	cursor: pointer;
+	line-height: 2;
 }
 
 .subjectName-edit.active,

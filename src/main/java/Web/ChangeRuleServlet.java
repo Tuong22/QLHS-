@@ -40,6 +40,13 @@ public class ChangeRuleServlet extends HttpServlet {
 			action = "list";
 		}
 		switch (action) {
+		case "/insert":
+            try {
+            	insertChangeRule(request, response);
+            } catch (ClassNotFoundException | ServletException | IOException e) {
+                e.printStackTrace();
+            }
+            break;
 		case "/updateTuoi":
             try {
             	updateTuoi(request, response);
@@ -82,6 +89,22 @@ public class ChangeRuleServlet extends HttpServlet {
 	
 	private void renderThamSo(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException, ClassNotFoundException, SQLException {
+		ChangeRule cr = ChangeRuleDao.renderThamSo();
+		request.setAttribute("CR", cr);
+	    request.getRequestDispatcher("/changeRule.jsp").forward(request, response);
+	}
+	
+	private void insertChangeRule(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException {
+		String name = request.getParameter("ruleName");
+		String value = request.getParameter("ruleStandard");
+
+		boolean isvalid = ChangeRuleDao.insertChangeRule(name, Integer.parseInt(value));
+		if (isvalid) {
+	        request.setAttribute("messageInfoAddSubject", "Thêm quy định mới thành công.");
+	    } else {
+	        request.setAttribute("messageErrorAddSubject", "Tên quy định bị trùng");
+	    }
 		ChangeRule cr = ChangeRuleDao.renderThamSo();
 		request.setAttribute("CR", cr);
 	    request.getRequestDispatcher("/changeRule.jsp").forward(request, response);

@@ -7,6 +7,21 @@ public class ChangeRule {
     private int diemToiDa;
     private int diemToiThieu;
     private int diemDat;
+    private String columnName;
+    private int value;
+
+    public ChangeRule(String columnName, int value) {
+        this.columnName = columnName;
+        this.value = value;
+    }
+
+    public String getColumnName() {
+        return columnName;
+    }
+
+    public int getValue() {
+        return value;
+    }
 	public ChangeRule(int tuoiHSToiDa, int tuoiHSToiThieu, int soLuongHSToiDa, int diemToiDa, int diemToiThieu,
 			int diemDat) {
 		super();

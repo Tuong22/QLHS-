@@ -45,18 +45,20 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="./account.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/changePasswordServlet" aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/infoClassServlet" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/infoClassServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/InfoStudentsServlet" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-graduation-cap"></i>
+								href="<%=request.getContextPath()%>/InfoStudentsServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -72,7 +74,7 @@
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./tablePoint.jsp" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/tablePointServlet" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
@@ -173,7 +175,8 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Tuổi
 														tối đa <span> <i
-															class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+															class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square"
+															<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 													</td>
@@ -184,7 +187,8 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Tuổi
 														tối thiểu<span> <i
-															class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+															class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square"
+															<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 													</td>
@@ -195,7 +199,8 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Sĩ
 														số tối đa<span> <i
-															class="changeRule2 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+															class="changeRule2 changeRule-edit-icon fa fa-solid fa-pen-to-square"
+															<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 													</td>
@@ -206,7 +211,8 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Điểm
 														tối đa<span> <i
-															class="changeRule3 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+															class="changeRule3 changeRule-edit-icon fa fa-solid fa-pen-to-square"
+															<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 													</td>
@@ -217,7 +223,8 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Điểm
 														tối thiểu<span> <i
-															class="changeRule3 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+															class="changeRule3 changeRule-edit-icon fa fa-solid fa-pen-to-square"
+															<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 													</td>
@@ -227,15 +234,26 @@
 													<td style="text-align: center;"><%=i++%></td>
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Điểm
-														đạt<span> 
-														<i class="changeRule4 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+														đạt<span> <i
+															class="changeRule4 changeRule-edit-icon fa fa-solid fa-pen-to-square"
+															<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
 													</td>
 													<td style="text-align: center;">${CR.diemDat}</td>
 												</tr>
+												
 											</tbody>
 										</table>
+
+									</div>
+									<div class="add-rule">
+									<c:if test="${sessionScope.account.isAdmin == 1 || sessionScope.account.isAdmin == 4}">
+										<button style="margin-left: 689px; margin-top: 20px;" class="btn btn-primary add-rule-btn"
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               >Thêm
+											quy định</button>
+											</c:if>
 									</div>
 
 									<div id="QD1" class="changeRuleForm">
@@ -400,6 +418,43 @@
 									</div>
 
 
+									<div id="QDX" class="changeRuleForm">
+										<div class="rule">
+											<div class="card">
+												<header class="change-rule-top">
+													<h5>Thêm quy định</h5>
+												</header>
+												<form action="<%=request.getContextPath()%>/ChangeRule">
+													<input type="hidden" name="action" value="/insert">
+													<div class="change-rule-container">
+														<div class="change-rule-group ruleX">
+															<label for="min-point">Nhập tên quy định:</label> <input
+																type="text" id="new-rule" class="modal-input"
+																placeholder="Tên quy định" name="ruleName">
+														</div>
+														
+														<div class="change-rule-group ruleX">
+															<label for="min-point">Nhập tiêu chuẩn:</label> <input
+																type="text" id="new-standard-rule" class="modal-input"
+																placeholder="Tiêu chuẩn" name="ruleStandard">
+														</div>
+													</div>
+
+													<div class="change-rule-bottom">
+														<div class="change-rule-confirm">
+															<button type="button"
+																class="btn btn-primary change-rule-cancel-btn btn-cancel">Hủy</button>
+															<button type="submit"
+																class="btn btn-primary change-rule-confirm-btn">Xác
+																nhận</button>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+
+
 								</div>
 							</div>
 						</div>
@@ -408,6 +463,8 @@
 			</div>
 
 		</div>
+
+
 		<!-- Change rule end -->
 
 	</div>
@@ -423,10 +480,12 @@
 	const changeRule2 = document.querySelector('.changeRule2')
 	const changeRule3 = document.querySelectorAll('.changeRule3')
 	const changeRule4 = document.querySelector('.changeRule4')
+	const btnChangeRuleX = document.querySelector('.add-rule-btn')
 	const changeRuleForm1 = document.getElementById('QD1')
 	const changeRuleForm2 = document.getElementById('QD2')
 	const changeRuleForm3 = document.getElementById('QD3')
 	const changeRuleForm4 = document.getElementById('QD4')
+	const changeRuleFormX = document.getElementById('QDX')
 	const changeRuleFormContainer = document.querySelectorAll('.rule')
 	const cancelChangeRuleBtn = document.querySelectorAll('.change-rule-cancel-btn')
 	const changeRuleForms = document.querySelectorAll('.changeRuleForm')
@@ -451,6 +510,10 @@
 		changeRuleForm4.classList.add('open')
 	})
 	
+	btnChangeRuleX.addEventListener('click', () => {
+		changeRuleFormX.classList.add('open')
+	})
+	
 	
 	changeRuleForm1.addEventListener('click', () => {
 		changeRuleForm1.classList.remove('open')
@@ -464,6 +527,9 @@
 	})
 	changeRuleForm4.addEventListener('click', () => {
 		changeRuleForm4.classList.remove('open')
+	})
+	changeRuleFormX.addEventListener('click', () => {
+		changeRuleFormX.classList.remove('open')
 	})
 	
 	changeRuleFormContainer.forEach(function(item) {
@@ -480,6 +546,24 @@
 		})
 	});
 	
+	</script>
+	
+	<script type="text/javascript">
+		(function(d, m) {
+			var kommunicateSettings = {
+				"appId" : "1f738c914043ebc4eff88a22ec4875001",
+				"popupWidget" : true,
+				"automaticChatOpenOnNavigation" : true
+			};
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.async = true;
+			s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+			var h = document.getElementsByTagName("head")[0];
+			h.appendChild(s);
+			window.kommunicate = m;
+			m._globals = kommunicateSettings;
+		})(document, window.kommunicate || {});
 	</script>
 
 </body>
