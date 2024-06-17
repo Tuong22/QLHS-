@@ -27,7 +27,7 @@ public class ReportDao {
 		String SELECT_BCTKHK = "SELECT l.TenLop, l.siSO, bctkhk.SLDat, bctkhk.TiLe"
 							+ " FROM BaoCaoTongKetHocKy  bctkhk, LOP l, HocKy hk"
 							+ " WHERE hk.TenHK = ? AND bctkhk.MaLop = l.MaLop AND bctkhk.MaHK = hk.MaHK;";
-		String SELECT_BCTKM = "SELECT l.TenLop, l.SiSo, ct_bctkm.SLDat, ct_bctkm.TiLe"
+		String SELECT_BCTKM = "SELECT DISTINCT l.TenLop, l.SiSo, ct_bctkm.SLDat, ct_bctkm.TiLe"
 							+ " FROM BaoCaoTongKetMon bctkhk, CT_BCTKM ct_bctkm, LOP l, HocKy hk, MON m"
 							+ " WHERE ct_bctkm.MaLop = l.MaLop AND bctkhk.MaHK = hk.MaHK AND bctkhk.MaBCTKM = ct_bctkm.MaBCTKM"
 							+ " AND bctkhk.MaMH = m.MaMH AND hk.TenHK = ? AND m.TenMH = ?;";

@@ -287,9 +287,16 @@ tbody, td, tfoot, th, thead, tr {
 .className-edit .className-edit-icon:hover,
 .className-edit .removeClass-icon:hover,
 .className-edit .showListStudent-icon:hover,
-.changeRule-edit-icon:hover {
+.changeRule-edit-icon:hover,
+.edit-pass:hover,
+.show-pass:hover,
+.edit-infoStudent:hover,
+.role-user-icon:hover,
+.edit-pass-icon:hover,
+.remove-acc-icon:hover {
 	color: #40E9C0;
-	cursor: pointer;
+	scale: 1.1;
+	transition: 0.2s
 }
 
 .subjectName-edit.active,
@@ -4449,7 +4456,7 @@ ul {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .change-signin {

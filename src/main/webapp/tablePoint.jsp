@@ -45,7 +45,8 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="./account.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/AccountServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
@@ -60,18 +61,19 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/searchStudentServlet" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-magnifying-glass"></i>
+								href="<%=request.getContextPath()%>/SearchStudentServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/InfoSubjectServlet"
+								href="<%=request.getContextPath()%>/SubjectServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link active"
-								href="<%=request.getContextPath()%>/tablePointServlet"
+								href="<%=request.getContextPath()%>/TablePointServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
@@ -84,7 +86,7 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./changeRule.jsp"
+								href="<%=request.getContextPath()%>/ChangeRule"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
@@ -128,7 +130,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">Admin</a>
+							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -149,51 +151,42 @@
 							<div class="card-header">
 								<i class="fas fa-table me-1"></i> Bảng điểm môn
 							</div>
-							<div class="card-body">
+							<div class="card-body pb-2">
 								<div class="datatable-wrapper">
 									<div class="datatable-top">
-										<form action="<%=request.getContextPath()%>/TablePointServlet">
+										<form action="<%=request.getContextPath()%>/tablePointServlet">
 											<input type="hidden" name="action" value="/pointStudent">
 											<div class="datatable-selection">
 												<div class="">
 													<label>Lớp: </label> <select class="search-class"
 														name="search-lop">
 														<c:forEach var="c" items="${DSL}">
-														<option <c:if test="${nameLop == c.tenLop}">selected</c:if>>${c.tenLop}</option>
+															<option
+																<c:if test="${nameLop == c.tenLop}">selected</c:if>>${c.tenLop}</option>
 														</c:forEach>
 
 													</select>
 
 												</div>
-
-												<div class="">
-													<label>Học kỳ: </label> <select id="search-hk"
-														name="search-hk">
-														<option <c:if test="${nameHocKy == '1'}">selected</c:if>>1</option>
-														<option <c:if test="${nameHocKy == '2'}">selected</c:if>>2</option>
-													</select>
-												</div>
-
-													<div class="">
-
-														<label>Môn: </label> <select id="search-mon"
-															name="search-mon">
-															<c:forEach var="subject" items="${DSMH}">
-															<option <c:if test="${nameMon == subject.tenMH}">selected</c:if>>${subject.tenMH}</option>
-															</c:forEach>
-														</select>
-													</div>
-
 											</div>
 
 
-											<div class="search-point">
-												<button type="submit"
-													class="btn btn-primary search-point-btn">Tìm kiếm</button>
+											<div class="search-point d-flex justify-content-between">
+												<span>
+													<button type="submit"
+														class="btn btn-primary search-point-btn">Tìm kiếm</button>
 
-												<a href="./insertPoint.jsp"><button type="button"
-														class="btn btn-primary search-point-btn">Nhập
-														điểm</button></a>
+													<a href="./insertPoint.jsp"
+													<c:if test="${sessionScope.account.isAdmin != 3 && sessionScope.account.isAdmin != 1}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>><button
+															type="button" class="btn btn-primary search-point-btn">Nhập
+															điểm</button></a>
+												</span> <span>
+													<button type="submit"
+														class="btn btn-primary search-point-btn">In bảng
+														điểm</button>
+												</span>
 											</div>
 										</form>
 
@@ -202,29 +195,24 @@
 										<table id="datatablesPoint" class="datatable-table">
 											<thead>
 												<tr>
-													<th data-sortable="true" style="width: 5%;"><a
-														href="#" class="datatable-sorter">STT</a></th>
-													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 25%;"><a
-														href="#" class="datatable-sorter">Tên</a></th>
-													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 10%;"><a
-														href="#" class="datatable-sorter">Miệng</a></th>
-													<th data-sortable="true" style="width: 10%;"><a
-														href="#" class="datatable-sorter">15'</a></th>
-													<th data-sortable="true" style="width: 10%;"><a
-														href="#" class="datatable-sorter">1T</a></th>
-													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 10%;"><a
-														href="#" class="datatable-sorter">HK</a></th>
-													<th data-sortable="true" style="width: 20%;"><a
-														href="#" class="datatable-sorter">TB môn</a></th>
+													<th style="width: 5%; text-align: center;">STT</th>
+													<th style="width: 25%; text-align: center;">Tên</th>
+													<th style="width: 7%; text-align: center;">Toán</th>
+													<th style="width: 7%; text-align: center;">Văn</th>
+													<th style="width: 7%; text-align: center;">Anh</th>
+													<th style="width: 7%; text-align: center;">Lý</th>
+													<th style="width: 7%; text-align: center;">Hóa</th>
+													<th style="width: 7%; text-align: center;">Sinh</th>
+													<th style="width: 7%; text-align: center;">Sử</th>
+													<th style="width: 7%; text-align: center;">Địa</th>
+													<th style="width: 7%; text-align: center;">GDCD</th>
+													<th style="width: 7%; text-align: center;">TD</th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach var="point" items="${DSD}">
 													<tr data-index="0">
-														<td><%=i++%></td>
+														<td style="text-align: center;"><%=i++%></td>
 														<td>${point.tenHS}</td>
 														<td>${point.mieng}</td>
 														<td>${point.muoiLamPhut}</td>

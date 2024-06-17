@@ -33,9 +33,31 @@ public class AccountServlet extends HttpServlet {
 			action = "list";
 		}
 		switch (action) {
+		case "/addAccount":
+			try {
+				addAccount(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+				e.printStackTrace();
+			} 
+			break;
 		case "/updatePass":
             try {
             	updatePassword(request, response);
+            } catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            break;
+		case "/updateRole":
+            try {
+            	updateRole(request, response);
+            } catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            break;
+            
+		case "/deleteAccount":
+            try {
+            	deleteAccount(request, response);
             } catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
                 e.printStackTrace();
             }
@@ -48,6 +70,24 @@ public class AccountServlet extends HttpServlet {
             }
             break;
 		}
+	}
+	
+	private void addAccount(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		String name = request.getParameter("newUsername");
+		String pass = request.getParameter("newPassword");
+		String role = request.getParameter("roleUser");
+		
+		SignIn s = new SignIn(0, name, pass, Integer.parseInt(role));
+		boolean isvalid = accountDao.addAccount(s);
+		if (isvalid) {
+	        request.setAttribute("messageInfoAddAccount", "Thêm tài khoản mới thành công.");
+	    } else {
+	        request.setAttribute("messageErrorAddAccount", "Tên tài khoản bị trùng");
+	    }
+		List<SignIn> DSTK = accountDao.renderAccountRoleAdmin();
+		request.setAttribute("DSTK", DSTK);
+		request.getRequestDispatcher("/account.jsp").forward(request, response);
 	}
 	
 	private void renderAccountRoleAdmin(HttpServletRequest request, HttpServletResponse response) 
@@ -86,19 +126,63 @@ public class AccountServlet extends HttpServlet {
 	
 	private void updatePassword(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		String username = request.getParameter("usernameUpdate");
         String newPass = request.getParameter("newPass");
         String cNewPass = request.getParameter("cNewPass");
-        if (newPass == "" || newPass.length()<5) {
-        	request.setAttribute("messageerror", "Thay đổi mật khẩu không thành công. Mật khẩu có độ dài phải lớn hơn 5");
-            request.getRequestDispatcher("/account.jsp").forward(request, response);
-        } else if (newPass.length()!=cNewPass.length()) {
-        	request.setAttribute("messageerror", "Xác nhận mật khẩu không đúng.");
-            request.getRequestDispatcher("/account.jsp").forward(request, response);
-        } else {
-        	accountDao.updatePassword(newPass);
+        System.out.println("1: " + username);
+        System.out.println("2: " + username);
+        System.out.println("3: " + username);
+        boolean isvalid = accountDao.updatePassword(newPass, username);
+        System.out.println("4: " + isvalid);
+        if (isvalid) {
         	request.setAttribute("messageinfo", "Thay đổi mật khẩu thành công.");
-        	request.getRequestDispatcher("/account.jsp").forward(request, response);
         }
+        else {
+        	if (newPass == "" || newPass.length()<5) {
+            	request.setAttribute("messageerror", "Thay đổi mật khẩu không thành công. Mật khẩu có độ dài phải lớn hơn 5");
+            } else if (newPass.length()!=cNewPass.length()) {
+            	request.setAttribute("messageerror", "Xác nhận mật khẩu không đúng.");
+            }
+        }
+        List<SignIn> DSTK = accountDao.renderAccountRoleAdmin();
+		request.setAttribute("DSTK", DSTK);
+		request.getRequestDispatcher("/account.jsp").forward(request, response);
+	}
+	
+	private void updateRole(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		String username = request.getParameter("userNameRole");
+        String newRole = request.getParameter("roleAccount");
+        if(Integer.parseInt(newRole) == 1) {
+        	request.setAttribute("messageerror", "Không thể thay đổi người dùng thành admin.");
+        }
+        else {
+        	boolean isvalid = accountDao.updateRole(Integer.parseInt(newRole), username);
+        	if (isvalid && Integer.parseInt(newRole) != 1) {
+            	request.setAttribute("messageinfo", "Thiết lập phân quyền thành công");
+            }
+            else {
+                request.setAttribute("messageerror", "Không thể thay đổi người dùng thành admin.");
+            }
+        }
+        List<SignIn> DSTK = accountDao.renderAccountRoleAdmin();
+		request.setAttribute("DSTK", DSTK);
+		request.getRequestDispatcher("/account.jsp").forward(request, response);
+	}
+	
+	private void deleteAccount(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		String userNameRoleDelete = request.getParameter("userNameRoleDelete");
+		boolean isvalid = accountDao.deleteAccount(userNameRoleDelete);
+        if(isvalid) {
+        	request.setAttribute("messageinfo", "Xoá tài khoản thành công.");
+        }
+        else {
+        	request.setAttribute("messageerror", "Xoá tài khoản không thành công.");
+        }
+        List<SignIn> DSTK = accountDao.renderAccountRoleAdmin();
+		request.setAttribute("DSTK", DSTK);
+		request.getRequestDispatcher("/account.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

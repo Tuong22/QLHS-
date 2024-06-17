@@ -5,14 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Quản lý học sinh</title>
 
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@v5.3.0/dist/css/bootstrap.min.css">
-<style <%@ include file="./css/style.css" %>></style>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/style.css">
 
 </head>
 <body style="background-color: #484848">
@@ -31,8 +32,8 @@
 				<div
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
-						class="logo-img" src="./image/logo.jpg" alt="">
-						StudentManager
+						class="logo-img" src="./image/logo.jpg" alt=""> Quản lý học
+						sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -44,16 +45,20 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a
-								class="sidebar-link" href="#" aria-expanded="false">
-									<span> <i class="fa fa-solid fa-user"></i>
+								class="sidebar-link"
+								href="<%=request.getContextPath()%>/AccountServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
+
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/InfoClassServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
+
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/InfoStudentsServlet"
 								aria-expanded="false"> <span> <i
@@ -61,8 +66,9 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-magnifying-glass"></i>
+								href="<%=request.getContextPath()%>/SearchStudentServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link active"
@@ -85,8 +91,9 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./changeRule.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-gear"></i>
+								href="<%=request.getContextPath()%>/ChangeRuleServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
@@ -128,7 +135,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">Admin</a>
+							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -151,12 +158,115 @@
 							</div>
 
 							<div class="subject-list-wrap">
-								<div class="card-body subject-list-data">
+								<div class="card-body subject-list-data pb-2">
 
 									<div class="datatable-wrapper">
+										<c:if test="${not empty requestScope.messageErrorAddSubject}">
+												<div id="toast">
+													<div class="toast toast--error">
+														<div class="toast__icon">
+															<i class="fa-solid  fa-triangle-exclamation"></i>
+														</div>
+														<div class="toast__body">
+															<h3 class="toast__title">Thất bại</h3>
+															<p class="toast__msg">Tên môn đã tồn tại</p>
+														</div>
+														<div class="toast__close">
+															<i class="fa-solid fa-xmark"></i>
+														</div>
+													</div>
+												</div>
+											</c:if>
+										<c:if test="${not empty requestScope.messageInfoAddSubject}">
+											<div id="toast">
+												<div class="toast toast--success">
+													<div class="toast__icon">
+														<i class="fa-solid fa-circle-check"></i>
+													</div>
+													<div class="toast__body">
+														<h3 class="toast__title">Thành công</h3>
+														<p class="toast__msg">Thêm môn mới thành công.</p>
+													</div>
+													<div class="toast__close">
+														<i class="fa-solid fa-xmark"></i>
+													</div>
+												</div>
+											</div>
+										</c:if>
+
+										<c:if test="${not empty requestScope.messageErrorDeleteSubject}">
+												<div id="toast">
+													<div class="toast toast--error">
+														<div class="toast__icon">
+															<i class="fa-solid  fa-triangle-exclamation"></i>
+														</div>
+														<div class="toast__body">
+															<h3 class="toast__title">Thất bại</h3>
+															<p class="toast__msg">Không thể xóa môn đang học.</p>
+														</div>
+														<div class="toast__close">
+															<i class="fa-solid fa-xmark"></i>
+														</div>
+													</div>
+												</div>
+											</c:if>
+										<c:if
+											test="${not empty requestScope.messageInfoDeleteSubject}">
+											<div id="toast">
+												<div class="toast toast--success">
+													<div class="toast__icon">
+														<i class="fa-solid fa-circle-check"></i>
+													</div>
+													<div class="toast__body">
+														<h3 class="toast__title">Thành công</h3>
+														<p class="toast__msg">Xóa môn không có dữ liệu thành
+															công.</p>
+													</div>
+													<div class="toast__close">
+														<i class="fa-solid fa-xmark"></i>
+													</div>
+												</div>
+											</div>
+										</c:if>
+
+										<c:if test="${not empty requestScope.messageErrorUpdateSubject}">
+												<div id="toast">
+													<div class="toast toast--error">
+														<div class="toast__icon">
+															<i class="fa-solid  fa-triangle-exclamation"></i>
+														</div>
+														<div class="toast__body">
+															<h3 class="toast__title">Thất bại</h3>
+															<p class="toast__msg">Tên môn đã tồn tại.</p>
+														</div>
+														<div class="toast__close">
+															<i class="fa-solid fa-xmark"></i>
+														</div>
+													</div>
+												</div>
+											</c:if>
+										<c:if
+											test="${not empty requestScope.messageInfoUpdateSubject}">
+											<div id="toast">
+												<div class="toast toast--success">
+													<div class="toast__icon">
+														<i class="fa-solid fa-circle-check"></i>
+													</div>
+													<div class="toast__body">
+														<h3 class="toast__title">Thành công</h3>
+														<p class="toast__msg">Sửa tên môn thành công.</p>
+													</div>
+													<div class="toast__close">
+														<i class="fa-solid fa-xmark"></i>
+													</div>
+												</div>
+											</div>
+										</c:if>
 
 										<div class="add-subject">
-											<button class="btn btn-primary add-subject-btn">Thêm
+											<button class="btn btn-primary add-subject-btn" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>>Thêm
 												môn</button>
 										</div>
 
@@ -164,26 +274,25 @@
 											<table id="datatablesSubject" class="datatable-table">
 												<thead>
 													<tr>
-														<th data-sortable="true" style="width: 20%;"><a
-															href="#" class="datatable-sorter">STT</a></th>
-														<th data-sortable="true" aria-sort="descending"
-															class="datatable-descending" style="width: 60%;"><a
-															href="#" class="datatable-sorter">Tên môn</a></th>
-														<th data-sortable="true" style="width: 20%;"><a
-															href="#" class="datatable-sorter">Hệ số</a></th>
+														<th style="width: 20%; text-align: center;">STT</th>
+														<th style="width: 60%; text-align: center;">Tên môn</th>
+														<th style="width: 20%; text-align: center;">Hệ số</th>
 													</tr>
 												</thead>
 												<tbody>
-													<c:forEach var="Mon" items="${DSMon}">
+													<c:forEach var="Mon" items="${DSMH}">
 														<tr>
-															<td><%=i++%></td>
-															<td class="subjectName-edit"><c:out
+															<td style="text-align: center;"><%=i++%></td>
+															<td class="subjectName-edit" style="padding-left: 35px"><c:out
 																	value="${Mon.tenMH}" /><span><i
-																class="subjectName-edit-icon fa fa-solid fa-pen-to-square"></i>
-															<i class="removeSubject-icon fa fa-solid fa-trash-can"></i>
-															</span>
-															</td>
-															<td><c:out value="${Mon.heSo}" /></td>
+																	class="subjectName-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
+																	<i class="removeSubject-icon fa fa-solid fa-trash-can" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
+															</span></td>
+															<td style="text-align: center;"><c:out value="${Mon.heSo}" /></td>
 														</tr>
 													</c:forEach>
 												</tbody>
@@ -191,13 +300,15 @@
 										</div>
 									</div>
 
+
 								</div>
-								<div class="card-body change-subjectName hidden">
+								<div class="card-body change-subjectName pb-2 hidden">
 									<div class="card">
 										<header class="change-subjectName-top">
 											<h5>Thay đổi tên môn</h5>
 										</header>
-										<form action="<%=request.getContextPath()%>/SubjectServlet">
+										<form
+											action="<%=request.getContextPath()%>/SubjectServlet">
 											<input type="hidden" name="action" value="/update">
 											<div class="change-subjectName-container">
 												<div class="change-subjectName-group">
@@ -210,9 +321,13 @@
 														placeholder="Tên môn mới" name="name">
 												</div>
 												<div class="change-subjectName-group">
-													<label for="numberSubject-input">Nhập hệ số:</label> <input
-														type="text" id="numberSubject-input" placeholder="Hệ số"
-														name="number">
+													<label for="numberSubject-input">Nhập hệ số:</label> <select
+														class="numberSubject-input" name="number">
+														<option name="number"
+															<c:if test="${number == '1'}">selected</c:if>>1</option>
+														<option name="number"
+															<c:if test="${number == '2'}">selected</c:if>>2</option>
+													</select>
 												</div>
 											</div>
 
@@ -220,7 +335,7 @@
 											<div class="change-subjectName-bottom">
 												<div class="change-subjectName-confirm">
 													<button type="button"
-														class="btn btn-primary change-subjectName-cancel-btn">Hủy</button>
+														class="btn btn-primary change-subjectName-cancel-btn btn-cancel">Hủy</button>
 													<button type="submit"
 														class="btn btn-primary change-subjectName-confirm-btn">Xác
 														nhận</button>
@@ -229,13 +344,14 @@
 										</form>
 									</div>
 								</div>
-								
-								<div class="card-body remove-subject hidden">
+
+								<div class="card-body remove-subject pb-2 hidden" style="margin-top: 113px;">
 									<div class="card">
 										<header class="remove-subject-top">
 											<h5>Bạn có chắc chắn xóa môn</h5>
 										</header>
-										<form action="<%=request.getContextPath()%>/SubjectServlet">
+										<form
+											action="<%=request.getContextPath()%>/SubjectServlet">
 											<input type="hidden" name="action" value="/delete">
 											<div class="remove-subject-container">
 
@@ -249,7 +365,7 @@
 											<div class="remove-subject-bottom">
 												<div class="remove-subject-confirm">
 													<button type="button"
-														class="btn btn-primary remove-subject-cancel-btn">Hủy</button>
+														class="btn btn-primary remove-subject-cancel-btn btn-cancel">Hủy</button>
 													<button type="submit"
 														class="btn btn-primary remove-subject-confirm-btn">Xác
 														nhận</button>
@@ -288,21 +404,23 @@
 					<div class="model-input-item">
 						<label for="new-subject" class="modal-label">Tên môn:</label> <input
 							type="text" id="new-subject" class="modal-input"
-							placeholder="Tên môn" name="newSubjectName">
+							placeholder="Tên môn" name="subjectName">
 					</div>
 
 
 					<div class="model-input-item">
 						<label for="number-of-subject" class="modal-label">Hệ số:</label>
-						<input type="text" id="number-of-subject" class="modal-input"
-							placeholder="Hệ số" name="numberSubject">
+						<select class="number-of-subject" name="heSo">
+							<option name="heSo" <c:if test="${heSo == '1'}">selected</c:if>>1</option>
+							<option name="heSo" <c:if test="${heSo == '2'}">selected</c:if>>2</option>
+						</select>
 					</div>
 
 				</div>
 
 				<footer class="modal-footer">
 					<button type="button"
-						class="btn btn-primary cancel-add-subject-btn">Hủy</button>
+						class="btn btn-primary cancel-add-subject-btn btn-cancel">Hủy</button>
 					<button type="submit"
 						class="btn btn-primary confirm-add-subject-btn">Xác nhận</button>
 				</footer>

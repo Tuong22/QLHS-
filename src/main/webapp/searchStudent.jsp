@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Quản lý học sinh</title>
 
 
 <link rel="stylesheet"
@@ -31,8 +31,8 @@
 				<div
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
-						class="logo-img" src="./image/logo.jpg" alt="">
-						StudentManager
+						class="logo-img" src="./image/logo.jpg" alt=""> Quản lý học
+						sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -43,17 +43,20 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a
-								class="sidebar-link" href="#" aria-expanded="false">
-									<span> <i class="fa fa-solid fa-user"></i>
+							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
+								href="<%=request.getContextPath()%>/AccountServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
+
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/InfoClassServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
+
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/InfoStudentsServlet"
 								aria-expanded="false"> <span> <i
@@ -61,8 +64,9 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link active"
-								href="./searchStudent.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-magnifying-glass"></i>
+								href="<%=request.getContextPath()%>/SearchStudentServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -85,8 +89,9 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./changeRule.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-gear"></i>
+								href="<%=request.getContextPath()%>/ChangeRuleServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
@@ -129,7 +134,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">Admin</a>
+							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -150,52 +155,58 @@
 							<div class="card-header">
 								<i class="fas fa-table me-1"></i> Danh sách học sinh
 							</div>
-							<div class="card-body">
+							<div class="card-body pb-2">
 								<div class="datatable-wrapper">
 									<div class="datatable-top">
 
 										<form
-											action="<%=request.getContextPath()%>/InfoStudentsServlet">
+											action="<%=request.getContextPath()%>/SearchStudentServlet">
 											<input type="hidden" name="action" value="/searchByName">
-											<div class="datatable-search">
-												<input name="search-student-name" class="datatable-input"
-													placeholder="Search..." type="text"
-													title="Search within table"
-													aria-controls="datatablesSimple">
+											<div class="datatable-search mb-4">
+												<input name="search-student-name"
+													class="datatable-input me-4 p-1" placeholder="Tên học sinh"
+													type="text" title="Search within table"
+													aria-controls="datatablesSimple"
+													<c:if test="${not empty searchStudentName}">value="${searchStudentName}"</c:if>>
+
+												<label for="search-student-class">Tên lớp: </label> <select
+													class="search-student-class p-1"
+													name="search-student-class">
+													<option></option>
+													<c:forEach var="c" items="${DSL}">
+														<option name="search-student-class"
+															<c:if test="${searchStudentClass == c.tenLop}">selected</c:if>>${c.tenLop}</option>
+													</c:forEach>
+												</select>
 											</div>
 
 											<div class="search-student">
 												<button type="submit"
-													class="btn btn-primary search-point-btn mt-2">Tìm
-													kiếm</button>
+													class="btn btn-primary search-point-btn">Tìm kiếm</button>
 											</div>
 										</form>
 
 									</div>
-									<div class="datatable-container">
+									<div class="datatable-container" style="margin-top: -10px">
 										<table id="datatablesSearchStudent" class="datatable-table">
 											<thead>
 												<tr>
-													<th data-sortable="true" style="width: 10%;"><a
-														href="#" class="datatable-sorter">STT</a></th>
-													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 25%;"><a
-														href="#" class="datatable-sorter">Tên</a></th>
-													<th data-sortable="true" style="width: 15%;"><a
-														href="#" class="datatable-sorter">Lớp</a></th>
-													<th data-sortable="true" style="width: 25%;"><a
-														href="#" class="datatable-sorter">TB HKI</a></th>
-													<th data-sortable="true" style="width: 25%;"><a
-														href="#" class="datatable-sorter">TB HKII</a></th>
+													<th
+														style="width: 10%; text-align: center; margin-left: 20px;">STT</th>
+													<th style="width: 25%; text-align: center;">Tên</th>
+													<th style="width: 15%; text-align: center;">Lớp</th>
+													<th style="width: 25%; text-align: center;">TB HKI</th>
+													<th style="width: 25%; text-align: center;">TB HKII</th>
 												</tr>
 											</thead>
 											<tbody>
 
 												<c:forEach var="HocSinh" items="${DSTCHS}">
 													<tr>
-														<td><%=i++%></td>
+														<td style="text-align: center;"><%=i++%></td>
 														<td><c:out value="${HocSinh.tenHS}" /></td>
-														<td><c:out value="${HocSinh.lop}" /></td>
+														<td style="text-align: center;"><c:out
+																value="${HocSinh.lop}" /></td>
 														<td><c:out value="${HocSinh.tbhk1}" /></td>
 														<td><c:out value="${HocSinh.tbhk2}" /></td>
 													</tr>
@@ -206,7 +217,22 @@
 										</table>
 									</div>
 								</div>
-
+								<c:if test="${not empty requestScope.messageerror}">
+									<div id="toast">
+										<div class="toast toast--error">
+											<div class="toast__icon">
+												<i class="fa-solid fa-triangle-exclamation"></i>
+											</div>
+											<div class="toast__body">
+												<h3 class="toast__title">Cảnh báo</h3>
+												<p class="toast__msg">Không tìm thấy học sinh.</p>
+											</div>
+											<div class="toast__close">
+												<i class="fa-solid fa-xmark"></i>
+											</div>
+										</div>
+									</div>
+								</c:if>
 							</div>
 						</div>
 					</div>

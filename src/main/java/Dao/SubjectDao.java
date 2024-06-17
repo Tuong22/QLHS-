@@ -24,28 +24,28 @@ public class SubjectDao {
 	}
 	
 	public List<Mon> selectAllSubject() throws ClassNotFoundException {
-		String SELECT_ALL_SUBJECT = "select * from mon order by length(MaMH), MaMH";
-		List<Mon> DSMon = new ArrayList<>();
-		try (Connection connection = getConnection();
-				Statement statement = connection.createStatement();
-				ResultSet rs = statement.executeQuery(SELECT_ALL_SUBJECT)) {
+		List<Mon> DSM = new ArrayList<>();
+		try	(Connection connection = getConnection();
+			Statement statement = connection.createStatement();	
+			ResultSet rs = statement.executeQuery("select * from Mon")) {
 			while (rs.next()) {
 				String id = rs.getString(1);
-				String name = rs.getString(2);
-				int heso = rs.getInt(3);
+				String tenMH = rs.getString(2);
+				int heSo = rs.getInt(3);
 
-				Mon mon = new Mon(id, name, heso);
-				DSMon.add(mon);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return DSMon;
+				Mon m = new Mon(id, tenMH, heSo);
+				DSM.add(m);
+			} 
+		}catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return DSM;
 	}
 	
-	public void insertSubject(Mon mon) throws ClassNotFoundException {
+	public boolean insertMon(Mon m) throws ClassNotFoundException {
 		String querySelectId = "SELECT MaMH FROM Mon order by length(MaMH), MaMH";
 		String INSERT_STUDENT = "INSERT INTO Mon VALUES (?,?,?)";
+		boolean isvalid = false;
 		try (Connection connection = getConnection();
 				Statement stmt = connection.createStatement();
 				PreparedStatement statement = connection.prepareStatement(INSERT_STUDENT);
@@ -73,7 +73,6 @@ public class SubjectDao {
 				}
 			}
 			if(currentSubjectId != "") {
-				//System.out.println(currentRoomBillId);
 				if(fillUnindexed == 1) {
 					nextSubjectId = prefixSubjectId + Integer.toString(traceUnindexed);
 				}
@@ -84,11 +83,15 @@ public class SubjectDao {
 				nextSubjectId = prefixSubjectId + "1";	
 				
 			statement.setString(1, nextSubjectId);
-			statement.setString(2, mon.getTenMH());
-			statement.setInt(3, mon.getHeSo());
-
+			statement.setString(2, m.getTenMH());
+			statement.setInt(3, m.getHeSo());
 				
-			statement.execute();
+			int rowAffected = statement.executeUpdate();
+			if (rowAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
 			statement.close();
 			rs.close();
 			stmt.close();
@@ -96,12 +99,14 @@ public class SubjectDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		return isvalid;
 	}
 	
-	public void updateSubject(Mon mon, String nameSubjectOld) throws ClassNotFoundException {
+	
+	public boolean updateSubject(Mon mon, String nameSubjectOld) throws ClassNotFoundException {
 		String SELECT_SUBJECT = "select * from mon";
 		String UPDATE_SUBJECT = "update mon set TenMH = ?, HeSo = ? where MaMH = ?";
+		boolean isvalid = false;
 		try (Connection connection = getConnection();
 				Statement stmt = connection.createStatement();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_SUBJECT);
@@ -120,18 +125,26 @@ public class SubjectDao {
 			statement.setInt(2, mon.getHeSo());	
 			statement.setString(3, currentSubjectId);	
 				
-			statement.execute();
+			int rowsAffected = statement.executeUpdate();
+
+			if (rowsAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
 
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return isvalid;
 	}
 	
-	public void deleteSubject(String nameSubject) throws ClassNotFoundException {
+	public boolean deleteSubject(String nameSubject) throws ClassNotFoundException {
 		String SELECT_SUBJECT = "select * from mon";
 		String DELETE_SUBJECT = "delete from mon where MaMH = ?";
+		boolean isvalid = false;
 		try (Connection connection = getConnection();
 				Statement stmt = connection.createStatement();
 				PreparedStatement statement = connection.prepareStatement(DELETE_SUBJECT);
@@ -148,12 +161,19 @@ public class SubjectDao {
 
 			statement.setString(1, currentSubjectId);
 				
-			statement.execute();
+			int rowsAffected = statement.executeUpdate();
+
+			if (rowsAffected > 0) {
+				isvalid = true;
+			} else {
+				isvalid = false;
+			}
 
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return isvalid;
 	}
 }

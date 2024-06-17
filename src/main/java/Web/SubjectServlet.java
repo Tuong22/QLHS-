@@ -24,7 +24,9 @@ public class SubjectServlet extends HttpServlet {
 	}
 	
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
 		String action = request.getParameter("action");
 		if (action == null) {
 			action = "list";
@@ -34,18 +36,18 @@ public class SubjectServlet extends HttpServlet {
 			try {
 				insertSubject(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 			break;
+			
 		case "/update":
-			try {
-				updateSubject(request, response);
-			} catch (ClassNotFoundException | ServletException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-			break;
+            try {
+                updateSubject(request, response);
+            } catch (ClassNotFoundException | ServletException | IOException e) {
+                e.printStackTrace();
+            }
+            break;
+            
 		case "/delete":
 			try {
 				deleteSubject(request, response);
@@ -54,39 +56,47 @@ public class SubjectServlet extends HttpServlet {
 				e.printStackTrace();
 			} 
 			break;
+		
 		default:
 			try {
 				render(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
 		}
+		
 	}
-
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
 	private void render(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException {
-		List<Mon> DSMon = subjectDao.selectAllSubject();
-		request.setAttribute("DSMon", DSMon);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("subject.jsp");
+		List<Mon> DSMH = subjectDao.selectAllSubject();
+		request.setAttribute("DSMH", DSMH);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/subject.jsp");
 		dispatcher.forward(request, response);
 	}
 	
 	private void insertSubject(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException {
-		String name = request.getParameter("newSubjectName");
-		String number = request.getParameter("numberSubject");
-
-		Mon mon = new Mon(null, name, Integer.parseInt(number));
-		subjectDao.insertSubject(mon);
-		response.sendRedirect(request.getContextPath() + "/SubjectServlet");
+		String name = request.getParameter("subjectName");
+		String heSo = request.getParameter("heSo");
+		if(name==null) {
+			name = "";
+		}
+		if(heSo == null) {
+			heSo = "1";
+		}
+		
+		Mon m = new Mon(null, name, Integer.parseInt(heSo));
+		boolean isvalid = subjectDao.insertMon(m);
+		if (isvalid) {
+	        request.setAttribute("messageInfoAddSubject", "Thêm môn mới thành công.");
+	    } else {
+	        request.setAttribute("messageErrorAddSubject", "Tên môn bị trùng");
+	    }
+		List<Mon> DSMH = subjectDao.selectAllSubject();
+		request.setAttribute("DSMH", DSMH);
+		request.getRequestDispatcher("/subject.jsp").forward(request, response);
 	}
 	
 	private void updateSubject(HttpServletRequest request, HttpServletResponse response) 
@@ -95,14 +105,35 @@ public class SubjectServlet extends HttpServlet {
 		String nameSubject = request.getParameter("name");
 		int numberSubject =Integer.parseInt(request.getParameter("number"));
 		Mon mon = new Mon(null, nameSubject,numberSubject);
-		subjectDao.updateSubject(mon, nameSubjectOld);
-		response.sendRedirect(request.getContextPath() + "/SubjectServlet");
+		boolean isvalid = subjectDao.updateSubject(mon, nameSubjectOld);
+
+	    if (isvalid) {
+	        request.setAttribute("messageInfoUpdateSubject", "Sửa tên môn thành công.");
+	    } else {
+	        request.setAttribute("messageErrorUpdateSubject", "Tên môn đã tồn tại.");
+	    }
+	    List<Mon> DSMH = subjectDao.selectAllSubject();
+		request.setAttribute("DSMH", DSMH);
+	    request.getRequestDispatcher("/subject.jsp").forward(request, response);
 	}
 	
 	private void deleteSubject(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException, ClassNotFoundException {
 		String nameSubject = request.getParameter("nameRemove");
-		subjectDao.deleteSubject(nameSubject);
-		response.sendRedirect(request.getContextPath() + "/SubjectServlet");
+		boolean isvalid = subjectDao.deleteSubject(nameSubject);
+
+	    if (isvalid) {
+	        request.setAttribute("messageInfoDeleteSubject", "Xoá môn không có dữ liệu thành công.");
+	    } else {
+	        request.setAttribute("messageErrorDeleteSubject", "Không thể xóa môn đang học.");
+	    }
+	    List<Mon> DSMH = subjectDao.selectAllSubject();
+		request.setAttribute("DSMH", DSMH);
+	    request.getRequestDispatcher("/subject.jsp").forward(request, response);
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
+	    doGet(request, response);
 	}
 }

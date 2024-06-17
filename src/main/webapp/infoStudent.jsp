@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Quản lý học sinh</title>
 
 
 <link rel="stylesheet"
@@ -31,8 +31,8 @@
 				<div
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
-						class="logo-img" src="./image/logo.jpg" alt="">
-						StudentManager
+						class="logo-img" src="./image/logo.jpg" alt=""> Quản lý học
+						sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -43,17 +43,21 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="#" aria-expanded="false"> <span> <i
+							<li class="sidebar-item mg-l-4"><a
+								class="sidebar-link"
+								href="<%=request.getContextPath()%>/AccountServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
+
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/InfoClassServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
+
 							<li class="sidebar-item"><a class="sidebar-link active"
 								href="<%=request.getContextPath()%>/InfoStudentsServlet"
 								aria-expanded="false"> <span> <i
@@ -61,8 +65,9 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-magnifying-glass"></i>
+								href="<%=request.getContextPath()%>/SearchStudentServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -85,8 +90,9 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./changeRule.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-gear"></i>
+								href="<%=request.getContextPath()%>/ChangeRuleServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
@@ -128,7 +134,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">Admin</a>
+							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -153,29 +159,109 @@
 							<div class="card-body">
 								<div class="datatable-wrapper">
 
+									<c:if test="${not empty requestScope.messageErrorAge}">
+										<div id="toast">
+											<div class="toast toast--error">
+												<div class="toast__icon">
+													<i class="fa-solid fa-triangle-exclamation"></i>
+												</div>
+												<div class="toast__body">
+													<h3 class="toast__title">Thất bại</h3>
+													<p class="toast__msg">Thêm học sinh thất bại. Tuổi
+														không hợp lệ.</p>
+												</div>
+												<div class="toast__close">
+													<i class="fa-solid fa-xmark"></i>
+												</div>
+											</div>
+										</div>
+									</c:if>
+
+									<c:if test="${not empty requestScope.messageErrorEmailExist}">
+										<div id="toast">
+											<div class="toast toast--error">
+												<div class="toast__icon">
+													<i class="fa-solid fa-triangle-exclamation"></i>
+												</div>
+												<div class="toast__body">
+													<h3 class="toast__title">Thất bại</h3>
+													<p class="toast__msg">Thêm học sinh thất bại. Email đã
+														tồn tại.</p>
+												</div>
+												<div class="toast__close">
+													<i class="fa-solid fa-xmark"></i>
+												</div>
+											</div>
+										</div>
+									</c:if>
+
+
+
+									<c:if test="${not empty requestScope.messageInfo}">
+										<div id="toast">
+											<div class="toast toast--success">
+												<div class="toast__icon">
+													<i class="fa-solid fa-circle-check"></i>
+												</div>
+												<div class="toast__body">
+													<h3 class="toast__title">Thành công</h3>
+													<p class="toast__msg">Thêm học sinh thành công.</p>
+												</div>
+												<div class="toast__close">
+													<i class="fa-solid fa-xmark"></i>
+												</div>
+											</div>
+										</div>
+									</c:if>
+
+									<c:if
+										test="${not empty requestScope.messageErrorUpdateStudent}">
+										<div id="toast">
+											<div class="toast toast--error">
+												<div class="toast__icon">
+													<i class="fa-solid fa-circle-check"></i>
+												</div>
+												<div class="toast__body">
+													<h3 class="toast__title">Thất bại</h3>
+													<p class="toast__msg">Sửa thông tin không thành công.</p>
+												</div>
+												<div class="toast__close">
+													<i class="fa-solid fa-xmark"></i>
+												</div>
+											</div>
+										</div>
+									</c:if>
 									<div class="add-student">
-										<button class="btn btn-primary add-student-btn">Thêm
+										<button class="btn btn-primary add-student-btn"
+											<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>>Thêm
 											học sinh</button>
 									</div>
-
 
 									<div class="datatable-container">
 										<table id="datatablesInfoStudent" class="datatable-table">
 											<thead>
 												<tr>
-													<th data-sortable="true" style="width: 10%;"><a
+													<th data-sortable="true"
+														style="width: 6%; margin-left: 20px; text-align: center;"><a
 														href="#" class="datatable-sorter">STT</a></th>
 													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 20%;"><a
-														href="#" class="datatable-sorter">Tên</a></th>
-													<th data-sortable="true" style="width: 10%;"><a
-														href="#" class="datatable-sorter">Giới Tính</a></th>
-													<th data-sortable="true" style="width: 10%;"><a
-														href="#" class="datatable-sorter">Năm</a></th>
-													<th data-sortable="true" style="width: 25%;"><a
-														href="#" class="datatable-sorter">Địa chỉ</a></th>
-													<th data-sortable="true" style="width: 25%;"><a
-														href="#" class="datatable-sorter">Email</a></th>
+														class="datatable-descending"
+														style="width: 20%; text-align: center;"><a href="#"
+														class="datatable-sorter">Tên</a></th>
+													<th data-sortable="true"
+														style="width: 12%; text-align: center;"><a href="#"
+														class="datatable-sorter">Giới Tính</a></th>
+													<th data-sortable="true"
+														style="width: 14%; text-align: center;"><a href="#"
+														class="datatable-sorter">Ngày sinh</a></th>
+													<th data-sortable="true"
+														style="width: 20%; text-align: center;"><a href="#"
+														class="datatable-sorter">Địa chỉ</a></th>
+													<th data-sortable="true"
+														style="width: 28%; text-align: center;"><a href="#"
+														class="datatable-sorter">Email</a></th>
 												</tr>
 											</thead>
 											<tbody>
@@ -189,7 +275,11 @@
 														<td class="address"><c:out value="${HocSinh.diaChi}" /></td>
 														<td class="email d-flex justify-content-between border-0"><c:out
 																value="${HocSinh.email}" /> <i
-															class="edit-infoStudent fa-solid fa-pen-to-square"></i></td>
+															class="edit-infoStudent fa-solid fa-pen-to-square"
+															<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
+														</td>
 													</tr>
 												</c:forEach>
 
@@ -211,7 +301,6 @@
 	</div>
 
 
-	<!-- Modal add student -->
 	<div class="modal add-student-modal">
 		<div class="modal-container add-student-modal-container w-100">
 
@@ -285,7 +374,7 @@
 					<div class="model-input-item">
 						<label for="student-name-new" class="modal-label">Tên:</label> <input
 							type="text" id="student-name-new" class="modal-input"
-							placeholder="Họ tên" name="studentNameNew">
+							placeholder="Họ tên" name="studentName" readonly>
 					</div>
 
 					<div class="model-input-item">
@@ -294,13 +383,13 @@
 							<div class="student-gender-wrap">
 								<label for="student-male-new" class="modal-label">Nam</label> <input
 									type="radio" id="student-male-new" class="modal-input"
-									name="gender-group-new" value="Nam">
+									name="gender-group-new" value="Nam" disabled>
 							</div>
 
 							<div class="student-gender-wrap">
 								<label for="student-female-new" class="modal-label">Nữ</label> <input
 									type="radio" id="student-female-new" class="modal-input"
-									name="gender-group-new" value="Nữ">
+									name="gender-group-new" value="Nữ" disabled>
 							</div>
 
 						</div>
@@ -309,7 +398,7 @@
 
 					<div class="model-input-item">
 						<label for="student-year-new" class="modal-label">Năm
-							sinh:</label> <input type="text" id="student-year-new"
+							sinh:</label> <input type="date" id="student-year-new"
 							class="modal-input" placeholder="Năm sinh" name="studentYearNew">
 					</div>
 
@@ -504,5 +593,6 @@
             container.removeChild(getParent(button, ".student"));
         }
     </script>
+
 </body>
 </html>

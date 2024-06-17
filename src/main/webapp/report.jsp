@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Quản lý học sinh</title>
 
 
 <link rel="stylesheet"
@@ -31,8 +31,8 @@
 				<div
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
-						class="logo-img" src="./image/logo.jpg" alt="">
-						StudentManager
+						class="logo-img" src="./image/logo.jpg" alt=""> Quản lý học
+						sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -43,17 +43,20 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a
-								class="sidebar-link" href="#" aria-expanded="false">
-									<span> <i class="fa fa-solid fa-user"></i>
+							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
+								href="<%=request.getContextPath()%>/AccountServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
+
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/InfoClassServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
+
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/InfoStudentsServlet"
 								aria-expanded="false"> <span> <i
@@ -61,8 +64,9 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-magnifying-glass"></i>
+								href="<%=request.getContextPath()%>/SearchStudentServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -85,8 +89,9 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./changeRule.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-gear"></i>
+								href="<%=request.getContextPath()%>/ChangeRuleServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
@@ -128,7 +133,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">Admin</a>
+							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -149,81 +154,85 @@
 							<div class="card-header">
 								<i class="fas fa-table me-1"></i> Báo cáo tổng kết
 							</div>
-							<div class="card-body">
+							<div class="card-body pb-2">
 								<div class="datatable-wrapper">
 									<div class="datatable-top">
 
-										<form class="d-flex flex-row justify-content-between"
-											action="<%=request.getContextPath()%>/ReportServlet">
+										<form action="<%=request.getContextPath()%>/ReportServlet">
 											<input type="hidden" name="action" value="/searchReport">
-											<div class="datatable-selection">
-												<div class="report-type-selection mb-2">
+											<div class="datatable-selection d-flex w-100 h-100">
+												<div class="report-type-selection mb-4">
 													<label for="report-type-selection">Loại: </label> <select
 														id="report-type-selection" name="report-type">
 														<option></option>
-														<option value="report-subject">Báo cáo tổng kết
-															môn</option>
-														<option value="report-semester">Báo cáo tổng kết
-															học kỳ</option>
+														<option value="report-subject"
+															<c:if test="${typeReport == 'report-subject'}">selected</c:if>>Báo
+															cáo tổng kết môn</option>
+														<option value="report-semester"
+															<c:if test="${typeReport == 'report-semester'}">selected</c:if>>Báo
+															cáo tổng kết học kỳ</option>
 													</select>
 												</div>
 
-												<div class="report-type-list hidden">
+												<div
+													class="report-type-list d-flex h-100 flex-grow-1 justify-content-around hidden">
 													<div class="report-semester report-type">
 														<label>Học kỳ: </label> <select name="search-semester1">
 															<option></option>
-															<option>1</option>
-															<option>2</option>
+															<option <c:if test="${hocKy1 == '1'}">selected</c:if>>1</option>
+															<option <c:if test="${hocKy1 == '2'}">selected</c:if>>2</option>
 														</select>
 													</div>
 
 													<div class="report-subject report-type">
 														<label>Học kỳ: </label> <select name="search-semester2">
 															<option></option>
-															<option>1</option>
-															<option>2</option>
+															<option <c:if test="${hocKy2 == '1'}">selected</c:if>>1</option>
+															<option <c:if test="${hocKy2 == '1'}">selected</c:if>>2</option>
 														</select>
 													</div>
 
 													<div class="report-subject report-type">
 														<label>Môn: </label> <select name="search-subject">
 															<option></option>
-															<option>Toán</option>
-															<option>Văn</option>
-															<option>Đạo đức</option>
-															<option>Sinh</option>
-															<option>Sử</option>
-															<option>Địa</option>
-															<option>Lý</option>
-															<option>Hóa</option>
-															<option>Thể dục</option>
+															<c:forEach var="subject" items="${DSMH}">
+																<option
+																	<c:if test="${nameMon == subject.tenMH}">selected</c:if>>${subject.tenMH}</option>
+															</c:forEach>
 														</select>
 													</div>
 												</div>
 											</div>
 
 
-											<div class="search-report">
+											<div class="search-report mb-2">
 												<button type="submit"
 													class="btn btn-primary search-point-btn">Tìm kiếm</button>
 											</div>
 										</form>
+
+										<form id="export-form"
+											style="float: right; margin-top: -47px;"
+											action="<%=request.getContextPath()%>/ReportServlet"
+											method="post">
+											<input type="hidden" name="tableData" id="tableData" value="">
+											<input type="hidden" name="titleReport" value="${typeReport}">
+											<button class="btn btn-primary" type="submit">
+												<i class="fa-solid fa-print"></i> In báo cáo
+											</button>
+
+										</form>
+
 									</div>
 									<div class="datatable-container">
-										<table id="datatablesReport" class="datatable-table  mb-4">
+										<table id="datatablesReport" class="datatable-table mb-4">
 											<thead>
 												<tr>
-													<th data-sortable="true" style="width: 10%;"><a
-														href="#" class="datatable-sorter">STT</a></th>
-													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 30%;"><a
-														href="#" class="datatable-sorter">Lớp</a></th>
-													<th data-sortable="true" style="width: 20%;"><a
-														href="#" class="datatable-sorter">Sỉ số</a></th>
-													<th data-sortable="true" style="width: 20%;"><a
-														href="#" class="datatable-sorter">Số lượng đạt</a></th>
-													<th data-sortable="true" style="width: 20%;"><a
-														href="#" class="datatable-sorter">Tỉ lệ</a></th>
+													<th style="width: 10%;">STT</th>
+													<th style="width: 30%;">Lớp</th>
+													<th style="width: 20%;">Sỉ số</th>
+													<th style="width: 20%;">Số lượng đạt</th>
+													<th style="width: 20%;">Tỉ lệ</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -263,6 +272,24 @@
 	<script src="./js/app.js"></script>
 	<script src="./js/handleReportType.js"></script>
 	<script src="./js/pagination.js"></script>
-
+	<script>
+		document.getElementById('export-form').onsubmit = function() {
+			var table = document.getElementById('datatablesReport');
+			var data = [];
+			var headers = [];
+			for (var i = 0; i < table.rows[0].cells.length; i++) {
+				headers[i] = table.rows[0].cells[i].innerHTML;
+			}
+			for (var i = 1; i < table.rows.length; i++) {
+				var row = table.rows[i];
+				var rowData = {};
+				for (var j = 0; j < row.cells.length; j++) {
+					rowData[headers[j]] = row.cells[j].innerHTML;
+				}
+				data.push(rowData);
+			}
+			document.getElementById('tableData').value = JSON.stringify(data);
+		};
+	</script>
 </body>
 </html>

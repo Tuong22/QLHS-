@@ -44,17 +44,21 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="#" aria-expanded="false"> <span> <i
+							<li class="sidebar-item mg-l-4"><a
+								class="sidebar-link"
+								href="<%=request.getContextPath()%>/AccountServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link  active"
-								href="<%=request.getContextPath()%>/infoClassServlet"
+
+							<li class="sidebar-item"><a class="sidebar-link active"
+								href="<%=request.getContextPath()%>/InfoClassServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
+
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/InfoStudentsServlet"
 								aria-expanded="false"> <span> <i
@@ -62,18 +66,19 @@
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-magnifying-glass"></i>
+								href="<%=request.getContextPath()%>/SearchStudentServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/InfoSubjectServlet"
+								href="<%=request.getContextPath()%>/SubjectServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/tablePointServlet"
+								href="<%=request.getContextPath()%>/TablePointServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
@@ -86,8 +91,9 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./changeRule.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-gear"></i>
+								href="<%=request.getContextPath()%>/ChangeRuleServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 
@@ -153,7 +159,7 @@
 							</div>
 
 							<div class="class-list-wrap">
-								<div class="card-body class-list-data">
+								<div class="card-body class-list-data pb-2">
 									<div class="datatable-wrapper">
 										
 										<div class="datatable-top">
@@ -168,7 +174,7 @@
 
 														<label for="search-khoi">Khối: </label> <select
 															id="search-khoi" name="search-khoi">
-															<option></option>
+															<option>Tổng hợp</option>
 															<option
 																<c:if test="${nameKhoi == 'Khối 10'}">selected</c:if>>Khối
 																10</option>

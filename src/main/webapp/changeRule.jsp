@@ -44,46 +44,54 @@
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
-							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/AccountServlet" aria-expanded="false"> <span> <i
+							<li class="sidebar-item mg-l-4"><a
+								class="sidebar-link"
+								href="<%=request.getContextPath()%>/AccountServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
+
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./class.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/InfoClassServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-chalkboard-user"></i>
 								</span> <span class="hide-menu">Lớp</span>
 							</a></li>
+
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./infoStudent.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-graduation-cap"></i>
+								href="<%=request.getContextPath()%>/InfoStudentsServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/searchStudentServlet"
+								href="<%=request.getContextPath()%>/SearchStudentServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/InfoSubjectServlet"
+								href="<%=request.getContextPath()%>/SubjectServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./tablePoint.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-table"></i>
+								href="<%=request.getContextPath()%>/TablePointServlet"
+								aria-expanded="false"> <span> <i
+										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./report.jsp" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/ReportServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link active"
-								href="<%=request.getContextPath()%>/ChangeRule"
+								href="<%=request.getContextPath()%>/ChangeRuleServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
@@ -127,7 +135,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">Admin</a>
+							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -173,7 +181,9 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Tuổi
 														tối đa <span> <i
-															class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square"></i>
+															class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
 													</td>
 													<td style="text-align: center;">${CR.tuoiHSToiDa}</td>
 												</tr>
@@ -182,7 +192,9 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Tuổi
 														tối thiểu<span> <i
-															class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square"></i>
+															class="changeRule1 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
 													</td>
 													<td style="text-align: center;">${CR.tuoiHSToiThieu}</td>
 												</tr>
@@ -191,7 +203,9 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Sĩ
 														số tối đa<span> <i
-															class="changeRule2 changeRule-edit-icon fa fa-solid fa-pen-to-square"></i>
+															class="changeRule2 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
 													</td>
 													<td style="text-align: center;">${CR.soLuongHSToiDa}</td>
 												</tr>
@@ -200,7 +214,9 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Điểm
 														tối đa<span> <i
-															class="changeRule3 changeRule-edit-icon fa fa-solid fa-pen-to-square"></i>
+															class="changeRule3 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
 													</td>
 													<td style="text-align: center;">${CR.diemToiDa}</td>
 												</tr>
@@ -209,7 +225,9 @@
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Điểm
 														tối thiểu<span> <i
-															class="changeRule3 changeRule-edit-icon fa fa-solid fa-pen-to-square"></i>
+															class="changeRule3 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
 													</td>
 													<td style="text-align: center;">${CR.diemToiThieu}</td>
 												</tr>
@@ -217,8 +235,10 @@
 													<td style="text-align: center;"><%=i++%></td>
 													<td
 														class="changeRuleName-edit d-flex justify-content-between ps-4">Điểm
-														đạt<span> <i
-															class="changeRule4 changeRule-edit-icon fa fa-solid fa-pen-to-square"></i>
+														đạt<span> 
+														<i class="changeRule4 changeRule-edit-icon fa fa-solid fa-pen-to-square" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>></i>
 													</td>
 													<td style="text-align: center;">${CR.diemDat}</td>
 												</tr>
@@ -226,7 +246,7 @@
 										</table>
 									</div>
 
-									<div id="QD1"  class="changeRuleForm">
+									<div id="QD1" class="changeRuleForm">
 										<div class="rule">
 											<div class="card">
 												<header class="change-rule-top">
@@ -278,7 +298,7 @@
 									</div>
 
 									<div id="QD2" class="changeRuleForm">
-										<div  class="rule">
+										<div class="rule">
 											<div class="card">
 												<header class="change-rule-top">
 													<h5>Thay đổi sỉ số tối đa của các lớp</h5>
@@ -355,7 +375,7 @@
 									</div>
 
 									<div id="QD4" class="changeRuleForm">
-										<div  class="rule">
+										<div class="rule">
 											<div class="card">
 												<header class="change-rule-top">
 													<h5>Thay đổi điểm đạt môn</h5>
@@ -397,9 +417,11 @@
 
 		</div>
 		<!-- Change rule end -->
-	</div>
 
+	</div>
 	<!--  Main wrapper -->
+
+
 
 	<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 	<script src="./js/app.js"></script>
