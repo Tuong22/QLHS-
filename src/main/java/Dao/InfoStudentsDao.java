@@ -20,6 +20,7 @@ import Model.HocSinh;
 import Model.Lop;
 import Model.Mon;
 import Model.TraCuuHocSinh;
+import Model.signIn;
 
 public class InfoStudentsDao {
 	
@@ -49,6 +50,20 @@ public class InfoStudentsDao {
             e.printStackTrace();
         }
 		return DSHS;
+	}
+	
+	public HocSinh selectOneStudent(String maHS) throws ClassNotFoundException {
+		String sql = "select * from hocsinh where mahs = ?;";
+		try (Connection connection = datasource.getConnection();
+		         PreparedStatement statement = connection.prepareStatement(sql)){
+				statement.setString(1, maHS);
+				ResultSet rs = statement.executeQuery();
+				while(rs.next()) {
+					return new HocSinh(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4).substring(0,10),rs.getString(5),rs.getString(6));
+				}
+			} catch (Exception e) {
+			}
+		return null;
 	}
 	
 	public List<TraCuuHocSinh> selectStudent (String name, String nameClass) throws ClassNotFoundException, SQLException {

@@ -44,7 +44,7 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a
-								class="sidebar-link active"
+								class="sidebar-link"
 								href="<%=request.getContextPath()%>/changePasswordServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
@@ -85,7 +85,7 @@
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
 
-							<li class="sidebar-item"><a class="sidebar-link"
+							<li class="sidebar-item"><a class="sidebar-link active"
 								href="<%=request.getContextPath()%>/ReportServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-file-excel"></i>
@@ -209,27 +209,35 @@
 											</div>
 
 
-											<div class="search-report">
+											<div class="search-report mb-2">
 												<button type="submit"
 													class="btn btn-primary search-point-btn">Xem</button>
 											</div>
+										</form>
+										
+										<form id="export-form"
+											style="float: right; margin-top: -47px;"
+											action="<%=request.getContextPath()%>/ReportServlet"
+											method="post"
+											accept-charset="UTF-8">
+											<input type="hidden" name="tableData" id="tableData" value="">
+											<input type="hidden" name="titleReport" value="${typeReport}">
+											<button class="btn btn-primary" type="submit">
+												<i class="fa-solid fa-print"></i> In báo cáo
+											</button>
+
 										</form>
 									</div>
 									<div class="datatable-container">
 										<table id="datatablesReport" class="datatable-table">
 											<thead>
 												<tr>
-													<th data-sortable="true" style="width: 10%;"><a
-														href="#" class="datatable-sorter">STT</a></th>
+													<th data-sortable="true" style="width: 10%;">STT</th>
 													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 30%;"><a
-														href="#" class="datatable-sorter">Lớp</a></th>
-													<th data-sortable="true" style="width: 20%;"><a
-														href="#" class="datatable-sorter">Sỉ số</a></th>
-													<th data-sortable="true" style="width: 20%;"><a
-														href="#" class="datatable-sorter">Số lượng đạt</a></th>
-													<th data-sortable="true" style="width: 20%;"><a
-														href="#" class="datatable-sorter">Tỉ lệ</a></th>
+														class="datatable-descending" style="width: 30%;">Lớp</th>
+													<th data-sortable="true" style="width: 20%;">Sỉ số</th>
+													<th data-sortable="true" style="width: 20%;">Số lượng đạt</th>
+													<th data-sortable="true" style="width: 20%;">Tỉ lệ</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -269,7 +277,25 @@
 	<script src="./js/app.js"></script>
 	<script src="./js/handleReportType.js"></script>
 	<script src="./js/pagination.js"></script>
-
+	<script>
+		document.getElementById('export-form').onsubmit = function() {
+			var table = document.getElementById('datatablesReport');
+			var data = [];
+			var headers = [];
+			for (var i = 0; i < table.rows[0].cells.length; i++) {
+				headers[i] = table.rows[0].cells[i].innerHTML;
+			}
+			for (var i = 1; i < table.rows.length; i++) {
+				var row = table.rows[i];
+				var rowData = {};
+				for (var j = 0; j < row.cells.length; j++) {
+					rowData[headers[j]] = row.cells[j].innerHTML;
+				}
+				data.push(rowData);
+			}
+			document.getElementById('tableData').value = JSON.stringify(data);
+		};
+	</script>
 	<script type="text/javascript">
 		(function(d, m) {
 			var kommunicateSettings = {

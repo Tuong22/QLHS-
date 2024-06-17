@@ -45,7 +45,7 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a
-								class="sidebar-link active"
+								class="sidebar-link"
 								href="<%=request.getContextPath()%>/changePasswordServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
@@ -73,7 +73,7 @@
 										class="fa fa-solid fa-magnifying-glass"></i>
 								</span> <span class="hide-menu">Tra cứu học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link"
+							<li class="sidebar-item"><a class="sidebar-link active"
 								href="<%=request.getContextPath()%>/InfoSubjectServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-book-open"></i>

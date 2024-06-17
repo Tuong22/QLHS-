@@ -47,6 +47,20 @@ public class infoClassDao {
 		}
 		return DSL;
 	}
+	
+	public Lop selectOneClass(String maHS) throws ClassNotFoundException {
+		String sql = "select l.malop, l.tenlop, l.siso, l.makhoi, l.manh from hocsinh hs, quatrinh qt, lop l where hs.mahs = qt.mahs and l.malop=qt.malop and hs.mahs=?;";
+		try (Connection connection = datasource.getConnection();
+		         PreparedStatement statement = connection.prepareStatement(sql)){
+				statement.setString(1, maHS);
+				ResultSet rs = statement.executeQuery();
+				while(rs.next()) {
+					return new Lop(rs.getString(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5));
+				}
+			} catch (Exception e) {
+			}
+		return null;
+	}
 
 	public boolean insertClass(Lop l) throws ClassNotFoundException {
 		String querySelectId = "SELECT MaLop FROM Lop order by length(MaLop), MaLop";

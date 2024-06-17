@@ -1,39 +1,41 @@
 package Model;
 
 public class QuaTrinh {
-	private String MaHS;
-	private String MaLop;
-	private String MaHK;
-	private double DiemTBHK;
-	public QuaTrinh(String maHS, String maLop, String maHK, double diemTBHK) {
-		MaHS = maHS;
-		MaLop = maLop;
-		MaHK = maHK;
-		DiemTBHK = diemTBHK;
+	private String maHS;
+	private String maLop;
+	private String maHK;
+	private float diemTBHK;
+	public QuaTrinh(String maHS, String maLop, String maHK, float diemTBHK) {
+		super();
+		this.maHS = maHS;
+		this.maLop = maLop;
+		this.maHK = maHK;
+		this.diemTBHK = diemTBHK;
 	}
 	public String getMaHS() {
-		return MaHS;
+		return maHS;
 	}
 	public void setMaHS(String maHS) {
-		MaHS = maHS;
+		this.maHS = maHS;
 	}
 	public String getMaLop() {
-		return MaLop;
+		return maLop;
 	}
 	public void setMaLop(String maLop) {
-		MaLop = maLop;
+		this.maLop = maLop;
 	}
 	public String getMaHK() {
-		return MaHK;
+		return maHK;
 	}
 	public void setMaHK(String maHK) {
-		MaHK = maHK;
+		this.maHK = maHK;
 	}
-	public double getDiemTBHK() {
-		return DiemTBHK;
+	public float getDiemTBHK() {
+		return diemTBHK;
 	}
-	public void setDiemTBHK(double diemTBHK) {
-		DiemTBHK = diemTBHK;
+	public void setDiemTBHK(float diemTBHK) {
+		this.diemTBHK = diemTBHK;
 	}
+	
 	
 }

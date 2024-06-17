@@ -68,6 +68,8 @@
 										class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
+							
+							<c:if test="${sessionScope.account.isAdmin != 5}">
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/searchStudentServlet"
 								aria-expanded="false"> <span> <i
@@ -80,12 +82,14 @@
 										class="fa fa-solid fa-book-open"></i>
 								</span> <span class="hide-menu">Môn</span>
 							</a></li>
+							</c:if>
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/tablePointServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
+							<c:if test="${sessionScope.account.isAdmin != 5}">
 
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/ReportServlet"
@@ -100,7 +104,10 @@
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
 						</div>
-
+						</c:if>
+						<c:if test="${sessionScope.account.isAdmin == 5}">
+							<br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+						</c:if>
 						<div class="sidebarnav-bottom">
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="./signIn.jsp" aria-expanded="false"> <span> <i
