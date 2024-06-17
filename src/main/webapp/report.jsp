@@ -214,7 +214,8 @@
 										<form id="export-form"
 											style="float: right; margin-top: -47px;"
 											action="<%=request.getContextPath()%>/ReportServlet"
-											method="post">
+											method="post"
+											accept-charset="UTF-8">
 											<input type="hidden" name="tableData" id="tableData" value="">
 											<input type="hidden" name="titleReport" value="${typeReport}">
 											<button class="btn btn-primary" type="submit">

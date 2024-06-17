@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -21,6 +23,7 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.PdfPTable;
 
@@ -68,7 +71,9 @@ public class ReportServlet extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/pdf");
+		request.setCharacterEncoding("UTF-8");
+	    response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=\"report.pdf\"");
         OutputStream out = response.getOutputStream();
 
@@ -80,7 +85,8 @@ public class ReportServlet extends HttpServlet {
         	titleReport = "Báo cáo tổng kết học kỳ";
         }
         Gson gson = new Gson();
-        List<Map<String, String>> tableData = gson.fromJson(tableDataJson, List.class);
+        Type listType = new TypeToken<List<Map<String, String>>>(){}.getType();
+        List<Map<String, String>> tableData = gson.fromJson(tableDataJson, listType);
 
         Document document = new Document();
         try {
@@ -90,7 +96,8 @@ public class ReportServlet extends HttpServlet {
             // Load the Vietnamese font
             String fontPath = getServletContext().getRealPath("WEB-INF/fonts/Roboto-Regular.ttf");
             BaseFont bf = BaseFont.createFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-            Font font = new Font(bf, 12);
+            Font cellFont = new Font(bf, 12);
+            Font thFont = new Font(bf, 14, Font.BOLD);
             Font titleFont = new Font(bf, 18, Font.BOLD);
 
             // Add a title
@@ -102,14 +109,21 @@ public class ReportServlet extends HttpServlet {
             document.add(new Paragraph("\n\n"));
 
             PdfPTable table = new PdfPTable(tableData.get(0).size());
+            float[] columnWidths = {1f, 3f, 2f, 2f, 2f}; // adjust the values as needed
+            table.setWidths(columnWidths);
+            
             // Add table headers
             for (String header : tableData.get(0).keySet()) {
-                table.addCell(new Paragraph(header, font));
+            	PdfPCell cell = new PdfPCell(new Paragraph(header, thFont));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
             }
             // Add table data
             for (Map<String, String> row : tableData) {
-                for (String cell : row.values()) {
-                    table.addCell(new Paragraph(cell, font));
+                for (String cellData : row.values()) {
+                	PdfPCell cell = new PdfPCell(new Paragraph(cellData, cellFont));
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cell);
                 }
             }
 
