@@ -52,13 +52,14 @@
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
-
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/InfoClassServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-chalkboard-user"></i>
-								</span> <span class="hide-menu">Lớp</span>
-							</a></li>
+							<c:if test="${sessionScope.account.isAdmin != 5}">
+								<li class="sidebar-item"><a class="sidebar-link"
+									href="<%=request.getContextPath()%>/InfoClassServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-chalkboard-user"></i>
+									</span> <span class="hide-menu">Lớp</span>
+								</a></li>
+							</c:if>
 
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/InfoStudentsServlet"
@@ -66,37 +67,42 @@
 										class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/SearchStudentServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-magnifying-glass"></i>
-								</span> <span class="hide-menu">Tra cứu học sinh</span>
-							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/SubjectServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-book-open"></i>
-								</span> <span class="hide-menu">Môn</span>
-							</a></li>
+
+							<c:if test="${sessionScope.account.isAdmin != 5}">
+								<li class="sidebar-item"><a class="sidebar-link"
+									href="<%=request.getContextPath()%>/SearchStudentServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-magnifying-glass"></i>
+									</span> <span class="hide-menu">Tra cứu học sinh</span>
+								</a></li>
+								<li class="sidebar-item"><a class="sidebar-link"
+									href="<%=request.getContextPath()%>/SubjectServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-book-open"></i>
+									</span> <span class="hide-menu">Môn</span>
+								</a></li>
+							</c:if>
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/TablePointServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
+							<c:if test="${sessionScope.account.isAdmin != 5}">
 
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/ReportServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-file-excel"></i>
-								</span> <span class="hide-menu">Báo cáo</span>
-							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/ChangeRuleServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-gear"></i>
-								</span> <span class="hide-menu">Thay đổi quy định</span>
-							</a></li>
+								<li class="sidebar-item"><a class="sidebar-link"
+									href="<%=request.getContextPath()%>/ReportServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-file-excel"></i>
+									</span> <span class="hide-menu">Báo cáo</span>
+								</a></li>
+								<li class="sidebar-item"><a class="sidebar-link"
+									href="<%=request.getContextPath()%>/ChangeRuleServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-gear"></i>
+									</span> <span class="hide-menu">Thay đổi quy định</span>
+								</a></li>
+							</c:if>
 						</div>
 
 						<div class="sidebarnav-bottom">
@@ -228,26 +234,27 @@
 
 								<div class="spacer"></div>
 
-
-
-								<table id="datatablesChangeRule" class="datatable-table">
-									<thead>
-										<tr>
-											<th style="text-align: center; width: 10%">STT</th>
-											<th style="text-align: center; width: 30%">Tên tài khoản</th>
-											<th style="text-align: center; width: 30%">Mật khẩu</th>
-											<th style="text-align: center; width: 10%">Quyền</th>
-											<th style="text-align: center; width: 20%">Thao tác</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="acc" items="${DSTK}">
+								<div style="overflow-y: auto; height: 300px;">
+									<table id="datatablesChangeRule" class="datatable-table">
+										<thead>
 											<tr>
-												<td style="text-align: center;"><%=i++%></td>
-												<td class="ps-4 name">${acc.username}</td>
+												<th
+													style="text-align: center; width: 10%; position: sticky; top: 0; z-index: 2;">STT</th>
+												<th style="text-align: center; width: 30%; position: sticky; top: 0; z-index: 2;">Tên tài
+													khoản</th>
+												<th style="text-align: center; width: 30%; position: sticky; top: 0; z-index: 2;">Mật khẩu</th>
+												<th style="text-align: center; width: 10%; position: sticky; top: 0; z-index: 2;">Quyền</th>
+												<th style="text-align: center; width: 20%; position: sticky; top: 0; z-index: 2;">Thao tác</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach var="acc" items="${DSTK}">
+												<tr>
+													<td style="text-align: center;"><%=i++%></td>
+													<td class="ps-4 name">${acc.username}</td>
 
-												<td class="d-flex justify-content-between border-0 ps-4">${acc.password}</td>
-												<td><c:if test="${acc.isAdmin == 1}">
+													<td class="d-flex justify-content-between border-0 ps-4">${acc.password}</td>
+													<td><c:if test="${acc.isAdmin == 1}">
 								                    admin
 								                </c:if> <c:if test="${acc.isAdmin == 2}">
 								                    headmaster
@@ -255,26 +262,28 @@
 								                    teacher
 								                </c:if> <c:if test="${acc.isAdmin == 4}">
 								                    office
+								                </c:if> <c:if test="${acc.isAdmin == 5}">
+								                    student
 								                </c:if></td>
-												<td class="action" style="text-align: center;"><i
-													class="role-user-icon fas fa-users"
-													<c:if test="${acc.isAdmin == 1}">
+													<td class="action" style="text-align: center;"><i
+														class="role-user-icon fas fa-users"
+														<c:if test="${acc.isAdmin == 1}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
-													<i class="edit-pass-icon fa-solid fa-pen-to-square mx-2"></i>
-													<i class="remove-acc-icon fa fa-solid fa-trash-can"
-													<c:if test="${acc.isAdmin == 1}">
+														<i class="edit-pass-icon fa-solid fa-pen-to-square mx-2"></i>
+														<i class="remove-acc-icon fa fa-solid fa-trash-can"
+														<c:if test="${acc.isAdmin == 1}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i></td>
 
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
 							</div>
 
-							<button type="button" class="btn btn-primary add-acc-btn">Tạo
+							<button type="button" class="btn btn-primary add-acc-btn m-4">Tạo
 								tài khoản</button>
 
 							<footer class="account-info-footer">
@@ -371,6 +380,7 @@
 							<option value="2">Headmaster</option>
 							<option value="3">Teacher</option>
 							<option value="4">Office</option>
+							<option value="5">Student</option>
 						</select>
 					</div>
 
@@ -412,6 +422,7 @@
 							<option value="2">Headmaster</option>
 							<option value="3">Teacher</option>
 							<option value="4">Office</option>
+							<option value="5">Student</option>
 						</select>
 					</div>
 				</div>

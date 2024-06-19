@@ -4823,3 +4823,9 @@ ul {
 	flex: 1;
 	text-align: end;
 }
+
+@media print {
+	.no-print {
+		display: none;
+	}
+}

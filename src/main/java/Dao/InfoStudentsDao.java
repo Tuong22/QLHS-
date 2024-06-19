@@ -50,6 +50,20 @@ public class InfoStudentsDao {
 		return DSHS;
 	}
 	
+	public HocSinh selectOneStudent(String maHS) throws ClassNotFoundException {
+		String sql = "select * from hocsinh where MaHS = ?;";
+		try (Connection connection = getConnection();
+		         PreparedStatement statement = connection.prepareStatement(sql)){
+				statement.setString(1, maHS);
+				ResultSet rs = statement.executeQuery();
+				while(rs.next()) {
+					return new HocSinh(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
+				}
+			} catch (Exception e) {
+			}
+		return null;
+	}
+	
 	public List<TraCuuHocSinh> selectStudent (String name, String nameClass) throws ClassNotFoundException, SQLException {
 		List<TraCuuHocSinh> tchsList = new ArrayList<>();
 		String SELECT_STUDENT_BY_NAME = "SELECT HocSinh.TenHS, Lop.TenLop, qthk1.DiemTBHK AS DiemTBHK1, qthk2.DiemTBHK AS DiemTBHK2\r\n"

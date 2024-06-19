@@ -15,7 +15,7 @@ import Dao.ChangeRuleDao;
 import Model.ChangeRule;
 
 
-@WebServlet("/ChangeRule")
+@WebServlet("/ChangeRuleServlet")
 public class ChangeRuleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private ChangeRuleDao changeRuleDao;

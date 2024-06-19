@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import Model.LoaiHinhKiemTra;
 import Model.Mon;
 
 public class SubjectDao {
@@ -41,6 +42,26 @@ public class SubjectDao {
         }
 		return DSM;
 	}
+	
+	public List<LoaiHinhKiemTra> selectLHKT() throws ClassNotFoundException {
+		List<LoaiHinhKiemTra> DSLHKT = new ArrayList<>();
+		try	(Connection connection = getConnection();
+			Statement statement = connection.createStatement();	
+			ResultSet rs = statement.executeQuery("select * from loaihinhkiemtra")) {
+			while (rs.next()) {
+				String id = rs.getString(1);
+				String tenLHKT = rs.getString(2);
+				int heSo = rs.getInt(3);
+
+				LoaiHinhKiemTra m = new LoaiHinhKiemTra(id, tenLHKT, heSo);
+				DSLHKT.add(m);
+			} 
+		}catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return DSLHKT;
+	}
+	
 	
 	public boolean insertMon(Mon m) throws ClassNotFoundException {
 		String querySelectId = "SELECT MaMH FROM Mon order by length(MaMH), MaMH";

@@ -1,15 +1,23 @@
 package Web;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import javax.servlet.http.Part;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import Dao.SubjectDao;
 import Dao.InfoClassDao;
@@ -19,6 +27,7 @@ import Model.Lop;
 import Model.Mon;
 
 @WebServlet("/TablePointServlet")
+@MultipartConfig
 public class TablePointServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TablePointDao tablePointDao;
@@ -93,5 +102,36 @@ public class TablePointServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Part filePart = request.getPart("file");
+        try (InputStream fileContent = filePart.getInputStream();
+             Workbook workbook = new XSSFWorkbook(fileContent)) {
+            	 
+            Sheet sheet = workbook.getSheetAt(0);
+            for (Row row : sheet) {
+                String maHS = row.getCell(0).getStringCellValue();
+                String maMH = row.getCell(1).getStringCellValue();
+                String maHK = row.getCell(2).getStringCellValue();
+                float diem = (float) row.getCell(3).getNumericCellValue();
+                String maLHKT = row.getCell(4).getStringCellValue();
+                
+                tablePointDao.InputPoint(maHS, maMH, maHK, diem, maLHKT);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+		try {
+			List<Lop> DSL = infoClassDao.selectAllClass();
+			List<Mon> DSMH = subjectDao.selectAllSubject();
+			request.setAttribute("DSL", DSL);
+			request.setAttribute("DSMH", DSMH);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/tablePoint.jsp");
+			dispatcher.forward(request, response);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
 }

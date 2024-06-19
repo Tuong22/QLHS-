@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Quản lý học sinh</title>
 
-
+<link rel="icon" href="./image/logo.jpg">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet"
@@ -51,13 +51,14 @@
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
-
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/InfoClassServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-chalkboard-user"></i>
-								</span> <span class="hide-menu">Lớp</span>
-							</a></li>
+							<c:if test="${sessionScope.account.isAdmin != 5}">
+								<li class="sidebar-item"><a class="sidebar-link"
+									href="<%=request.getContextPath()%>/InfoClassServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-chalkboard-user"></i>
+									</span> <span class="hide-menu">Lớp</span>
+								</a></li>
+							</c:if>
 
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/InfoStudentsServlet"
@@ -65,37 +66,42 @@
 										class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/SearchStudentServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-magnifying-glass"></i>
-								</span> <span class="hide-menu">Tra cứu học sinh</span>
-							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link active"
-								href="<%=request.getContextPath()%>/SubjectServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-book-open"></i>
-								</span> <span class="hide-menu">Môn</span>
-							</a></li>
+
+							<c:if test="${sessionScope.account.isAdmin != 5}">
+								<li class="sidebar-item"><a class="sidebar-link"
+									href="<%=request.getContextPath()%>/SearchStudentServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-magnifying-glass"></i>
+									</span> <span class="hide-menu">Tra cứu học sinh</span>
+								</a></li>
+								<li class="sidebar-item"><a class="sidebar-link active"
+									href="<%=request.getContextPath()%>/SubjectServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-book-open"></i>
+									</span> <span class="hide-menu">Môn</span>
+								</a></li>
+							</c:if>
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/TablePointServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
+							<c:if test="${sessionScope.account.isAdmin != 5}">
 
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/ReportServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-file-excel"></i>
-								</span> <span class="hide-menu">Báo cáo</span>
-							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/ChangeRuleServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-gear"></i>
-								</span> <span class="hide-menu">Thay đổi quy định</span>
-							</a></li>
+								<li class="sidebar-item"><a class="sidebar-link"
+									href="<%=request.getContextPath()%>/ReportServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-file-excel"></i>
+									</span> <span class="hide-menu">Báo cáo</span>
+								</a></li>
+								<li class="sidebar-item"><a class="sidebar-link"
+									href="<%=request.getContextPath()%>/ChangeRuleServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-gear"></i>
+									</span> <span class="hide-menu">Thay đổi quy định</span>
+								</a></li>
+							</c:if>
 						</div>
 						<div class="sidebarnav-bottom">
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -154,7 +160,7 @@
 					<div class="align-items-stretch">
 						<div class="card">
 							<div class="card-header">
-								<i class="fas fa-table me-1"></i> Danh sách môn
+								<i class="fas fa-table me-1"></i> DANH SÁCH MÔN HỌC
 							</div>
 
 							<div class="subject-list-wrap">
@@ -435,7 +441,6 @@
 
 
 	<script src="./js/app.js"></script>
-	<script src="./js/pagination.js"></script>
 	<script src="./js/subjectHandle.js"></script>
 	<script src="./js/modalAddSubject.js"></script>
 </body>

@@ -6,9 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Quản lý học sinh</title>
 
-
+<link rel="icon" href="./image/logo.jpg">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet"
@@ -33,8 +33,8 @@
 				<div
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap brand-logo-link"> <img
-						class="logo-img" src="./image/logo.jpg" alt="">
-						StudentManager
+						class="logo-img" src="./image/logo.jpg" alt=""> Quản lý học
+						sinh
 					</a>
 					<div class="close-btn d-block sidebartoggler cursor-pointer"
 						id="sidebarCollapse">
@@ -46,51 +46,62 @@
 					<ul id="sidebarnav">
 						<div class="sidebarnav-top">
 							<li class="sidebar-item mg-l-4"><a class="sidebar-link"
-								href="#" aria-expanded="false"> <span> <i
+								href="<%=request.getContextPath()%>/AccountServlet"
+								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-user"></i>
 								</span> <span class="hide-menu">Tài Khoản</span>
 							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link active"
-								href="<%=request.getContextPath()%>/infoClassServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-chalkboard-user"></i>
-								</span> <span class="hide-menu">Lớp</span>
-							</a></li>
+							<c:if test="${sessionScope.account.isAdmin != 5}">
+								<li class="sidebar-item"><a class="sidebar-link active"
+									href="<%=request.getContextPath()%>/InfoClassServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-chalkboard-user"></i>
+									</span> <span class="hide-menu">Lớp</span>
+								</a></li>
+							</c:if>
+
 							<li class="sidebar-item"><a class="sidebar-link"
 								href="<%=request.getContextPath()%>/InfoStudentsServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-graduation-cap"></i>
 								</span> <span class="hide-menu">Thông tin học sinh</span>
 							</a></li>
+
+							<c:if test="${sessionScope.account.isAdmin != 5}">
+								<li class="sidebar-item"><a class="sidebar-link"
+									href="<%=request.getContextPath()%>/SearchStudentServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-magnifying-glass"></i>
+									</span> <span class="hide-menu">Tra cứu học sinh</span>
+								</a></li>
+								<li class="sidebar-item"><a class="sidebar-link"
+									href="<%=request.getContextPath()%>/SubjectServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-book-open"></i>
+									</span> <span class="hide-menu">Môn</span>
+								</a></li>
+							</c:if>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="./searchStudent.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-magnifying-glass"></i>
-								</span> <span class="hide-menu">Tra cứu học sinh</span>
-							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/InfoSubjectServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-book-open"></i>
-								</span> <span class="hide-menu">Môn</span>
-							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/tablePointServlet"
+								href="<%=request.getContextPath()%>/TablePointServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-table"></i>
 								</span> <span class="hide-menu">Bảng điểm</span>
 							</a></li>
+							<c:if test="${sessionScope.account.isAdmin != 5}">
 
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/ReportServlet"
-								aria-expanded="false"> <span> <i
-										class="fa fa-solid fa-file-excel"></i>
-								</span> <span class="hide-menu">Báo cáo</span>
-							</a></li>
-							<li class="sidebar-item"><a class="sidebar-link"
-								href="./changeRule.jsp" aria-expanded="false"> <span>
-										<i class="fa fa-solid fa-gear"></i>
-								</span> <span class="hide-menu">Thay đổi quy định</span>
-							</a></li>
+								<li class="sidebar-item"><a class="sidebar-link"
+									href="<%=request.getContextPath()%>/ReportServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-file-excel"></i>
+									</span> <span class="hide-menu">Báo cáo</span>
+								</a></li>
+								<li class="sidebar-item"><a class="sidebar-link"
+									href="<%=request.getContextPath()%>/ChangeRuleServlet"
+									aria-expanded="false"> <span> <i
+											class="fa fa-solid fa-gear"></i>
+									</span> <span class="hide-menu">Thay đổi quy định</span>
+								</a></li>
+							</c:if>
 						</div>
 						<div class="sidebarnav-bottom">
 							<li class="sidebar-item"><a class="sidebar-link"
@@ -131,7 +142,7 @@
 						id="navbarNav">
 						<ul
 							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-							<a href="" target="_blank">VanA@gmail.com</a>
+							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -163,47 +174,49 @@
 												action="<%=request.getContextPath()%>/listStudentOfClassServlet">
 												<input type="hidden" name="action" value="/show">
 												<div class="datatable-top-group">
-													<input class="search-class" placeholder="Tên lớp"
-														type="text" name="search-lop"
-														<c:if test="${not empty searchClass}">value="${searchClass}"</c:if>>
+													<label for="search-Class" style="margin-right: 20px;">Tên
+														lớp: </label> <select class="search-class" name="search-lop"
+														style="margin-bottom: 50px;">
+														<c:forEach var="c" items="${DSL}">
+															<option
+																<c:if test="${searchClass == c.tenLop}">selected</c:if>>${c.tenLop}</option>
+														</c:forEach>
+
+													</select>
 												</div>
 
+
+
+												<div class="datatable-top-group">
+													<p class="">
+														Sỉ số:
+														<c:out value="${siso}" />
+													</p>
+												</div>
 												<div class="add-class">
 													<button type="submit"
-														class="btn btn-primary show-list-student-of-class">Xem</button>
+														class="btn btn-primary show-list-student-of-class mb-1">Xem</button>
 												</div>
-											</form>
-
-											<div class="datatable-top-group">
-												<p class="mt-2">
-													Sỉ số:
-													<c:out value="${siso}" />
-												</p>
-											</div>
 										</div>
+
+										</form>
 										<div class="datatable-container">
-											<table id="datatablesListStudent" class="datatable-table">
+											<table id="datatablesListStudent"
+												class="datatable-table mb-4">
 												<thead>
 													<tr>
-														<th data-sortable="true" style="width: 10%;"><a
-															href="#" class="datatable-sorter">STT</a></th>
-														<th data-sortable="true" aria-sort="descending"
-															class="datatable-descending" style="width: 20%;"><a
-															href="#" class="datatable-sorter">Tên</a></th>
-														<th data-sortable="true" style="width: 15%;"><a
-															href="#" class="datatable-sorter">Giới Tính</a></th>
-														<th data-sortable="true" style="width: 15%;"><a
-															href="#" class="datatable-sorter">Năm sinh</a></th>
-														<th data-sortable="true" style="width: 20%;"><a
-															href="#" class="datatable-sorter">Địa chỉ</a></th>
-														<th data-sortable="true" style="width: 20%;"><a
-															href="#" class="datatable-sorter">Email</a></th>
+														<th style="width: 6%; text-align: center;">STT</th>
+														<th style="width: 20%; text-align: center;">Tên</th>
+														<th style="width: 12%; text-align: center;">Giới Tính</th>
+														<th style="width: 14%; text-align: center;">Ngày sinh</th>
+														<th style="width: 20%; text-align: center;">Địa chỉ</th>
+														<th style="width: 28%; text-align: center;">Email</th>
 													</tr>
 												</thead>
 												<tbody>
 													<c:forEach var="HocSinh" items="${HS}">
 														<tr>
-															<td><%=i++%></td>
+															<td style="text-align: center;"><%=i++%></td>
 															<td><c:out value="${HocSinh.tenHS}" /></td>
 															<td><c:out value="${HocSinh.gioiTinh}" /></td>
 															<td><c:out value="${HocSinh.namSinh}" /></td>
@@ -220,20 +233,60 @@
 										<div class="datatablefooter justify-content-between">
 											<button
 												class="btn btn-primary list-student-of-class-cancel-btn">
-												<a href="./class.jsp">Quay lại</a>
+												<a href="<%=request.getContextPath()%>/InfoClassServlet">Quay
+													lại</a>
 											</button>
 											<button
-												class="btn btn-primary list-student-of-class-confirm-btn">
+												class="btn btn-primary list-student-of-class-confirm-btn"
+												<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													               </c:if>>
 												<a>Thêm học sinh</a>
 											</button>
 										</div>
+
+										<c:if
+											test="${not empty requestScope.messageErrorInsertToClass}">
+											<div id="toast">
+												<div class="toast toast--error">
+													<div class="toast__icon">
+														<i class="fa-solid fa-triangle-exclamation"></i>
+													</div>
+													<div class="toast__body">
+														<h3 class="toast__title">Thất bại</h3>
+														<p class="toast__msg">Thêm học sinh thất bại.</p>
+													</div>
+													<div class="toast__close">
+														<i class="fa-solid fa-xmark"></i>
+													</div>
+												</div>
+											</div>
+										</c:if>
+										<c:if
+											test="${not empty requestScope.messageInfoInsertToClass}">
+											<div id="toast">
+												<div class="toast toast--success">
+													<div class="toast__icon">
+														<i class="fa-solid fa-circle-check"></i>
+													</div>
+													<div class="toast__body">
+														<h3 class="toast__title">Thành công</h3>
+														<p class="toast__msg">Thêm học sinh vào lớp thành
+															công.</p>
+													</div>
+													<div class="toast__close">
+														<i class="fa-solid fa-xmark"></i>
+													</div>
+												</div>
+											</div>
+										</c:if>
 
 									</div>
 								</div>
 
 
 								<div id="listStudentNotClass" class="datatable-container hidden"
-									style="width: 85%; margin: auto;">
+									style="width: 85%; margin: auto; animation: modalFadeIn ease 0.4s; ">
 									<header class="modal-header"> Danh sách học sinh chưa
 										có lớp </header>
 
@@ -243,22 +296,14 @@
 										<table id="datatablesListStudent" class="datatable-table">
 											<thead>
 												<tr>
-													<th data-sortable="true" style="width: 8%;"><a
-														href="#" class="datatable-sorter">STT</a></th>
-													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 20%;"><a
-														href="#" class="datatable-sorter">Tên</a></th>
-													<th data-sortable="true" style="width: 15%;"><a
-														href="#" class="datatable-sorter">Giới Tính</a></th>
-													<th data-sortable="true" style="width: 10%;"><a
-														href="#" class="datatable-sorter">Năm sinh</a></th>
-													<th data-sortable="true" style="width: 22%;"><a
-														href="#" class="datatable-sorter">Địa chỉ</a></th>
-													<th data-sortable="true" style="width: 25%;"><a
-														href="#" class="datatable-sorter">Email</a></th>
-													<th data-sortable="true"><input
-														class="listStudentNotClass-input" type="hidden"
-														name="listStudentNotClass"> <input
+													<th style="width: 6%; text-align: center;">STT</th>
+													<th style="width: 20%; text-align: center;">Tên</th>
+													<th style="width: 14%; text-align: center;">Giới Tính</th>
+													<th style="width: 15%; text-align: center;">Ngày sinh</th>
+													<th style="width: 20%; text-align: center;">Địa chỉ</th>
+													<th style="width: 27%; text-align: center;">Email</th>
+													<th><input class="listStudentNotClass-input"
+														type="hidden" name="listStudentNotClass"> <input
 														class="className-input" type="hidden" name="className"></th>
 
 												</tr>
@@ -308,12 +353,18 @@
 			<script src="./js/app.js"></script>
 			<script src="./js/pagination.js"></script>
 			<script>
-				const addListStudentBtn = document
-						.querySelector(".list-student-of-class-confirm-btn")
+				const addListStudentBtn = document.querySelector(".list-student-of-class-confirm-btn")
+				const cancelAddListStudentBtn = document.querySelector(".cancel-list-students-btn")
 				addListStudentBtn.addEventListener('click', function() {
 					document.getElementById("listStudentNotClass").classList
 							.remove('hidden')
+					document.getElementById("listStudentNotClass").scrollIntoView({ behavior: "smooth" });
 				})
+				cancelAddListStudentBtn.addEventListener('click', function() {
+					document.getElementById("listStudentNotClass").classList
+							.add('hidden')
+				})
+				
 			</script>
 			<script> 
 			function getParent(element, selector) {
@@ -327,7 +378,7 @@
 			
 			function getSibling(element, className) {
 			    const parent = element.parentElement;
-			    if (!parent) return null; // Kiểm tra nếu không có phần tử cha
+			    if (!parent) return null;
 			    
 			    const siblings = parent.children;
 			    for (let i = 0; i < siblings.length; i++) {
@@ -336,7 +387,7 @@
 			        }
 			    }
 			    
-			    return null; // Trả về null nếu không tìm thấy phần tử ngang cấp với class truyền vào
+			    return null;
 			}
 			
 			document.getElementById('confirm-list-students-btn').addEventListener('click', function() {
