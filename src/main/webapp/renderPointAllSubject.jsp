@@ -145,116 +145,129 @@
 					<div class="align-items-stretch">
 						<div class="card">
 							<div class="card-header">
-								<i class="fas fa-table me-1"></i> Nhập điểm môn
+								<i class="fas fa-table me-1"></i> Bảng điểm tổng kết 
 							</div>
 							<div class="card-body">
 								<div class="datatable-wrapper">
 									<div class="datatable-top">
-										<form action="<%=request.getContextPath()%>/tablePointServlet">
-											<input type="hidden" name="action" value="/pointStudent">
+										<form action="<%=request.getContextPath()%>/renderPointAllSubjectServlet">
+											<input type="hidden" name="action" value="/pointAllSubject">
 											<div class="datatable-selection">
-												
-												<div class="">
-													<label>Tên học sinh: </label> <input class="" placeholder="Tên học sinh"
-														type="text">
-												</div>
-												
 												<div class="">
 													<label>Lớp: </label> 
-													
-													<select
-														class="search-class" name="search-lop">
-														<option></option>
-														<option>10A1</option>
-														<option>10A2</option>
-														<option>10A3</option>
-				 										<option>10A4</option>
-														<option>11A1</option>
-														<option>11A2</option>
-														<option>11A3</option>
-														<option>12A1</option>
-														<option>12A2</option>
-														
+													<select class="search-class" name="search-lop">
+														<c:forEach var="c" items="${DSL}">
+															<option <c:if test="${nameLop == c.tenLop}">selected</c:if>>${c.tenLop}</option>
+														</c:forEach>
 													</select> 
 												</div>
 
 												<div class="">
-													<label>Học kỳ: </label> <select id="search-hk"
-														name="search-hk">
+													<label>Học kỳ: </label> 
+													<select id="search-hk" name="search-hk">
 														<option <c:if test="${nameHocKy == '1'}">selected</c:if>>1</option>
 														<option <c:if test="${nameHocKy == '2'}">selected</c:if>>2</option>
 													</select>
 												</div>
-
+												
 												<div class="">
-													<label>Môn: </label> <select id="search-mon"
-														name="search-mon">
-														<option <c:if test="${nameMon == 'Toán'}">selected</c:if>>Toán</option>
-														<option <c:if test="${nameMon == 'Văn'}">selected</c:if>>Văn</option>
-														<option
-															<c:if test="${nameMon == 'Đạo đức'}">selected</c:if>>Đạo
-															đức</option>
-														<option <c:if test="${nameMon == 'Sinh'}">selected</c:if>>Sinh</option>
-														<option <c:if test="${nameMon == 'Sử'}">selected</c:if>>Sử</option>
-														<option <c:if test="${nameMon == 'Địa'}">selected</c:if>>Địa</option>
-														<option <c:if test="${nameMon == 'Lý'}">selected</c:if>>Lý</option>
-														<option <c:if test="${nameMon == 'Hóa'}">selected</c:if>>Hóa</option>
-														<option
-															<c:if test="${nameMon == 'Thể dục'}">selected</c:if>>Thể
-															dục</option>
+													<label>Năm học: </label> 
+													<select id="search-nh" name="search-nh" style="width: auto;">
+														<option>2023-2024</option>
+														<option>2022-2023</option>
 													</select>
 												</div>
-
 											</div>
 
-
-											<div class="search-point">
-												<a href="./tablePoint.jsp"><button type="button"
-													class="btn btn-primary search-point-btn">Quay lại</button></a>
-													
-												<button type="button"
-													class="btn btn-primary search-point-btn">Lọc</button>
+											<div class="select-point">
+												<a href="./tablePointServlet">
+													<button type="button" class="btn btn-primary">Quay lại</button>
+												</a>
+												<button type="submit" class="btn btn-primary">Xem</button>
+												<button class="btn btn-primary ms-auto no-print" onclick="printReport()">
+													<i class="fa-solid fa-print""></i> In bảng điểm
+												</button>
+												
 											</div>
+											
 										</form>
+										
+										
 
 									</div>
+									<h3 style="text-align: center;">BẢNG ĐIỂM TỔNG KẾT HỌC KỲ</h3>
 									<div class="datatable-container">
+									
 										<table id="datatablesPoint" class="datatable-table">
 											<thead>
 												<tr>
-													<th data-sortable="true" style="width: 5%;"><a
-														href="#" class="datatable-sorter">STT</a></th>
+													<th data-sortable="true" style="text-align: center;">STT</th>
 													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 25%;"><a
-														href="#" class="datatable-sorter">Tên</a></th>
+														class="datatable-descending">Tên học sinh</th>
 													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 10%;"><a
-														href="#" class="datatable-sorter">Miệng</a></th>
-													<th data-sortable="true" style="width: 10%;"><a
-														href="#" class="datatable-sorter">15'</a></th>
-													<th data-sortable="true" style="width: 10%;"><a
-														href="#" class="datatable-sorter">1T</a></th>
+														class="datatable-descending" style="text-align: center;">Toán</th>
 													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 10%;"><a
-														href="#" class="datatable-sorter">HK</a></th>
-													<th data-sortable="true" style="width: 20%;"><a
-														href="#" class="datatable-sorter">TB môn</a></th>
+														class="datatable-descending" style="text-align: center;">Lý</th>
+													<th data-sortable="true" aria-sort="descending"
+														class="datatable-descending" style="text-align: center;">Hóa</th>
+													<th data-sortable="true" aria-sort="descending"
+														class="datatable-descending" style="text-align: center;">Anh</th>
+													<th data-sortable="true" aria-sort="descending"
+														class="datatable-descending" style="text-align: center;">Văn</th>
+													<th data-sortable="true" aria-sort="descending"
+														class="datatable-descending" style="text-align: center;">Thể dục</th>
+													<th data-sortable="true" aria-sort="descending"
+														class="datatable-descending" style="text-align: center;">Sinh</th>
+													<th data-sortable="true" aria-sort="descending"
+														class="datatable-descending" style="text-align: center;">Sử</th>
+													<th data-sortable="true" aria-sort="descending"
+														class="datatable-descending" style="text-align: center;">Địa</th>
+													<th data-sortable="true" aria-sort="descending"
+														class="datatable-descending" style="text-align: center;">GDCD</th>
+													<th data-sortable="true" aria-sort="descending"
+														class="datatable-descending" style="text-align: center;">TBHK</th>
+													<th data-sortable="true" aria-sort="descending"
+														class="datatable-descending" style="text-align: center;">Học lực</th>
+													<th data-sortable="true" aria-sort="descending"
+														class="datatable-descending" style="text-align: center;">Hạnh kiểm</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>1</td>
-													<td>Trần Anh Tuấn</td>
-													<td>9</td>
-													<td>8</td>
-													<td>9</td>
-													<td>9</td>
-													<td>8.86</td>
-												</tr>
+												<c:forEach var="point" items="${DSD}">
+													<tr>
+														<td style="text-align: center;"><%=i++%></td>
+														<td>${point.tenHS}</td>
+														<td style="text-align: center;">${point.dToan}</td>
+														<td style="text-align: center;">${point.dLy}</td>
+														<td style="text-align: center;">${point.dHoa}</td>
+														<td style="text-align: center;">${point.dAnh}</td>
+														<td style="text-align: center;">${point.dVan}</td>
+														<td style="text-align: center;">Đạt</td>
+														<td style="text-align: center;">${point.dSinh}</td>
+														<td style="text-align: center;">${point.dSu}</td>
+														<td style="text-align: center;">${point.dDia}</td>
+														<td style="text-align: center;">${point.dGDCD}</td>
+														<td style="text-align: center;">${point.dTBHK}</td>
+														<td style="text-align: center;">${point.sXepLoai}</td>
+														<td style="text-align: center;">Tốt</td>
+													</tr>
+												</c:forEach>
 											</tbody>
 										</table>
-										<button type="button"
-													class="btn btn-primary" style="margin-left: 745px">Xác nhận</button>
+										<form action="<%=request.getContextPath()%>/renderPointAllSubjectServlet">
+											<input type="hidden" name="action" value="/filter">
+											<div class="">
+												<label>Phân loại: </label> 
+												<select id="search-loaiHS" name="search-loaiHS" style="width: auto;">
+													<option value="xuatSac" <c:if test="${loaiHS == 'Xuất sắc'}">selected</c:if>>Xuất sắc</option>
+													<option value="gioi" <c:if test="${loaiHS == 'Giỏi'}">selected</c:if>>Giỏi</option>
+													<option value="kha" <c:if test="${loaiHS == 'Khá'}">selected</c:if>>Khá</option>
+													<option value="trungBinh" <c:if test="${loaiHS == 'Trung Bình'}">selected</c:if>>Trung Bình</option>
+													<option value="yeu" <c:if test="${loaiHS == 'Yếu'}">selected</c:if>>Yếu</option>
+												</select>
+												<button type="submit" class="btn btn-primary">Lọc</button>
+											</div>
+										</form>
 									</div>
 								</div>
 							</div>
@@ -275,6 +288,11 @@
 	<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 	<script src="./js/app.js"></script>
 	<!-- <script src="./js/pagination.js"></script> -->
+	<script>
+        function printReport() {
+            window.print();
+        }
+    </script>
 
 </body>
 </html>

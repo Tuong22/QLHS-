@@ -342,9 +342,7 @@
 													</tr>
 													<tr>
 														<th data-sortable="true">Địa chỉ</th>
-															<td class="address">${sessionScope.hs.diaChi}
-																<i class="edit-infoStudent fa-solid fa-pen-to-square" style="line-height: 1"></i>
-															</td>
+															<td class="address">${sessionScope.hs.diaChi}</td>
 															
 													</tr>
 													<tr>

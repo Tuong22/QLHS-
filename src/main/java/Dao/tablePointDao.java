@@ -109,10 +109,6 @@ public class tablePointDao {
 				statement.setString(1, maHS);
 				ResultSet rs = statement.executeQuery();
 				while(rs.next()) {
-					System.out.println(rs.getString(1));
-					System.out.println(rs.getString(2));
-					System.out.println(rs.getString(3));
-					System.out.println(rs.getFloat(4));
 					return new QuaTrinh(rs.getString(1),rs.getString(2),rs.getString(3),rs.getFloat(4));
 				}
 			} catch (Exception e) {

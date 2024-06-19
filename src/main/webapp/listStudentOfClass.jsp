@@ -302,11 +302,10 @@
 														href="#" class="datatable-sorter">Địa chỉ</a></th>
 													<th data-sortable="true" style="width: 27%; text-align: center;"><a
 														href="#" class="datatable-sorter">Email</a></th>
-													<th data-sortable="true"><input
-														class="listStudentNotClass-input" type="hidden"
-														name="listStudentNotClass"> <input
-														class="className-input" type="hidden" name="className"></th>
-
+													<th data-sortable="true">
+														<input class="listStudentNotClass-input" type="hidden" name="listStudentNotClass">
+														<input class="className-input" type="hidden" name="className">
+													</th>
 												</tr>
 											</thead>
 											<tbody>

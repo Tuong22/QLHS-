@@ -182,7 +182,6 @@
 							</c:if>
 							</div>
 							
-							
 							<div class="card-body">
 								<div class="datatable-wrapper">
 								<c:if
@@ -228,14 +227,12 @@
 												<button type="submit"
 													class="btn btn-primary search-point-btn">Xem</button>
 
-												<a href="./insertPoint.jsp" <c:if test="${sessionScope.account.isAdmin != 3 && sessionScope.account.isAdmin != 1}">
-													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
-													               </c:if>><button type="button"
-														class="btn btn-primary search-point-btn" style="margin-left: 655px;">Nhập
-														điểm</button></a>
+												<a href="./renderPointAllSubjectServlet" <c:if test="${sessionScope.account.isAdmin != 3 && sessionScope.account.isAdmin != 1}">
+														aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
+													</c:if>>
+													<button type="button" class="btn btn-primary search-point-btn"">Điểm tổng kết</button></a>
 											</div>
 										</form>
-
 									</div>
 									</c:if>
 									<c:if
@@ -390,11 +387,9 @@
             window.print();
         }
     </script>
-
-
-
 	<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 	<script src="./js/app.js"></script>
+	
 
 </body>
 </html>
