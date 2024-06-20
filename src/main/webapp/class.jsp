@@ -92,7 +92,7 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/ChangeRule"
+								href="<%=request.getContextPath()%>/ChangeRuleServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
@@ -501,7 +501,90 @@
 
 
 	<script src="./js/app.js"></script>
-	<script src="./js/pagination.js"></script>
+	<script src="./js/app.js"></script>	
+	<script>
+	const editClassNameBtns = document.querySelectorAll(".className-edit-icon")
+	const removeClassBtns = document.querySelectorAll(".removeClass-icon")
+	const classNameEdits = document.querySelectorAll(".className-edit")
+	const classListData = document.querySelector(".card-body.class-list-data")
+	const showListStudentForm = document.querySelector(".card-body.show-student-of-class")
+	const changeClassNameForm = document.querySelector(".card-body.change-className")
+	const removeClassForm = document.querySelector(".card-body.remove-class")
+	const cancelChangeNameBtn = document.querySelector(".change-className-cancel-btn")
+	const cancelRemoveNameBtn = document.querySelector(".remove-class-cancel-btn")
+	const searchClassBtn = document.querySelector(".search-class-btn")
+	const addClassBtn = document.querySelector(".add-class-btn")
+	const listStdOfClassBtn = document.querySelector(".list-of-class-btn")
+	
+	function getParent(element, selector) {
+		while (element.parentElement) {
+			if (element.parentElement.matches(selector)) {
+				return element.parentElement
+			}
+			element = element.parentElement
+		}
+	}
+	editClassNameBtns.forEach(function(editClassNameBtn) {
+		editClassNameBtn.addEventListener('click', function() {
+			classListData.style.width = '50%'
+			changeClassNameForm.classList.remove('hidden')
+			classNameEdits.forEach(function(classNameEdit) {
+				classNameEdit.classList.remove("active")
+			});
+			removeClassBtns.forEach(function(removeClassBtn) {
+				removeClassBtn.classList.add("hidden")
+			})
+			getParent(editClassNameBtn, ".className-edit").classList.add("active")
+			searchClassBtn.classList.add("hidden")
+			addClassBtn.classList.add("hidden")
+			listStdOfClassBtn.classList.add("hidden")
+			document.getElementById("classNameOld").setAttribute("value", getParent(editClassNameBtn, ".className-edit").textContent)
+		})
+	});
+	removeClassBtns.forEach(function(removeClassBtn) {
+		removeClassBtn.addEventListener('click', function() {
+			classListData.style.width = '50%'
+			removeClassForm.classList.remove('hidden')
+			classNameEdits.forEach(function(classNameEdit) {
+				classNameEdit.classList.remove("active")
+			});
+			editClassNameBtns.forEach(function(editClassNameBtn) {
+				editClassNameBtn.classList.add("hidden")
+			});
+			getParent(removeClassBtn, ".className-edit").classList.add("active")
+			searchClassBtn.classList.add("hidden")
+			addClassBtn.classList.add("hidden")
+			listStdOfClassBtn.classList.add("hidden")
+			document.getElementById("classNameRemove").setAttribute("value", getParent(removeClassBtn, ".className-edit").textContent)
+		})
+	});
+	cancelChangeNameBtn.addEventListener('click', function() {
+		classListData.style.width = '100%'
+		changeClassNameForm.classList.add('hidden')
+		classNameEdits.forEach(function(classNameEdit) {
+			classNameEdit.classList.remove("active")
+		});
+		removeClassBtns.forEach(function(removeClassBtn) {
+			removeClassBtn.classList.remove("hidden")
+		})
+		searchClassBtn.classList.remove('hidden')
+		addClassBtn.classList.remove('hidden')
+		listStdOfClassBtn.classList.remove("hidden")
+	});
+	cancelRemoveNameBtn.addEventListener('click', function() {
+		classListData.style.width = '100%'
+		removeClassForm.classList.add('hidden')
+		classNameEdits.forEach(function(classNameEdit) {
+			classNameEdit.classList.remove("active")
+		});
+		editClassNameBtns.forEach(function(editClassNameBtn) {
+			editClassNameBtn.classList.remove("hidden")
+		});
+		searchClassBtn.classList.remove('hidden')
+		addClassBtn.classList.remove('hidden')
+		listStdOfClassBtn.classList.remove("hidden")
+	});
+	</script>
 
 	<script>
 		const addClass = document.querySelector('.add-class-btn')

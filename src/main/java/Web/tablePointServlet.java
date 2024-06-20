@@ -2,6 +2,8 @@ package Web;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.InputStream;
+import javax.servlet.annotation.MultipartConfig;
 import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,6 +17,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+
+import javax.servlet.http.Part;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -37,6 +45,7 @@ import Model.TraCuuKhoi;
 import Model.tablePointSubjectClass;
 
 @WebServlet("/tablePointServlet")
+@MultipartConfig
 public class tablePointServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -116,7 +125,30 @@ public class tablePointServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
+        Part filePart = request.getPart("file");
+        try (InputStream fileContent = filePart.getInputStream();
+             Workbook workbook = new XSSFWorkbook(fileContent)) {
+
+            Sheet sheet = workbook.getSheetAt(0);
+            int count = 0;
+            for (Row row : sheet) {
+                String maHS = row.getCell(0).getStringCellValue();
+                String maMH = row.getCell(1).getStringCellValue();
+                String maHK = row.getCell(2).getStringCellValue();
+                float diem = (float) row.getCell(3).getNumericCellValue();
+                String maLHKT = row.getCell(4).getStringCellValue();
+                TablePointDao.InputPoint(maHS, maMH, maHK, diem, maLHKT);
+                count++;
+            }
+            if (count>0) {
+            	request.setAttribute("messageSuccess", "Nhập điểm thành công!");
+            } else {
+            	request.setAttribute("messageError", "Nhập điểm thất bại!");
+            }
+            renderClassAndSubject(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

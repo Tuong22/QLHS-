@@ -85,7 +85,7 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link active"
-								href="<%=request.getContextPath()%>/ChangeRule"
+								href="<%=request.getContextPath()%>/ChangeRuleServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
@@ -262,7 +262,7 @@
 												<header class="change-rule-top">
 													<h5>Thay đổi số tuổi tối thiểu, tuổi tối đa</h5>
 												</header>
-												<form action="<%=request.getContextPath()%>/ChangeRule">
+												<form action="<%=request.getContextPath()%>/ChangeRuleServlet">
 													<input type="hidden" name="action" value="/updateTuoi">
 													<div class="change-rule-container">
 
@@ -313,7 +313,7 @@
 												<header class="change-rule-top">
 													<h5>Thay đổi sỉ số tối đa của các lớp</h5>
 												</header>
-												<form action="<%=request.getContextPath()%>/ChangeRule">
+												<form action="<%=request.getContextPath()%>/ChangeRuleServlet">
 													<input type="hidden" name="action" value="/updateSiSo">
 													<div class="change-rule-container">
 														<div class="change-rule-group rule2-max-number">
@@ -345,7 +345,7 @@
 												<header class="change-rule-top">
 													<h5>Thay đổi điểm tối thiểu, điểm tối đa</h5>
 												</header>
-												<form action="<%=request.getContextPath()%>/ChangeRule">
+												<form action="<%=request.getContextPath()%>/ChangeRuleServlet">
 													<input type="hidden" name="action" value="/updateDiem">
 													<div class="change-rule-container">
 
@@ -390,7 +390,7 @@
 												<header class="change-rule-top">
 													<h5>Thay đổi điểm đạt môn</h5>
 												</header>
-												<form action="<%=request.getContextPath()%>/ChangeRule">
+												<form action="<%=request.getContextPath()%>/ChangeRuleServlet">
 													<input type="hidden" name="action" value="/updateDiemDat">
 													<div class="change-rule-container">
 														<div class="change-rule-group rule5-point">
@@ -424,7 +424,7 @@
 												<header class="change-rule-top">
 													<h5>Thêm quy định</h5>
 												</header>
-												<form action="<%=request.getContextPath()%>/ChangeRule">
+												<form action="<%=request.getContextPath()%>/ChangeRuleServlet">
 													<input type="hidden" name="action" value="/insert">
 													<div class="change-rule-container">
 														<div class="change-rule-group ruleX">

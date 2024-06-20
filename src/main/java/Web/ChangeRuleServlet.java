@@ -19,7 +19,7 @@ import Model.ChangeRule;
 import Model.Mon;
 import Model.TraCuuKhoi;
 
-@WebServlet("/ChangeRule")
+@WebServlet("/ChangeRuleServlet")
 public class ChangeRuleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private changeRuleDao ChangeRuleDao;

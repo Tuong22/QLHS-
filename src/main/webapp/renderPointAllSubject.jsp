@@ -83,7 +83,7 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/ChangeRule" aria-expanded="false"> <span>
+								href="<%=request.getContextPath()%>/ChangeRuleServlet" aria-expanded="false"> <span>
 										<i class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
 							</a></li>
@@ -158,6 +158,7 @@
 													<select class="search-class" name="search-lop">
 														<c:forEach var="c" items="${DSL}">
 															<option <c:if test="${nameLop == c.tenLop}">selected</c:if>>${c.tenLop}</option>
+															
 														</c:forEach>
 													</select> 
 												</div>

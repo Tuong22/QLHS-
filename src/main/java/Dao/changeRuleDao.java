@@ -331,7 +331,7 @@ public class changeRuleDao {
 						"CALL CalculatePassRateAndRatioSemester('HK2', 'L6', 'NH1', @SLDat, @TiLe);\r\n",
 						"CALL CalculatePassRateAndRatioSemester('HK2', 'L7', 'NH1', @SLDat, @TiLe);\r\n",
 						"CALL CalculatePassRateAndRatioSemester('HK2', 'L8', 'NH1', @SLDat, @TiLe);\r\n",
-						"CALL CalculatePassRateAndRatioSemester('HK2', 'L9', 'NH1', @SLDat, @TiLe);" };
+						"CALL CalculatePassRateAndRatioSemester('HK2', 'L9', 'NH1', @SLDat, @TiLe);\r\n"};
 				for (String call : calls) {
 					callStatement.execute(call);
 				}

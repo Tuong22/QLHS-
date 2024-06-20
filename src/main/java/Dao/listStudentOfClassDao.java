@@ -12,6 +12,8 @@ import javax.sql.DataSource;
 import java.sql.Statement;
 
 import Model.HocSinh;
+import Model.LoaiHinhKiemTra;
+import Model.Mon;
 
 public class listStudentOfClassDao {
 	private DataSource datasource;
@@ -116,6 +118,71 @@ public class listStudentOfClassDao {
 		}
 		return isvalid;
 	}
+	
+	// hàm tạo bảng bảng điểm môn
+		public void createTablePointEmpty(String[] listStdIdSelected, String nameClass, List<Mon> DSMH)
+				throws ClassNotFoundException {
+			String sql = "INSERT INTO BANGDIEMMON VALUES (?,?,?,?,?);";
+			String classID = selectClassIDbyName(nameClass);
+			String hk1 = "HK1";
+			try (Connection connection = datasource.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+				// part is MaHS
+				for (String part : listStdIdSelected) {
+					for (int i = 0; i < DSMH.size(); i++) {
+						statement.setString(1, part + "-" + DSMH.get(i).getMaMH() + "-" + hk1);
+						statement.setString(2, "NH1");
+						statement.setString(3, classID);
+						statement.setString(4, DSMH.get(i).getMaMH());
+						statement.setString(5, hk1);
+						statement.executeUpdate();
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// hàm tạo bảng chi tiết bảng điểm môn
+		public void createCTTablePointEmpty(String[] listStdIdSelected, List<Mon> DSMH) throws ClassNotFoundException {
+			String sql = "INSERT INTO CT_BANGDIEMMON_HS VALUES (?,?,?,?);";
+			String hk1 = "HK1";
+			try (Connection connection = datasource.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+				// part is MaHS
+				for (String part : listStdIdSelected) {
+					for (int i = 0; i < DSMH.size(); i++) {
+						statement.setString(1, "CT-" + part + "-" + DSMH.get(i).getMaMH() + "-" + hk1);
+						statement.setString(2, part + "-" + DSMH.get(i).getMaMH() + "-" + hk1);
+						statement.setString(3, part);
+						statement.setString(4, null);
+						statement.executeUpdate();
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// hàm tạo bảng chi tiết loại hình kiểm tra
+		public void createCTLHKTEmpty(String[] listStdIdSelected, List<Mon> DSMH, List<LoaiHinhKiemTra> DSLHKT)
+				throws ClassNotFoundException {
+			String sql = "INSERT INTO CT_BANGDIEMMON_LHKT VALUES (?,?,?);";
+			String hk1 = "HK1";
+			try (Connection connection = datasource.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+				// part is MaHS
+				for (String part : listStdIdSelected) {
+					for (int i = 0; i < DSMH.size(); i++) {
+						for (int e = 0; e < DSLHKT.size(); e++) {
+							statement.setString(1, "CT-" + part + "-" + DSMH.get(i).getMaMH() + "-" + hk1);
+							statement.setString(2, DSLHKT.get(e).getMaLHKT());
+							statement.setFloat(3, 0);
+							statement.executeUpdate();
+						}
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 
 	public String selectClassIDbyName(String name) throws ClassNotFoundException {
 		String SELECT_ID_BY_NAME = "SELECT MaLop FROM lop WHERE TenLop = ?";

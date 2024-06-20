@@ -87,7 +87,7 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/ChangeRule"
+								href="<%=request.getContextPath()%>/ChangeRuleServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
@@ -168,7 +168,8 @@
 														lớp: </label> <select class="search-class" name="search-lop"
 														style="margin-bottom: 50px;">
 														<c:forEach var="c" items="${DSL}">
-															<option <c:if test="${searchClass == c.tenLop}">selected</c:if>>${c.tenLop}</option>
+															<option
+																<c:if test="${searchClass == c.tenLop}">selected</c:if>>${c.tenLop}</option>
 														</c:forEach>
 
 													</select>
@@ -186,26 +187,27 @@
 													<button type="submit"
 														class="btn btn-primary show-list-student-of-class mb-1">Xem</button>
 												</div>
+												
+											
 										</div>
+										<div class="add-class">
+													<button class="btn btn-primary ms-auto no-print" onclick="printReport()">
+														<i class="fa-solid fa-print""></i> Xuất danh sách
+													</button>
+												</div>
 
 										</form>
 										<div class="datatable-container">
-											<table id="datatablesListStudent" class="datatable-table">
+											<table id="datatablesListStudent"
+												class="datatable-table mb-4">
 												<thead>
 													<tr>
-														<th data-sortable="true" style="width: 6%; text-align: center;"><a
-															href="#" class="datatable-sorter">STT</a></th>
-														<th data-sortable="true" aria-sort="descending"
-															class="datatable-descending" style="width: 20%; text-align: center;"><a
-															href="#" class="datatable-sorter">Tên</a></th>
-														<th data-sortable="true" style="width: 12%; text-align: center;"><a
-															href="#" class="datatable-sorter">Giới Tính</a></th>
-														<th data-sortable="true" style="width: 14%; text-align: center;"><a
-															href="#" class="datatable-sorter">Ngày sinh</a></th>
-														<th data-sortable="true" style="width: 20%; text-align: center;"><a
-															href="#" class="datatable-sorter">Địa chỉ</a></th>
-														<th data-sortable="true" style="width: 28%; text-align: center;"><a
-															href="#" class="datatable-sorter">Email</a></th>
+														<th style="width: 6%; text-align: center;">STT</th>
+														<th style="width: 20%; text-align: center;">Tên</th>
+														<th style="width: 12%; text-align: center;">Giới Tính</th>
+														<th style="width: 14%; text-align: center;">Ngày sinh</th>
+														<th style="width: 20%; text-align: center;">Địa chỉ</th>
+														<th style="width: 28%; text-align: center;">Email</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -228,10 +230,12 @@
 										<div class="datatablefooter justify-content-between">
 											<button
 												class="btn btn-primary list-student-of-class-cancel-btn">
-												<a href="./class.jsp">Quay lại</a>
+												<a href="<%=request.getContextPath()%>/infoClassServlet">Quay
+													lại</a>
 											</button>
 											<button
-												class="btn btn-primary list-student-of-class-confirm-btn" <c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
+												class="btn btn-primary list-student-of-class-confirm-btn"
+												<c:if test="${sessionScope.account.isAdmin != 1 && sessionScope.account.isAdmin != 4}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>>
 												<a>Thêm học sinh</a>
@@ -279,7 +283,7 @@
 
 
 								<div id="listStudentNotClass" class="datatable-container hidden"
-									style="width: 85%; margin: auto;">
+									style="width: 85%; margin: auto; animation: modalFadeIn ease 0.4s; ">
 									<header class="modal-header"> Danh sách học sinh chưa
 										có lớp </header>
 
@@ -289,23 +293,16 @@
 										<table id="datatablesListStudent" class="datatable-table">
 											<thead>
 												<tr>
-													<th data-sortable="true" style="width: 6%; text-align: center;"><a
-														href="#" class="datatable-sorter">STT</a></th>
-													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 20%; text-align: center;"><a
-														href="#" class="datatable-sorter">Tên</a></th>
-													<th data-sortable="true" style="width: 14%; text-align: center;"><a
-														href="#" class="datatable-sorter">Giới Tính</a></th>
-													<th data-sortable="true" style="width: 15%; text-align: center;"><a
-														href="#" class="datatable-sorter">Ngày sinh</a></th>
-													<th data-sortable="true" style="width: 20%; text-align: center;"><a
-														href="#" class="datatable-sorter">Địa chỉ</a></th>
-													<th data-sortable="true" style="width: 27%; text-align: center;"><a
-														href="#" class="datatable-sorter">Email</a></th>
-													<th data-sortable="true">
-														<input class="listStudentNotClass-input" type="hidden" name="listStudentNotClass">
-														<input class="className-input" type="hidden" name="className">
-													</th>
+													<th style="width: 6%; text-align: center;">STT</th>
+													<th style="width: 20%; text-align: center;">Tên</th>
+													<th style="width: 14%; text-align: center;">Giới Tính</th>
+													<th style="width: 15%; text-align: center;">Ngày sinh</th>
+													<th style="width: 20%; text-align: center;">Địa chỉ</th>
+													<th style="width: 27%; text-align: center;">Email</th>
+													<th><input class="listStudentNotClass-input"
+														type="hidden" name="listStudentNotClass"> <input
+														class="className-input" type="hidden" name="className"></th>
+
 												</tr>
 											</thead>
 											<tbody>
@@ -353,12 +350,18 @@
 			<script src="./js/app.js"></script>
 			<script src="./js/pagination.js"></script>
 			<script>
-				const addListStudentBtn = document
-						.querySelector(".list-student-of-class-confirm-btn")
+				const addListStudentBtn = document.querySelector(".list-student-of-class-confirm-btn")
+				const cancelAddListStudentBtn = document.querySelector(".cancel-list-students-btn")
 				addListStudentBtn.addEventListener('click', function() {
 					document.getElementById("listStudentNotClass").classList
 							.remove('hidden')
+					document.getElementById("listStudentNotClass").scrollIntoView({ behavior: "smooth" });
 				})
+				cancelAddListStudentBtn.addEventListener('click', function() {
+					document.getElementById("listStudentNotClass").classList
+							.add('hidden')
+				})
+				
 			</script>
 			<script> 
 			function getParent(element, selector) {
@@ -372,7 +375,7 @@
 			
 			function getSibling(element, className) {
 			    const parent = element.parentElement;
-			    if (!parent) return null; // Kiểm tra nếu không có phần tử cha
+			    if (!parent) return null;
 			    
 			    const siblings = parent.children;
 			    for (let i = 0; i < siblings.length; i++) {
@@ -381,7 +384,7 @@
 			        }
 			    }
 			    
-			    return null; // Trả về null nếu không tìm thấy phần tử ngang cấp với class truyền vào
+			    return null;
 			}
 			
 			document.getElementById('confirm-list-students-btn').addEventListener('click', function() {
@@ -397,6 +400,10 @@
 			    document.querySelector(".className-input").setAttribute("value", document.querySelector(".search-class").value)
 			    console.log(document.querySelector(".className-input").value);
 			});
+			
+			function printReport() {
+	            window.print();
+	        }
 			</script>
 </body>
 </html>

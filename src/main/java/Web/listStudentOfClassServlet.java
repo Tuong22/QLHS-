@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import Dao.infoClassDao;
+import Dao.infoSubjectDao;
 import Dao.listStudentOfClassDao;
 import Model.HocSinh;
+import Model.LoaiHinhKiemTra;
 import Model.Lop;
 import Model.Mon;
 
@@ -25,6 +27,7 @@ public class listStudentOfClassServlet extends HttpServlet {
 
 	private listStudentOfClassDao ListStudentOfClassDao;
 	private infoClassDao InfoClassDao;
+	private infoSubjectDao InfoSubjectDao;
 	@Resource(name = "jdbc/student_management")
 	private DataSource datasource;
 
@@ -33,6 +36,7 @@ public class listStudentOfClassServlet extends HttpServlet {
 		super.init();
 		ListStudentOfClassDao = new listStudentOfClassDao(datasource);
 		InfoClassDao = new infoClassDao(datasource);
+		InfoSubjectDao = new infoSubjectDao(datasource);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -101,9 +105,14 @@ public class listStudentOfClassServlet extends HttpServlet {
 		String className = request.getParameter("className");
 		String listEmailOfStdNotClass = request.getParameter("listStudentNotClass");
 		String[] emailSplit = ListStudentOfClassDao.splitStringByComma(listEmailOfStdNotClass);
-		String[] emailList = ListStudentOfClassDao.selectStdIDByEmail(emailSplit);
-		
-		boolean isvalid = ListStudentOfClassDao.addStdNotClassToClass(emailList, className);
+		String[] stdIdList = ListStudentOfClassDao.selectStdIDByEmail(emailSplit);
+		List<Mon> DSMH = InfoSubjectDao.selectAllSubject();
+		List<LoaiHinhKiemTra> DSLHKT = InfoSubjectDao.selectLHKT();
+
+		boolean isvalid = ListStudentOfClassDao.addStdNotClassToClass(stdIdList, className);
+		ListStudentOfClassDao.createTablePointEmpty(stdIdList, className, DSMH);
+		ListStudentOfClassDao.createCTTablePointEmpty(stdIdList, DSMH);
+		ListStudentOfClassDao.createCTLHKTEmpty(stdIdList, DSMH, DSLHKT);
 
 		if (isvalid) {
 			request.setAttribute("messageInfoInsertToClass", "Thêm học sinh vào lớp thành công.");

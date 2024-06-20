@@ -105,7 +105,7 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/ChangeRule"
+								href="<%=request.getContextPath()%>/ChangeRuleServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
@@ -142,20 +142,20 @@
 						<li class="nav-item d-block d-xl-none"><a
 							class="nav-link sidebartoggler nav-icon-hover"
 							id="headerCollapse" href="javascript:void(0)"> <i
-								class="fa-solid fa-bars ms-auto no-print"></i>
+								class="fa-solid fa-bars"></i>
 						</a></li>
-						<li class="nav-item"><a class="nav-link nav-icon-hover ms-auto no-print"
-							href="javascript:void(0)"> <i class="fa-regular fa-bell ms-auto no-print"></i>
-								<div class="notification ms-auto no-print"></div>
+						<li class="nav-item"><a class="nav-link nav-icon-hover"
+							href="javascript:void(0)"> <i class="fa-regular fa-bell"></i>
+								<div class="notification"></div>
 						</a></li>
 					</ul>
 					<div class="navbar-collapse justify-content-end px-0"
 						id="navbarNav">
 						<ul
-							class="navbar-nav flex-row ms-auto align-items-center justify-content-end ms-auto no-print">
+							class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
 							<a href="" target="_blank">${sessionScope.account.username}</a>
 							<li class="nav-item dropdown"><a
-								class="nav-link nav-icon-hover ms-auto no-print" href="javascript:void(0)"
+								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
 									<img src="./image/captain_yami-sukehiro.jpg" alt="" width="35"
 									height="35" class="rounded-circle">
@@ -172,200 +172,244 @@
 					<div class="align-items-stretch">
 						<div class="card">
 							<div class="card-header">
-							<c:if
-									test="${sessionScope.account.isAdmin != 5}">
-								<i class="fas fa-table me-1"></i> BẢNG ĐIỂM MÔN LỚP
+								<c:if test="${sessionScope.account.isAdmin != 5}">
+									<i class="fas fa-table me-1"></i> BẢNG ĐIỂM MÔN LỚP
 								</c:if>
 								<c:if
 									test="${sessionScope.account.username == sessionScope.hs.maHS}">
 									<i class="fas fa-table me-1"></i> BẢNG ĐIỂM MÔN HỌC SINH
-							</c:if>
+								</c:if>
 							</div>
-							
-							<div class="card-body">
+							<div class="card-body pb-2">
 								<div class="datatable-wrapper">
-								<c:if
-										test="${sessionScope.account.isAdmin != 5}">
-									<div class="datatable-top">
-										<form action="<%=request.getContextPath()%>/tablePointServlet">
-											<input type="hidden" name="action" value="/pointStudent">
-											<div class="datatable-selection">
-											
-												<div class="">
-													<label>Lớp: </label> <select class="search-class"
-														name="search-lop">
-														<c:forEach var="c" items="${DSL}">
-														<option <c:if test="${nameLop == c.tenLop}">selected</c:if>>${c.tenLop}</option>
-														</c:forEach>
+									<c:if test="${sessionScope.account.isAdmin != 5}">
+										<div class="datatable-top">
+											<form
+												action="<%=request.getContextPath()%>/tablePointServlet">
+												<input type="hidden" name="action" value="/pointStudent">
+												<div class="datatable-selection">
 
-													</select>
+													<div class="">
+														<label>Lớp: </label> <select class="search-class"
+															name="search-lop">
+															<c:forEach var="c" items="${DSL}">
+																<option
+																	<c:if test="${nameLop == c.tenLop}">selected</c:if>>${c.tenLop}</option>
+															</c:forEach>
 
-												</div>
+														</select>
 
-												<div class="">
-													<label>Học kỳ: </label> <select id="search-hk"
-														name="search-hk">
-														<option <c:if test="${nameHocKy == '1'}">selected</c:if>>1</option>
-														<option <c:if test="${nameHocKy == '2'}">selected</c:if>>2</option>
-													</select>
-												</div>
+													</div>
+
+													<div class="">
+														<label>Học kỳ: </label> <select id="search-hk"
+															name="search-hk">
+															<option <c:if test="${nameHocKy == '1'}">selected</c:if>>1</option>
+															<option <c:if test="${nameHocKy == '2'}">selected</c:if>>2</option>
+														</select>
+													</div>
 
 													<div class="">
 
 														<label>Môn: </label> <select id="search-mon"
 															name="search-mon">
 															<c:forEach var="subject" items="${DSMH}">
-															<option <c:if test="${nameMon == subject.tenMH}">selected</c:if>>${subject.tenMH}</option>
+																<option
+																	<c:if test="${nameMon == subject.tenMH}">selected</c:if>>${subject.tenMH}</option>
 															</c:forEach>
 														</select>
 													</div>
-													
-											</div>
 
-											
-											<div class="search-point">
-												<button type="submit"
-													class="btn btn-primary search-point-btn">Xem</button>
+												</div>
 
-												<a href="./renderPointAllSubjectServlet" <c:if test="${sessionScope.account.isAdmin != 3 && sessionScope.account.isAdmin != 1}">
+
+												<div class="search-point">
+													<button type="submit"
+														class="btn btn-primary search-point-btn">Xem</button>
+													<a href="<%=request.getContextPath()%>/renderPointAllSubjectServlet">
+														<button type="button" class="btn btn-primary">Điểm
+															tổng kết</button>
+													</a>
+													<button type="button"
+														class="btn btn-primary import-point-btn float-end" <c:if test="${sessionScope.account.isAdmin != 3 && sessionScope.account.isAdmin != 1}">
 														aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													</c:if>>
-													<button type="button" class="btn btn-primary search-point-btn"">Điểm tổng kết</button></a>
-											</div>
-										</form>
-									</div>
-									</c:if>
-									<c:if
-										test="${sessionScope.account.isAdmin != 5}">
-									<div class="datatable-container">
-										<table id="datatablesPoint" class="datatable-table">
-											<thead>
-												<tr>
-													<th data-sortable="true" style="width: 5%; text-align: center;"><a
-														href="#" class="datatable-sorter">STT</a></th>
-													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 25%; text-align: center;"><a
-														href="#" class="datatable-sorter">Tên</a></th>
-													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 10%; text-align: center;"><a
-														href="#" class="datatable-sorter">Miệng</a></th>
-													<th data-sortable="true" style="width: 10%; text-align: center;"><a
-														href="#" class="datatable-sorter">15'</a></th>
-													<th data-sortable="true" style="width: 10%; text-align: center;"><a
-														href="#" class="datatable-sorter">1T</a></th>
-													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 10%; text-align: center;"><a
-														href="#" class="datatable-sorter">HK</a></th>
-													<th data-sortable="true" style="width: 20%; text-align: center;"><a
-														href="#" class="datatable-sorter">TB môn</a></th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach var="point" items="${DSD}">
-													<tr data-index="0">
-														<td style="text-align: center;"><%=i++%></td>
-														<td>${point.tenHS}</td>
-														<td>${point.mieng}</td>
-														<td>${point.muoiLamPhut}</td>
-														<td>${point.motTiet}</td>
-														<td>${point.hocKy}</td>
-														<td>${point.tbMon}</td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
-									</div>
-									</c:if>
-									
-									
-									<c:if
-										test="${sessionScope.account.username == sessionScope.hs.maHS}">
-										
-										<button class="btn btn-primary ms-auto no-print" onclick="printReport()">
-												<i class="fa-solid fa-print""></i> In báo cáo
-											</button>
+														<i class="fa-solid fa-pen-nib pe-2"></i>Nhập điểm</button>
+												</div>
+											</form>
 
+
+											<div class="importFileExcelModal modal">
+												<div class="modal-container importFileExcel-modal-container"
+													style="min-height: 200px">
+													<div class="icon-close js-importFileExcel-modal-close">
+														<i class="modal-icon-close fa-solid fa-xmark"></i>
+													</div>
+													<header class="modal-header p-4">Nhập điểm</header>
+													<form method="post" enctype="multipart/form-data"
+														action="<%=request.getContextPath()%>/tablePointServlet"
+														class="d-flex justify-content-between p-4">
+														<label for="chooseFile" class="flex-1">Chọn file:</label>
+														<input id="chooseFile" type="file" name="file"><br>
+														<input type="submit" value="Upload" class="btn btn-primary">
+													</form>
+												</div>
+											</div>
+										</div>
+									</c:if>
+									<c:if test="${sessionScope.account.isAdmin != 5}">
 										<div class="datatable-container">
-										<h2 style="text-align: center;">BẢNG ĐIỂM HỌC SINH</h2>
-											<table id="datatablesInfoStudent" class="datatable-table">
+											<table id="datatablesPoint" class="datatable-table">
 												<thead>
 													<tr>
-														<th data-sortable="true" aria-sort="descending"
-															class="datatable-descending">Mã học sinh</th>
+														<th style="width: 5%; text-align: center;">STT</th>
+														<th style="width: 25%; text-align: center;">Tên</th>
+														<th style="width: 10%; text-align: center;">Miệng</th>
+														<th style="width: 10%; text-align: center;">15'</th>
+														<th style="width: 10%; text-align: center;">1 Tiết</th>
+														<th style="width: 10%; text-align: center;">Học kỳ</th>
+														<th style="width: 20%; text-align: center;">Trung bình môn</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach var="point" items="${DSD}">
+														<tr data-index="0">
+															<td style="text-align: center;"><%=i++%></td>
+															<td>${point.tenHS}</td>
+															<td style="text-align: center;">${point.mieng}</td>
+															<td style="text-align: center;">${point.muoiLamPhut}</td>
+															<td style="text-align: center;">${point.motTiet}</td>
+															<td style="text-align: center;">${point.hocKy}</td>
+															<td style="text-align: center;"><fmt:formatNumber
+																	value="${point.tbMon}" type="number" maxFractionDigits="1" /></td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+											<c:if
+												test="${not empty requestScope.messageError}">
+												<div id="toast">
+													<div class="toast toast--error">
+														<div class="toast__icon">
+															<i class="fa-solid  fa-triangle-exclamation"></i>
+														</div>
+														<div class="toast__body">
+															<h3 class="toast__title">Thất bại</h3>
+															<p class="toast__msg">Nhập điểm không được</p>
+														</div>
+														<div class="toast__close">
+															<i class="fa-solid fa-xmark"></i>
+														</div>
+													</div>
+												</div>
+											</c:if>
+											
+									<c:if test="${not empty requestScope.messageSuccess}">
+												<div id="toast">
+													<div class="toast toast--success">
+														<div class="toast__icon">
+															<i class="fa-solid fa-circle-check"></i>
+														</div>
+														<div class="toast__body">
+															<h3 class="toast__title">Thành công</h3>
+															<p class="toast__msg">Nhập điểm thành
+																công.</p>
+														</div>
+														<div class="toast__close">
+															<i class="fa-solid fa-xmark"></i>
+														</div>
+													</div>
+												</div>
+											</c:if>
+											<button class="btn btn-primary ms-auto no-print" onclick="printReport()">
+													<i class="fa-solid fa-print""></i> In bảng điểm
+												</button>
+										</div>
+									</c:if>
+
+									<c:if
+										test="${sessionScope.account.username == sessionScope.hs.maHS}">
+
+										<button class="btn btn-primary ms-auto no-print"
+											onclick="printReport()">
+											<i class="fa-solid fa-print""></i> Xuất bảng điểm
+										</button>
+
+										<div class="datatable-container mb-4">
+											<h2 style="text-align: center;">BẢNG ĐIỂM HỌC SINH</h2>
+											<table id="datatablesInfoOneStudent" class="datatable-table">
+												<thead>
+													<tr>
+														<th>Mã học sinh</th>
 														<td class="name">${sessionScope.hs.maHS}</td>
-														<th data-sortable="true" aria-sort="descending"
-															class="datatable-descending">Giới tính</th>
+														<th>Giới tính</th>
 														<td class="gender">${sessionScope.hs.gioiTinh}</td>
-														<th data-sortable="true">Địa chỉ</th>
-															<td class="address">${sessionScope.hs.diaChi}
-															</td>
-														<th data-sortable="true">Lớp</th>
+														<th>Địa chỉ</th>
+														<td class="address">${sessionScope.hs.diaChi}</td>
+														<th>Lớp</th>
 														<td>${sessionScope.l.tenLop}</td>
 													</tr>
 													<tr>
-														<th data-sortable="true" aria-sort="descending"
-															class="datatable-descending">Họ và tên</th>
+														<th>Họ và tên</th>
 														<td class="name">${sessionScope.hs.tenHS}</td>
-														<th data-sortable="true">Ngày sinh</th>
-															<td class="year">${sessionScope.hs.namSinh}</td>
-														<th data-sortable="true">Email</th>
-															<td class="email d-flex justify-content-between border-0">
-															${sessionScope.hs.email} </td>
-														<th data-sortable="true">Tình trạng</th>
+														<th>Ngày sinh</th>
+														<td class="year">${sessionScope.hs.namSinh}</td>
+														<th>Email</th>
+														<td class="email d-flex justify-content-between border-0">
+															${sessionScope.hs.email}</td>
+														<th>Tình trạng</th>
 														<td>Đang học</td>
 													</tr>
 												</thead>
 											</table>
 										</div>
-										<div class="datatable-container">
-										<h5>Học kỳ 1 - Năm học 2023-2024</h5>
-										<table id="datatablesPoint" class="datatable-table">
-											<thead>
-												<tr>
-													<th data-sortable="true" style="width: 5%; text-align: center;"><a
-														href="#" class="datatable-sorter">STT</a></th>
-													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 25%; text-align: center;"><a
-														href="#" class="datatable-sorter">Tên môn</a></th>
-													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 10%; text-align: center;"><a
-														href="#" class="datatable-sorter">Miệng</a></th>
-													<th data-sortable="true" style="width: 10%; text-align: center;"><a
-														href="#" class="datatable-sorter">15'</a></th>
-													<th data-sortable="true" style="width: 10%; text-align: center;"><a
-														href="#" class="datatable-sorter">1T</a></th>
-													<th data-sortable="true" aria-sort="descending"
-														class="datatable-descending" style="width: 10%; text-align: center;"><a
-														href="#" class="datatable-sorter">HK</a></th>
-													<th data-sortable="true" style="width: 20%; text-align: center;"><a
-														href="#" class="datatable-sorter">TB môn</a></th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach var="p" items="${p}">
-													<tr data-index="0">
-														<td style="text-align: center;"><%=i++%></td>
-														<td>${p.tenHS}</td>
-														<td style="text-align: center;"><fmt:formatNumber value="${p.mieng}" type="number" maxFractionDigits="1" /></td>
-														<td style="text-align: center;"><fmt:formatNumber value="${p.muoiLamPhut}" type="number" maxFractionDigits="1" /></td>
-														<td style="text-align: center;"><fmt:formatNumber value="${p.motTiet}" type="number" maxFractionDigits="1" /></td>
-														<td style="text-align: center;"><fmt:formatNumber value="${p.hocKy}" type="number" maxFractionDigits="1" /></td>
-														<td style="text-align: center;"><fmt:formatNumber value="${p.tbMon}" type="number" maxFractionDigits="1" /></td>
+										<div class="datatable-container mt-4 mb-4">
+											<h5>Học kỳ 1 - Năm học 2023-2024</h5>
+											<table id="datatablesOnePoint" class="datatable-table">
+												<thead>
+													<tr>
+														<th style="width: 5%; text-align: center;">STT</th>
+														<th style="width: 25%; text-align: center;">Tên</th>
+														<th style="width: 10%; text-align: center;">Miệng</th>
+														<th style="width: 10%; text-align: center;">15'</th>
+														<th style="width: 10%; text-align: center;">1T</th>
+														<th style="width: 10%; text-align: center;">HK</th>
+														<th style="width: 20%; text-align: center;">TB môn</th>
 													</tr>
-												</c:forEach>
-												<tr>
-													<td></td>
-													<td><b>Trung bình học kỳ</b></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td style="text-align: center;"><fmt:formatNumber value="${sessionScope.pAVG.diemTBHK}" type="number" maxFractionDigits="2" /></td>
-												</tr>
-											</tbody>
-										</table>
-										<h5>Học kỳ 2 - Năm học 2023-2024</h5>
-									</div>
+												</thead>
+												<tbody>
+													<c:forEach var="p" items="${p}">
+														<tr data-index="0">
+															<td style="text-align: center;"><%=i++%></td>
+															<td>${p.tenHS}</td>
+															<td style="text-align: center;"><fmt:formatNumber
+																	value="${p.mieng}" type="number" maxFractionDigits="1" /></td>
+															<td style="text-align: center;"><fmt:formatNumber
+																	value="${p.muoiLamPhut}" type="number"
+																	maxFractionDigits="1" /></td>
+															<td style="text-align: center;"><fmt:formatNumber
+																	value="${p.motTiet}" type="number"
+																	maxFractionDigits="1" /></td>
+															<td style="text-align: center;"><fmt:formatNumber
+																	value="${p.hocKy}" type="number" maxFractionDigits="1" /></td>
+															<td style="text-align: center;"><fmt:formatNumber
+																	value="${p.tbMon}" type="number" maxFractionDigits="1" /></td>
+														</tr>
+													</c:forEach>
+													<tr>
+														<td></td>
+														<td><b>Trung bình học kỳ</b></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td style="text-align: center;"><fmt:formatNumber
+																value="${sessionScope.pAVG.diemTBHK}" type="number"
+																maxFractionDigits="2" /></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
 									</c:if>
 								</div>
 							</div>
@@ -380,16 +424,36 @@
 		<!--  Main wrapper -->
 
 	</div>
-	
-    
-    <script>
-        function printReport() {
-            window.print();
-        }
-    </script>
+
+
+
 	<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 	<script src="./js/app.js"></script>
-	
+	<script>
+	const importPointBtn = document.querySelector('.import-point-btn')
+	const modalImportPoint = document.querySelector('.importFileExcelModal')
+	const modalImportPointContainer = document.querySelector('.importFileExcel-modal-container')
+	const modalImportPointClose = document.querySelector('.js-importFileExcel-modal-close')
 
+	function OpenModalImportPoint() {
+		modalImportPoint.classList.add('open')
+	}
+
+	function HideModalImportPoint() {
+		modalImportPoint.classList.remove('open')
+	}
+
+	importPointBtn.addEventListener('click', OpenModalImportPoint)
+
+
+	modalImportPointClose.addEventListener('click', HideModalImportPoint)
+	modalImportPoint.addEventListener('click', HideModalImportPoint)
+	modalImportPointContainer.addEventListener('click', function(event) { event.stopPropagation() })
+	
+	function printReport() {
+            window.print();
+        }
+	</script>
+	
 </body>
 </html>

@@ -17,7 +17,7 @@
 <style <%@ include file="./css/style.css" %>></style>
 
 </head>
-<body>
+<body style="background-color: #484848">
 	<%
 	int i = 1;
 	%>
@@ -98,7 +98,7 @@
 								</span> <span class="hide-menu">Báo cáo</span>
 							</a></li>
 							<li class="sidebar-item"><a class="sidebar-link"
-								href="<%=request.getContextPath()%>/ChangeRule"
+								href="<%=request.getContextPath()%>/ChangeRuleServlet"
 								aria-expanded="false"> <span> <i
 										class="fa fa-solid fa-gear"></i>
 								</span> <span class="hide-menu">Thay đổi quy định</span>
@@ -241,35 +241,27 @@
 
 
 
-								<table id="datatablesChangeRule" class="datatable-table">
-									<thead>
-										<tr>
-											<th data-sortable="true"
-												style="text-align: center; width: 10%"><a href="#"
-												class="datatable-sorter">STT</a></th>
-											<th data-sortable="true" aria-sort="descending"
-												class="datatable-descending"
-												style="text-align: center; width: 20%"><a href="#"
-												class="datatable-sorter">Tên tài khoản</a></th>
-											<th data-sortable="true"
-												style="text-align: center; width: 20%"><a href="#"
-												class="datatable-sorter">Mật khẩu</a></th>
-											<th data-sortable="true"
-												style="text-align: center; width: 20%"><a href="#"
-												class="datatable-sorter">Quyền</a></th>
-											<th data-sortable="true"
-												style="text-align: center; width: 30%;"><a href="#"
-												class="datatable-sorter">Thao tác</a></th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="acc" items="${DSTK}">
+								<div style="overflow-y: auto; height: 300px;">
+									<table id="datatablesChangeRule" class="datatable-table">
+										<thead>
 											<tr>
-												<td style="text-align: center;"><%=i++%></td>
-												<td class="ps-4 name">${acc.username}</td>
+												<th
+													style="text-align: center; width: 10%; position: sticky; top: 0; z-index: 2;">STT</th>
+												<th style="text-align: center; width: 30%; position: sticky; top: 0; z-index: 2;">Tên tài
+													khoản</th>
+												<th style="text-align: center; width: 30%; position: sticky; top: 0; z-index: 2;">Mật khẩu</th>
+												<th style="text-align: center; width: 10%; position: sticky; top: 0; z-index: 2;">Quyền</th>
+												<th style="text-align: center; width: 20%; position: sticky; top: 0; z-index: 2;">Thao tác</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach var="acc" items="${DSTK}">
+												<tr>
+													<td style="text-align: center;"><%=i++%></td>
+													<td class="ps-4 name">${acc.username}</td>
 
-												<td class="d-flex justify-content-between border-0 ps-4">${acc.password}</td>
-												<td><c:if test="${acc.isAdmin == 1}">
+													<td class="d-flex justify-content-between border-0 ps-4">${acc.password}</td>
+													<td><c:if test="${acc.isAdmin == 1}">
 								                    admin
 								                </c:if> <c:if test="${acc.isAdmin == 2}">
 								                    headmaster
@@ -280,25 +272,25 @@
 								                </c:if> <c:if test="${acc.isAdmin == 5}">
 								                    student
 								                </c:if></td>
-												<td class="action" style="text-align: center;"><i
-													class="role-user-icon fas fa-users"
-													<c:if test="${acc.isAdmin == 1}">
+													<td class="action" style="text-align: center;"><i
+														class="role-user-icon fas fa-users"
+														<c:if test="${acc.isAdmin == 1}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i>
-													<i class="edit-pass-icon fa-solid fa-pen-to-square mx-2"></i>
-													<i class="remove-acc-icon fa fa-solid fa-trash-can"
-													<c:if test="${acc.isAdmin == 1}">
+														<i class="edit-pass-icon fa-solid fa-pen-to-square mx-2"></i>
+														<i class="remove-acc-icon fa fa-solid fa-trash-can"
+														<c:if test="${acc.isAdmin == 1}">
 													                   aria-disabled="true" style="pointer-events: none; opacity: 0.5;"
 													               </c:if>></i></td>
 
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
 							</div>
 
-							<button type="button" class="btn btn-primary add-acc-btn">Tạo
+							<button type="button" class="btn btn-primary add-acc-btn m-4">Tạo
 								tài khoản</button>
 
 							<footer class="account-info-footer">

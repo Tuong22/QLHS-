@@ -115,4 +115,34 @@ public class tablePointDao {
 			}
 		return null;
 	}
+	
+	public boolean InputPoint(String maHS,String maMH,String maHK,float diem,String maLHKT)throws ClassNotFoundException {
+		String sql = "UPDATE CT_BANGDIEMMON_LHKT SET Diem = ? WHERE MaCT_BangDiemMon = ? AND MaLHKT = ?;";
+		boolean isvalid = false;
+		try (Connection connection = datasource.getConnection();
+		         PreparedStatement statement = connection.prepareStatement(sql)){
+				statement.setFloat(1, diem);
+				statement.setString(2, "CT-" + maHS + "-" + maMH + "-" + maHK);
+				statement.setString(3, maLHKT);
+				int rowAffected = statement.executeUpdate();
+				try (Statement callStatement = connection.createStatement()) {
+					String[] calls = {
+						"CALL PROC_AVG_MON('CT-HS121-MH1-HK1', @DiemTBMon);",
+						"CALL PROC_AVG_MON('CT-HS122-MH1-HK1', @DiemTBMon);",
+						"CALL CalculatePassRateAndRatioSubject('BCTKHK1M1', 'L1', 'MH1', 'HK1', @SLDat, @TiLe);"
+					};
+					for (String call : calls) {
+						callStatement.execute(call);
+					}
+				}
+				if (rowAffected > 0) {
+					isvalid = true;
+				} else {
+					isvalid = false;
+				}
+			} catch (Exception e) {
+				
+			}
+		return isvalid;
+	}
 }

@@ -94,7 +94,7 @@
 									</span> <span class="hide-menu">Báo cáo</span>
 								</a></li>
 								<li class="sidebar-item"><a class="sidebar-link"
-									href="<%=request.getContextPath()%>/ChangeRule"
+									href="<%=request.getContextPath()%>/ChangeRuleServlet"
 									aria-expanded="false"> <span> <i
 											class="fa fa-solid fa-gear"></i>
 									</span> <span class="hide-menu">Thay đổi quy định</span>
@@ -319,6 +319,10 @@
 										test="${sessionScope.account.username == sessionScope.hs.maHS}">
 
 										<div class="datatable-container">
+										<button class="btn btn-primary ms-auto no-print"
+											onclick="printReport()">
+											<i class="fa-solid fa-print""></i> Xuất thông tin
+										</button>
 											<h2 style="text-align: center;">BẢNG THÔNG TIN HỌC SINH</h2>
 											<table id="datatablesInfoStudent" class="datatable-table">
 												<thead>
@@ -419,8 +423,6 @@
 								</div>
 							</div>
 						</div>
-
-
 					</div>
 
 				</div>
@@ -668,6 +670,10 @@
         function removeStudent(button) {
             var container = document.getElementById("studentsContainer");
             container.removeChild(getParent(button, ".student"));
+        }
+        
+        function printReport() {
+            window.print();
         }
     </script>
 
